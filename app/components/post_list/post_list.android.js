@@ -16,6 +16,7 @@ export default class PostList extends PostListBase {
         super(props);
 
         this.contentOffsetY = 0;
+        this.contentHeight = 0;
 
         this.state = {
             refreshing: false,
@@ -67,6 +68,12 @@ export default class PostList extends PostListBase {
                     this.props.onLoadMoreUp();
                 }
                 break;
+
+            case ListTypes.VISIBILITY_SCROLL_DOWN:
+                if (Math.round(pageOffsetY) < definedHeight) {
+                    this.props.onLoadMoreDown();
+                }
+                break;
             }
         }
     };
@@ -107,7 +114,6 @@ export default class PostList extends PostListBase {
                     initialScrollPosition={RecyclerViewList.Constants.ScrollPosition.CENTER}
                     inverted={true}
                     onScroll={this.handleScroll}
-                    onContentSizeChange={this.onContentSizeChange}
                     windowSize={60}
                     {...otherProps}
                 />

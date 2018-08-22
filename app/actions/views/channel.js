@@ -3,14 +3,15 @@
 
 import {batchActions} from 'redux-batched-actions';
 
-import {ViewTypes} from 'app/constants';
+import {ViewTypes, ListTypes} from 'app/constants';
 
-import {UserTypes} from 'mattermost-redux/action_types';
+import {UserTypes, ChannelTypes} from 'mattermost-redux/action_types';
 import {
     fetchMyChannelsAndMembers,
     getChannelByNameAndTeamName,
     markChannelAsRead,
-    leaveChannel as serviceLeaveChannel, markChannelAsViewed,
+    leaveChannel as serviceLeaveChannel,
+    markChannelAsViewed,
     selectChannel,
 } from 'mattermost-redux/actions/channels';
 import {getPosts, getPostsBefore, getPostsSince, getPostThread} from 'mattermost-redux/actions/posts';
@@ -212,6 +213,8 @@ export function loadPostsIfNecessaryWithRetry(channelId) {
             }
         }
 
+        actions.push(setLoadMorePostsVisible(loadMorePostsVisible));
+
         if (received) {
             actions.push({
                 type: ViewTypes.RECEIVED_POSTS_FOR_CHANNEL_AT_TIME,
@@ -220,7 +223,6 @@ export function loadPostsIfNecessaryWithRetry(channelId) {
             });
         }
 
-        actions.push(setLoadMorePostsVisible(loadMorePostsVisible));
         dispatch(batchActions(actions));
     };
 }
@@ -364,6 +366,10 @@ export function handleSelectChannel(channelId, fromPushNotification = false) {
         dispatch(batchActions([
             selectChannel(channelId),
             setChannelDisplayName(channel.display_name),
+            {
+                type: ChannelTypes.SELECT_CHANNEL,
+                data: channelId,
+            },
             {
                 type: ViewTypes.SET_INITIAL_POST_VISIBILITY,
                 data: channelId,
@@ -552,7 +558,7 @@ export function setChannelDisplayName(displayName) {
 }
 
 // Returns true if there are more posts to load
-export function increasePostVisibility(channelId, focusedPostId) {
+export function increasePostVisibility(channelId, focusedPostId, direction = ListTypes.VISIBILITY_SCROLL_UP) {
     return async (dispatch, getState) => {
         const state = getState();
         const {loadingPosts, postVisibility} = state.views.channel;
@@ -590,6 +596,9 @@ export function increasePostVisibility(channelId, focusedPostId) {
         let result;
         if (focusedPostId) {
             result = await retryGetPostsAction(getPostsBefore(channelId, focusedPostId, page, pageSize), dispatch, getState);
+        } else if (direction === ListTypes.VISIBILITY_SCROLL_DOWN) {
+            const lastPostId = state.entities.posts.postsInChannel[channelId][0];
+            result = await retryGetPostsAction(getPostsBefore(channelId, lastPostId, page, pageSize), dispatch, getState);
         } else {
             result = await retryGetPostsAction(getPosts(channelId, page, pageSize), dispatch, getState);
         }
@@ -621,6 +630,7 @@ export function increasePostVisibility(channelId, focusedPostId) {
         }
 
         dispatch(batchActions(actions));
+
         return hasMorePost;
     };
 }

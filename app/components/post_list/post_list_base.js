@@ -33,6 +33,7 @@ export default class PostListBase extends PureComponent {
         isSearchResult: PropTypes.bool,
         lastViewedAt: PropTypes.number, // Used by container // eslint-disable-line no-unused-prop-types
         navigator: PropTypes.object,
+        onLoadMoreDown: PropTypes.func,
         onLoadMoreUp: PropTypes.func,
         onHashtagPress: PropTypes.func,
         onPermalinkPress: PropTypes.func,
@@ -50,6 +51,7 @@ export default class PostListBase extends PureComponent {
     };
 
     static defaultProps = {
+        onLoadMoreDown: () => true,
         onLoadMoreUp: () => true,
         renderFooter: () => null,
         refreshing: false,

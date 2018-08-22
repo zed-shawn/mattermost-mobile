@@ -74,6 +74,11 @@ export default class PostList extends PostListBase {
                 (contentHeight - pageOffsetY) < (this.state.postListHeight * SCROLL_UP_MULTIPLIER)
             ) {
                 this.props.onLoadMoreUp();
+            } else if (
+                direction === ListTypes.VISIBILITY_SCROLL_DOWN &&
+                pageOffsetY < this.state.postListHeight
+            ) {
+                this.props.onLoadMoreDown();
             }
         } else if (pageOffsetY < 0) {
             if (this.state.postListHeight > contentHeight || this.props.location === THREAD) {
