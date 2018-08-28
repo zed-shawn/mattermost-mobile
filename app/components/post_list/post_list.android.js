@@ -57,21 +57,21 @@ export default class PostList extends PostListBase {
         if (contentOffset.y >= 0) {
             const definedHeight = Math.round(this.postListHeight) * SCROLL_UP_MULTIPLIER;
             const pageOffsetY = contentOffset.y;
+            const contentHeight = contentSize.height;
             const direction = (this.contentOffsetY < pageOffsetY) ?
                 ListTypes.VISIBILITY_SCROLL_DOWN :
                 ListTypes.VISIBILITY_SCROLL_UP;
             this.contentOffsetY = contentOffset.y;
 
             switch (direction) {
+            case ListTypes.VISIBILITY_SCROLL_DOWN:
+                if ((Math.round(contentHeight - pageOffsetY) < definedHeight)) {
+                    this.props.onLoadMoreDown();
+                }
+                break;
             case ListTypes.VISIBILITY_SCROLL_UP:
                 if (Math.round(pageOffsetY) < definedHeight) {
                     this.props.onLoadMoreUp();
-                }
-                break;
-
-            case ListTypes.VISIBILITY_SCROLL_DOWN:
-                if (Math.round(pageOffsetY) < definedHeight) {
-                    this.props.onLoadMoreDown();
                 }
                 break;
             }
