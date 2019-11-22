@@ -7,6 +7,7 @@ import ListTypes from './list';
 import NavigationTypes from './navigation';
 import PermissionTypes from './permissions';
 import ViewTypes, {UpgradeTypes} from './view';
+import MediaTypes from './media';
 
 export {
     DeepLinkTypes,
@@ -16,4 +17,5 @@ export {
     PermissionTypes,
     UpgradeTypes,
     ViewTypes,
+    MediaTypes,
 };

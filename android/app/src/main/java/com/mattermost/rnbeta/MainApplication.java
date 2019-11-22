@@ -29,12 +29,14 @@ import com.oblador.keychain.KeychainModule;
 import com.reactnativecommunity.asyncstorage.AsyncStorageModule;
 import com.reactnativecommunity.netinfo.NetInfoModule;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
+import com.reactnativecommunity.slider.ReactSliderPackage;
+import com.reactnativecommunity.rctaudiotoolkit.AudioPlayerModule;
+import com.reactnativecommunity.rctaudiotoolkit.AudioRecorderModule;
 import io.sentry.RNSentryModule;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettings;
 import com.mkuczera.RNReactNativeHapticFeedbackModule;
 
-import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.horcrux.svg.SvgPackage;
@@ -111,6 +113,10 @@ public class MainApplication extends NavigationApplication implements INotificat
                 switch (name) {
                   case "MattermostShare":
                     return new ShareModule(instance, reactContext);
+                  case "RCTAudioPlayer":
+                    return new AudioPlayerModule(reactContext);
+                  case "RCTAudioRecorder":
+                    return new AudioRecorderModule(reactContext);
                   case "RNDeviceInfo":
                     return new RNDeviceModule(reactContext, false);
                   case "ImagePickerManager":
@@ -169,6 +175,8 @@ public class MainApplication extends NavigationApplication implements INotificat
                     map.put("RNTextInputReset", new ReactModuleInfo("RNTextInputReset", "com.mattermost.rnbeta.RNTextInputResetModule", false, false, false, false, false));
 
                     map.put("MattermostShare", new ReactModuleInfo("MattermostShare", "com.mattermost.share.ShareModule", false, false, true, false, false));
+                    map.put("RCTAudioPlayer", new ReactModuleInfo("RCTAudioPlayer", "com.reactnativecommunity.rctaudiotoolkit.AudioPlayerModule", false, false, true, false, false));
+                    map.put("RCTAudioRecorder", new ReactModuleInfo("RCTAudioRecorder", "com.reactnativecommunity.rctaudiotoolkit.AudioRecorderModule", false, false, true, false, false));
                     map.put("RNDeviceInfo", new ReactModuleInfo("RNDeviceInfo", "com.learnium.RNDeviceInfo.RNDeviceModule", false, false, true, false, false));
                     map.put("ImagePickerManager", new ReactModuleInfo("ImagePickerManager", "com.imagepicker.ImagePickerModule", false, false, false, false, false));
                     map.put("RNCookieManagerAndroid", new ReactModuleInfo("RNCookieManagerAndroid", "com.psykar.cookiemanager.CookieManagerModule", false, false, false, false, false));
@@ -198,7 +206,8 @@ public class MainApplication extends NavigationApplication implements INotificat
             new LinearGradientPackage(),
             new ReactVideoPackage(),
             new RNGestureHandlerPackage(),
-            new RNPasteableTextInputPackage()
+            new RNPasteableTextInputPackage(),
+            new ReactSliderPackage()
     );
   }
 

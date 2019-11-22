@@ -14,13 +14,16 @@ import {
 import * as Utils from 'mattermost-redux/utils/file_utils.js';
 
 import TouchableWithFeedback from 'app/components/touchable_with_feedback';
-import {isDocument, isGif} from 'app/utils/file';
+import {isDocument, isGif, isAudio} from 'app/utils/file';
 import {calculateDimensions} from 'app/utils/images';
 import {changeOpacity, makeStyleSheetFromTheme} from 'app/utils/theme';
 
 import FileAttachmentDocument from './file_attachment_document';
 import FileAttachmentIcon from './file_attachment_icon';
 import FileAttachmentImage from './file_attachment_image';
+import FileAttachmentAudio from './file_attachment_audio';
+
+const VOICE_MESSAGE_PREFIX = 'voice-message';
 
 export default class FileAttachment extends PureComponent {
     static propTypes = {
@@ -184,6 +187,14 @@ export default class FileAttachment extends PureComponent {
                     {this.renderFileInfo()}
                 </View>
             );
+        } else if (isAudio(data)) {
+            fileAttachmentComponent = (
+                <FileAttachmentAudio
+                    file={data}
+                    theme={theme}
+                    autoDownload={data.name.startsWith(VOICE_MESSAGE_PREFIX)}
+                />
+            )
         } else {
             fileAttachmentComponent = (
                 <View style={[style.fileWrapper]}>

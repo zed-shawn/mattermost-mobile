@@ -7,9 +7,11 @@ import {Navigation} from 'react-native-navigation';
 import merge from 'deepmerge';
 
 import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import EventEmitter from 'mattermost-redux/utils/event_emitter';
 
 import store from 'app/store';
 import EphemeralStore from 'app/store/ephemeral_store';
+import {MediaTypes} from 'app/constants';
 
 function getThemeFromState() {
     const state = store.getState();
@@ -132,6 +134,8 @@ export function resetToTeams(name, title, passProps = {}, options = {}) {
 }
 
 export function goToScreen(name, title, passProps = {}, options = {}) {
+    EventEmitter.emit(MediaTypes.STOP_AUDIO, null);
+
     const theme = getThemeFromState();
     const componentId = EphemeralStore.getNavigationTopComponentId();
     const defaultOptions = {
@@ -185,6 +189,8 @@ export async function popToRoot() {
 }
 
 export function showModal(name, title, passProps = {}, options = {}) {
+    EventEmitter.emit(MediaTypes.STOP_AUDIO, null);
+
     const theme = getThemeFromState();
     const defaultOptions = {
         layout: {
@@ -327,6 +333,8 @@ export function mergeNavigationOptions(componentId, options) {
 }
 
 export function showOverlay(name, passProps, options = {}) {
+    EventEmitter.emit(MediaTypes.STOP_AUDIO, null);
+
     const defaultOptions = {
         overlay: {
             interceptTouchOutside: false,

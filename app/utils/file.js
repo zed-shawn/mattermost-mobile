@@ -10,7 +10,7 @@ import {lookupMimeType} from 'mattermost-redux/utils/file_utils';
 import {DeviceTypes} from 'app/constants/';
 
 const EXTRACT_TYPE_REGEXP = /^\s*([^;\s]*)(?:;|\s|$)/;
-const CONTENT_DISPOSITION_REGEXP = /inline;filename=".*\.([a-z]+)";/i;
+const CONTENT_DISPOSITION_REGEXP = /(inline|attachment);filename=".*\.([a-z0-9]+)";/i;
 const {DOCUMENTS_PATH, IMAGES_PATH, VIDEOS_PATH} = DeviceTypes;
 const DEFAULT_SERVER_MAX_FILE_SIZE = 50 * 1024 * 1024;// 50 Mb
 
@@ -34,6 +34,14 @@ const SUPPORTED_VIDEO_FORMAT = Platform.select({
     ios: ['video/mp4', 'video/x-m4v', 'video/quicktime'],
     android: ['video/3gpp', 'video/x-matroska', 'video/mp4', 'video/webm'],
 });
+
+const SUPPORTED_AUDIO_FORMAT = [
+    'audio/mpeg',
+    'audio/wav',
+    'audio/aac',
+    'audio/x-aac',
+    'audio/mp4',
+];
 
 const types = {};
 const extensions = {};
@@ -162,6 +170,15 @@ export const isVideo = (file) => {
     return SUPPORTED_VIDEO_FORMAT.includes(mime);
 };
 
+export const isAudio = (file) => {
+    let mime = file.mime_type || file.type || '';
+    if (mime && mime.includes(';')) {
+        mime = mime.split(';')[0];
+    }
+
+    return SUPPORTED_AUDIO_FORMAT.includes(mime);
+}
+
 /**
  * Get the default extension for a MIME type.
  *
@@ -238,7 +255,7 @@ export function getLocalFilePathFromFile(dir, file) {
 
 export function getExtensionFromContentDisposition(contentDisposition) {
     const match = CONTENT_DISPOSITION_REGEXP.exec(contentDisposition);
-    let extension = match && match[1];
+    let extension = match && match[2];
     if (extension) {
         if (!Object.keys(types).length) {
             populateMaps();
