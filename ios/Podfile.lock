@@ -256,6 +256,8 @@ PODS:
     - React-cxxreact (= 0.61.2)
     - React-jsi (= 0.61.2)
     - ReactCommon/jscallinvoker (= 0.61.2)
+  - ReactNativeAudioToolkit (2.0.2):
+    - React
   - ReactNativeExceptionHandler (2.10.8):
     - React
   - ReactNativeNavigation (3.2.0):
@@ -342,6 +344,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "ReactNativeAudioToolkit (from `../node_modules/@react-native-community/audio-toolkit`)"
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
   - ReactNativeNavigation (from `../node_modules/react-native-navigation`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
@@ -446,6 +449,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeAudioToolkit:
+    :path: "../node_modules/@react-native-community/audio-toolkit"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
   ReactNativeNavigation:
@@ -517,6 +522,7 @@ SPEC CHECKSUMS:
   React-RCTText: e3ef6191cdb627855ff7fe8fa0c1e14094967fb8
   React-RCTVibration: fb54c732fd20405a76598e431aa2f8c2bf527de9
   ReactCommon: 5848032ed2f274fcb40f6b9ec24067787c42d479
+  ReactNativeAudioToolkit: 8febb6c0664cf03fdf83eafaf7f645029b66bd62
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   ReactNativeNavigation: aad255980f20cc5d2001ed37972319f3789fea70
   ReactNativePermissions: 2e324bb3baf12702e3ec27f76c8ae1158fa69fc6
