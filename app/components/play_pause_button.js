@@ -13,10 +13,18 @@ function PlayPauseButton(props) {
     const {theme, isPlaying} = props;
     const style = getStyleSheet(theme);
 
+    let name = 'play';
+    let marginLeft = 3;
+    if (isPlaying) {
+        name = 'pause';
+        marginLeft = 0;
+    }
+
     const icon = (
         <FontAwesomeIcon
-            name={isPlaying ? 'pause' : 'play'}
+            name={name}
             color={theme.buttonColor}
+            style={{marginLeft}}
         />
     )
 

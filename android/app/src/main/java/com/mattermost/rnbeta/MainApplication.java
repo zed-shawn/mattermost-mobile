@@ -29,7 +29,6 @@ import com.oblador.keychain.KeychainModule;
 import com.reactnativecommunity.asyncstorage.AsyncStorageModule;
 import com.reactnativecommunity.netinfo.NetInfoModule;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
-import com.reactnativecommunity.slider.ReactSliderPackage;
 import com.reactnativecommunity.rctaudiotoolkit.AudioPlayerModule;
 import com.reactnativecommunity.rctaudiotoolkit.AudioRecorderModule;
 import io.sentry.RNSentryModule;
@@ -206,8 +205,7 @@ public class MainApplication extends NavigationApplication implements INotificat
             new LinearGradientPackage(),
             new ReactVideoPackage(),
             new RNGestureHandlerPackage(),
-            new RNPasteableTextInputPackage(),
-            new ReactSliderPackage()
+            new RNPasteableTextInputPackage()
     );
   }
 

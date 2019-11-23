@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {
     View,
 } from 'react-native';
-import Slider from '@react-native-community/slider';
+import Slider from 'react-native-slider';
 import {Player} from '@react-native-community/audio-toolkit';
 
 import {Client4} from 'mattermost-redux/client';
@@ -155,8 +155,9 @@ export default class FileAttachmentAudio extends PureComponent {
                         step={0.0001}
                         onValueChange={(percentage) => this._seek(percentage)}
                         value={this.state.progress}
-                        minimumTrackTintColor={theme.centerChannelColor}
-                        thumbTintColor={theme.buttonColor}
+                        minimumTrackTintColor={theme.linkColor}
+                        thumbTintColor={theme.linkColor}
+                        thumbStyle={{width: 15, height: 15}}
                     />
                 </View>
             </View>
