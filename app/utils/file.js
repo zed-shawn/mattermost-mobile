@@ -177,7 +177,7 @@ export const isAudio = (file) => {
     }
 
     return SUPPORTED_AUDIO_FORMAT.includes(mime);
-}
+};
 
 /**
  * Get the default extension for a MIME type.

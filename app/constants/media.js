@@ -3,6 +3,6 @@
 
 import keyMirror from 'mattermost-redux/utils/key_mirror';
 
-export default mediaTypes = keyMirror({
+export default keyMirror({
     STOP_AUDIO: null,
 });

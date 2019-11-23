@@ -26,7 +26,7 @@ function PlayPauseButton(props) {
             color={theme.buttonColor}
             style={{marginLeft}}
         />
-    )
+    );
 
     return (
         <TouchableWithFeedback

@@ -31,107 +31,109 @@ export default class FileAttachmentAudio extends PureComponent {
         this.state = {
             uri: null,
             progress: 0,
-            error: null
+            error: null,
         };
-    }
-
-    async componentDidMount() {
-        EventEmitter.on(MediaTypes.STOP_AUDIO, this.pauseIfPlaying);
-        const {file} = this.props;
-        const uri = await ImageCacheManager.cache(file.name, Client4.getFileUrl(file.id), emptyFunction);
-        this.setState({uri});
 
         this.player = null;
         this.lastSeek = 0;
-    
-        this._reloadPlayer();
-    
-        this._progressInterval = setInterval(() => {
-            if (this.player && this._shouldUpdateProgressBar()) {
-                let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
-                if (isNaN(currentProgress)) {
-                    currentProgress = 0;
+    }
+
+    componentDidMount() {
+        EventEmitter.on(MediaTypes.STOP_AUDIO, this.pauseIfPlaying);
+
+        const {file} = this.props;
+        ImageCacheManager.cache(file.name, Client4.getFileUrl(file.id), emptyFunction).then((uri) => {
+            this.setState({uri}, () => {
+                this.reloadPlayer();
+            });
+        });
+
+        this.progressInterval = setInterval(() => {
+            if (this.player && this.shouldUpdateProgressBar()) {
+                let progress = Math.max(0, this.player.currentTime) / this.player.duration;
+                if (isNaN(progress)) {
+                    progress = 0;
                 }
-                this.setState({ progress: currentProgress });
+                this.setState({progress});
             }
         }, 100);
     }
-    
+
     componentWillUnmount() {
         EventEmitter.off(MediaTypes.STOP_AUDIO, this.pauseIfPlaying);
-        clearInterval(this._progressInterval);
-        if (this.player.isPlaying) {
-            this._playPause();
+        clearInterval(this.progressInterval);
+        if (this.player?.isPlaying) {
+            this.playPause();
         }
     }
 
     pauseIfPlaying = (fileId) => {
         const {file} = this.props;
-        if (file.id !== fileId && this.player.isPlaying) {
-            this._playPause();
+        if (file.id !== fileId && this.player?.isPlaying) {
+            this.playPause();
         }
     }
 
-    _shouldUpdateProgressBar() {
+    shouldUpdateProgressBar() {
         // Debounce progress bar update by 200 ms
         return Date.now() - this.lastSeek > 200;
     }
 
-    _playPause() {
+    playPause() {
         this.player.playPause((err, paused) => {
             if (!paused) {
                 EventEmitter.emit(MediaTypes.STOP_AUDIO, this.props.file.id);
             }
-            this._updateState(err?.message);
-        });
-    }
-    
-    _stop() {
-        this.player.stop(() => {
-            this._updateState();
+            this.updateState(err?.message);
         });
     }
 
-    _seek(percentage) {
+    stop() {
+        this.player.stop(() => {
+            this.updateState();
+        });
+    }
+
+    seek(percentage) {
         if (!this.player) {
             return;
         }
-    
+
         this.lastSeek = Date.now();
-    
-        let position = percentage * this.player.duration;
-    
+
+        const position = percentage * this.player.duration;
+
         this.player.seek(position, () => {
-            this._updateState();
+            this.updateState();
         });
     }
 
-    _reloadPlayer() {
+    reloadPlayer() {
         if (this.player) {
             this.player.destroy();
         }
-    
+
         this.player = new Player(`file://${this.state.uri}`, {
-            autoDestroy: false
+            autoDestroy: false,
         }).prepare((error) => {
             if (error) {
-                console.log('error at _reloadPlayer():', error);
+                console.log('Error prepring player', error); // eslint-disable-line no-console
             }
 
-            this._updateState(error);
+            this.updateState(error);
         });
-    
-        this._updateState();
-    
+
+        this.updateState();
+
         this.player.on('ended', () => {
-            this._updateState();
+            this.updateState();
         });
         this.player.on('pause', () => {
-            this._updateState();
+            this.updateState();
         });
     }
 
-    _updateState(error) {
+    updateState(error) {
         this.setState({
             error,
         });
@@ -145,7 +147,7 @@ export default class FileAttachmentAudio extends PureComponent {
             <View style={styles.container}>
                 <View style={styles.buttonContainer}>
                     <PlayPauseButton
-                        onPress={() => this._playPause()}
+                        onPress={() => this.playPause()}
                         isPlaying={Boolean(this.player?.isPlaying)}
                         theme={theme}
                     />
@@ -153,7 +155,7 @@ export default class FileAttachmentAudio extends PureComponent {
                 <View style={styles.sliderContainer}>
                     <Slider
                         step={0.0001}
-                        onValueChange={(percentage) => this._seek(percentage)}
+                        onValueChange={(percentage) => this.seek(percentage)}
                         value={this.state.progress}
                         minimumTrackTintColor={theme.linkColor}
                         thumbTintColor={theme.linkColor}
@@ -183,5 +185,5 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             marginLeft: 10,
             justifyContent: 'center',
         },
-    }
+    };
 });

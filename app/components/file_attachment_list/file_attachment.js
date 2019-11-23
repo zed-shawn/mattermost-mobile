@@ -194,7 +194,7 @@ export default class FileAttachment extends PureComponent {
                     theme={theme}
                     autoDownload={data.name.startsWith(VOICE_MESSAGE_PREFIX)}
                 />
-            )
+            );
         } else {
             fileAttachmentComponent = (
                 <View style={[style.fileWrapper]}>
