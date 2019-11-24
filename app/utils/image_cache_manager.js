@@ -24,13 +24,13 @@ let siteUrl;
 export default class ImageCacheManager {
     static listeners = {};
 
-    static cache = async (filename, fileUri, listener) => {
+    static cache = async (filename, fileUri, listener, folder) => {
         if (!listener) {
             console.warn('Unable to cache image when no listener is provided'); // eslint-disable-line no-console
         }
 
         const uri = parseUri(fileUri);
-        const {path, exists} = await getCacheFile(filename, uri);
+        const {path, exists} = await getCacheFile(filename, uri, folder);
         const prefix = Platform.OS === 'android' ? 'file://' : '';
         let pathWithPrefix = `${prefix}${path}`;
 
@@ -103,12 +103,12 @@ const parseUri = (uri) => {
     return url.href;
 };
 
-export const getCacheFile = async (name, uri) => {
+export const getCacheFile = async (name, uri, folder = IMAGES_PATH) => {
     const filename = name || uri.substring(uri.lastIndexOf('/'), uri.indexOf('?') === -1 ? uri.length : uri.indexOf('?'));
     const defaultExt = `.${getExtensionFromMime(DEFAULT_MIME_TYPE)}`;
     const ext = filename.indexOf('.') === -1 ? defaultExt : filename.substring(filename.lastIndexOf('.'));
 
-    let path = `${IMAGES_PATH}/${Math.abs(hashCode(uri))}${ext}`;
+    let path = `${folder}/${Math.abs(hashCode(uri))}${ext}`;
 
     try {
         const isDir = await RNFetchBlob.fs.isDir(IMAGES_PATH);

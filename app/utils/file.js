@@ -116,7 +116,7 @@ export async function deleteFileCache() {
 
 export function buildFileUploadData(file) {
     const re = /heic/i;
-    const uri = file.uri;
+    const uri = file.uri || file.localPath;
     let name = file.fileName || file.name || file.path || file.uri;
     let mimeType = lookupMimeType(name.toLowerCase());
     let extension = name.split('.').pop().replace('.', '');

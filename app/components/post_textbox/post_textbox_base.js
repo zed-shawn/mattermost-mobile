@@ -38,6 +38,8 @@ import {
     getKeyboardAppearanceFromTheme,
 } from 'app/utils/theme';
 
+import Recorder from 'app/components/channel_keyboard_accessory/recorder';
+
 const {RNTextInputReset} = NativeModules;
 
 export default class PostTextBoxBase extends PureComponent {
@@ -747,7 +749,7 @@ export default class PostTextBoxBase extends PureComponent {
 
     renderTextBox = () => {
         const {intl} = this.context;
-        const {channelDisplayName, channelIsArchived, channelIsLoading, channelIsReadOnly, theme, isLandscape} = this.props;
+        const {channelDisplayName, channelIsArchived, channelIsLoading, channelIsReadOnly, rootId, theme, isLandscape} = this.props;
         const style = getStyleSheet(theme);
 
         if (channelIsArchived) {
@@ -790,6 +792,10 @@ export default class PostTextBoxBase extends PureComponent {
                             theme={theme}
                         />
                     </Fade>
+                    <Recorder
+                        rootId={rootId}
+                        theme={theme}
+                    />
                 </View>
             </View>
         );

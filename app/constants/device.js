@@ -20,5 +20,6 @@ export default {
     IS_IPHONE_WITH_INSETS: DeviceInfo.getModel().includes('iPhone X') || DeviceInfo.getModel().includes('iPhone 11'),
     IS_TABLET: DeviceInfo.isTablet(),
     VIDEOS_PATH: `${RNFetchBlobFS.dirs.CacheDir}/Videos`,
+    AUDIO_PATH: RNFetchBlobFS.dirs.DocumentDir,
     PERMANENT_SIDEBAR_SETTINGS: '@PERMANENT_SIDEBAR_SETTINGS',
 };
