@@ -1,0 +1,78 @@
+diff --git a/node_modules/@react-native-community/audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit/AudioRecorder.m b/node_modules/@react-native-community/audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit/AudioRecorder.m
+index 80d71e8..90a859c 100644
+--- a/node_modules/@react-native-community/audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit/AudioRecorder.m
++++ b/node_modules/@react-native-community/audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit/AudioRecorder.m
+@@ -25,6 +25,12 @@ @implementation AudioRecorder
+ 
+ @synthesize bridge = _bridge;
+ 
++id _powerUpdateTimer;
++int _frameId;
++NSNumber *_currentRecorderId;
++NSDate *_prevPowerUpdateTime;
++int _powerUpdateInterval = 250;
++
+ - (void)dealloc {
+     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+     NSError *error = nil;
+@@ -127,6 +133,8 @@ -(NSNumber *) keyForRecorder:(nonnull AVAudioRecorder*)recorder {
+         return;
+     }
+     
++    recorder.meteringEnabled = YES;
++    
+     callback(@[[NSNull null], filePath]);
+ }
+ 
+@@ -143,6 +151,10 @@ -(NSNumber *) keyForRecorder:(nonnull AVAudioRecorder*)recorder {
+         callback(@[dict]);
+         return;
+     }
++    
++    _currentRecorderId = recorderId;
++    [self startMonitorPower];
++
+     callback(@[[NSNull null]]);
+ }
+ 
+@@ -210,4 +222,40 @@ - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder
+                                                       }];
+ }
+ 
++- (void)startMonitorPower {
++    _prevPowerUpdateTime = nil;
++    [self stopMonitorPower];
++
++    _powerUpdateTimer = [CADisplayLink displayLinkWithTarget:self selector:@selector(sendPowerUpdate)];
++    [_powerUpdateTimer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
++}
++
++- (void)stopMonitorPower {
++    [_powerUpdateTimer invalidate];
++}
++
++- (void)sendPowerUpdate {
++    AVAudioRecorder *recorder = [[self recorderPool] objectForKey:_currentRecorderId];
++    if (!recorder || !recorder.isRecording) {
++        return;
++    }
++
++    if (_prevPowerUpdateTime == nil ||
++        (([_prevPowerUpdateTime timeIntervalSinceNow] * -1000.0) >= _powerUpdateInterval)) {
++        _frameId++;
++        NSMutableDictionary *body = [[NSMutableDictionary alloc] init];
++        [body setObject:[NSNumber numberWithFloat:_frameId] forKey:@"id"];
++
++        [recorder updateMeters];
++        float _currentLevel = [recorder averagePowerForChannel: 0];
++        [body setObject:[NSNumber numberWithFloat:_currentLevel] forKey:@"value"];
++        [body setObject:[NSNumber numberWithFloat:_currentLevel] forKey:@"rawValue"];
++
++//        [self.bridge.eventDispatcher sendAppEventWithName:@"frame" body:body];
++        NSLog(@"******************* %f", _currentLevel);
++
++        _prevPowerUpdateTime = [NSDate date];
++    }
++}
++
+ @end

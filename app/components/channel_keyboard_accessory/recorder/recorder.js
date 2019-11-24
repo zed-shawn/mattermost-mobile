@@ -9,14 +9,16 @@ import Permissions from 'react-native-permissions';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {intlShape} from 'react-intl';
+import RNFetchBlob from 'rn-fetch-blob';
 
 import {PermissionTypes} from 'app/constants';
 import {generateId} from 'app/utils/file';
-import RNFetchBlob from 'rn-fetch-blob';
+import {changeOpacity} from 'app/utils/theme';
 
 export default class Record extends PureComponent {
     static propTypes = {
         createVoiceMessage: PropTypes.func.isRequired,
+        theme: PropTypes.object.isRequired,
         rootId: PropTypes.string,
     };
 
@@ -135,6 +137,8 @@ export default class Record extends PureComponent {
     };
 
     render() {
+        const {theme} = this.props;
+
         return (
             <TouchableOpacity
                 onPressIn={this.startRecord}
@@ -143,7 +147,7 @@ export default class Record extends PureComponent {
                 <Icon
                     name='mic-none'
                     size={24}
-                    color={'white'}
+                    color={changeOpacity(theme.centerChannelColor, 0.9)}
                 />
             </TouchableOpacity>
         );

@@ -42,8 +42,7 @@ export default class FileAttachmentAudio extends PureComponent {
 
     componentDidMount() {
         EventEmitter.on(MediaTypes.STOP_AUDIO, this.pauseIfPlaying);
-        this.player = null;
-        this.lastSeek = 0;
+
         this.progressInterval = setInterval(this.updateProgress, 100);
         this.loadAudio();
     }
