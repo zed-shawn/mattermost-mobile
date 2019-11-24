@@ -120,7 +120,7 @@ function handleReceivedUploadFiles(state, action) {
 }
 
 function handleUploadFilesFailure(state, action) {
-    if (action.rootId) {
+    if (action.rootId || !action.channelId) {
         return state;
     }
 

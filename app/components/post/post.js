@@ -33,9 +33,9 @@ import Config from 'assets/config';
 export default class Post extends PureComponent {
     static propTypes = {
         actions: PropTypes.shape({
-            createPost: PropTypes.func.isRequired,
             insertToDraft: PropTypes.func.isRequired,
             removePost: PropTypes.func.isRequired,
+            retryFailedPost: PropTypes.func.isRequired,
         }).isRequired,
         channelIsReadOnly: PropTypes.bool,
         currentUserId: PropTypes.string.isRequired,
@@ -121,7 +121,7 @@ export default class Post extends PureComponent {
                     const {failed, id, ...post} = this.props.post; // eslint-disable-line
 
                     EventEmitter.emit(NavigationTypes.NAVIGATION_CLOSE_MODAL);
-                    this.props.actions.createPost(post);
+                    this.props.actions.retryFailedPost(post);
                 },
                 text: {
                     id: t('mobile.post.failed_retry'),

@@ -4,7 +4,7 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {createPost, removePost} from 'mattermost-redux/actions/posts';
+import {removePost} from 'mattermost-redux/actions/posts';
 import {Posts} from 'mattermost-redux/constants';
 import {isChannelReadOnlyById} from 'mattermost-redux/selectors/entities/channels';
 import {getPost, makeGetCommentCountForPost, makeIsPostCommentMention} from 'mattermost-redux/selectors/entities/posts';
@@ -13,6 +13,7 @@ import {getMyPreferences, getTheme} from 'mattermost-redux/selectors/entities/pr
 import {isPostFlagged, isSystemMessage} from 'mattermost-redux/utils/post_utils';
 
 import {insertToDraft, setPostTooltipVisible} from 'app/actions/views/channel';
+import {retryFailedPost} from 'app/actions/views/post';
 import {isLandscape} from 'app/selectors/device';
 
 import Post from './post';
@@ -94,7 +95,7 @@ function makeMapStateToProps() {
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators({
-            createPost,
+            retryFailedPost,
             removePost,
             setPostTooltipVisible,
             insertToDraft,

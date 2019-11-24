@@ -83,7 +83,7 @@ export default class FileAttachment extends PureComponent {
                         ellipsizeMode='tail'
                         style={style.fileName}
                     >
-                        {file.caption.trim()}
+                        {file.caption?.trim()}
                     </Text>
                     <View style={style.fileDownloadContainer}>
                         <Text

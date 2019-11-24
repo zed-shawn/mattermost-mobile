@@ -12,6 +12,7 @@ import {intlShape} from 'react-intl';
 
 import {PermissionTypes} from 'app/constants';
 import {generateId} from 'app/utils/file';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export default class Record extends PureComponent {
     static propTypes = {
@@ -123,9 +124,14 @@ export default class Record extends PureComponent {
 
     postVoiceMessage = () => {
         const {createVoiceMessage, rootId} = this.props;
+        const {fsPath} = this.recorder;
 
-        createVoiceMessage(this.recorder.fsPath, rootId);
-        this.recorder = null;
+        createVoiceMessage(fsPath, rootId).then(({error, remove}) => {
+            if (error && remove) {
+                RNFetchBlob.fs.unlink(fsPath);
+            }
+            this.recorder = null;
+        });
     };
 
     render() {

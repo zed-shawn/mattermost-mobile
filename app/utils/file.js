@@ -11,7 +11,7 @@ import {DeviceTypes} from 'app/constants/';
 
 const EXTRACT_TYPE_REGEXP = /^\s*([^;\s]*)(?:;|\s|$)/;
 const CONTENT_DISPOSITION_REGEXP = /(inline|attachment);filename=".*\.([a-z0-9]+)";/i;
-const {DOCUMENTS_PATH, IMAGES_PATH, VIDEOS_PATH} = DeviceTypes;
+const {AUDIO_PATH, DOCUMENTS_PATH, IMAGES_PATH, VIDEOS_PATH} = DeviceTypes;
 const DEFAULT_SERVER_MAX_FILE_SIZE = 50 * 1024 * 1024;// 50 Mb
 
 export const SUPPORTED_DOCS_FORMAT = [
@@ -100,6 +100,8 @@ export async function deleteFileCache() {
     const isDocsDir = await RNFetchBlob.fs.isDir(DOCUMENTS_PATH);
     const isImagesDir = await RNFetchBlob.fs.isDir(IMAGES_PATH);
     const isVideosDir = await RNFetchBlob.fs.isDir(VIDEOS_PATH);
+    const isAudioDir = await RNFetchBlob.fs.isDir(AUDIO_PATH);
+
     if (isDocsDir) {
         await RNFetchBlob.fs.unlink(DOCUMENTS_PATH);
     }
@@ -111,13 +113,26 @@ export async function deleteFileCache() {
     if (isVideosDir) {
         await RNFetchBlob.fs.unlink(VIDEOS_PATH);
     }
+
+    if (isAudioDir) {
+        const files = await RNFetchBlob.fs.ls(AUDIO_PATH);
+        files.forEach(async (name) => {
+            const path = `${AUDIO_PATH}/${name}`;
+            const isDir = await RNFetchBlob.fs.isDir(path);
+
+            if (!isDir) {
+                RNFetchBlob.fs.unlink(path);
+            }
+        });
+    }
+
     return true;
 }
 
 export function buildFileUploadData(file) {
     const re = /heic/i;
     const uri = file.uri || file.localPath;
-    let name = file.fileName || file.name || file.path || file.uri;
+    let name = file.fileName || file.name || file.path || file.uri || file.localPath;
     let mimeType = lookupMimeType(name.toLowerCase());
     let extension = name.split('.').pop().replace('.', '');
 

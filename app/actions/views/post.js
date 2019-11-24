@@ -2,11 +2,13 @@
 // See LICENSE.txt for license information.
 
 import {Posts} from 'mattermost-redux/constants';
-import {doPostAction, receivedNewPost} from 'mattermost-redux/actions/posts';
+import {createPost, doPostAction, receivedNewPost} from 'mattermost-redux/actions/posts';
+import {makeGetFilesForPost} from 'mattermost-redux/selectors/entities/files';
 
 import {ViewTypes} from 'app/constants';
-
 import {generateId} from 'app/utils/file';
+
+import {retryVoiceMessage} from './voice';
 
 export function sendAddToChannelEphemeralPost(user, addedUsername, message, channelId, postRootId = '') {
     return async (dispatch) => {
@@ -56,5 +58,21 @@ export function selectAttachmentMenuAction(postId, actionId, text, value) {
         });
 
         dispatch(doPostAction(postId, actionId, value));
+    };
+}
+
+export function retryFailedPost(post) {
+    const getFilesForPost = makeGetFilesForPost();
+    return async (dispatch, getState) => {
+        if (post.file_ids?.length) {
+            const state = getState();
+            const files = getFilesForPost(state, post.pending_post_id);
+            const isVoiceMessage = files?.some((f) => f.name.startsWith('voice-message'));
+            if (isVoiceMessage) {
+                return dispatch(retryVoiceMessage(files[0], post));
+            }
+        }
+
+        return dispatch(createPost(post));
     };
 }
