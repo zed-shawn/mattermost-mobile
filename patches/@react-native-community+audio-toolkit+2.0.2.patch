@@ -1,5 +1,5 @@
 diff --git a/node_modules/@react-native-community/audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit/AudioRecorder.m b/node_modules/@react-native-community/audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit/AudioRecorder.m
-index 80d71e8..90a859c 100644
+index 80d71e8..fd78bed 100644
 --- a/node_modules/@react-native-community/audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit/AudioRecorder.m
 +++ b/node_modules/@react-native-community/audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit/AudioRecorder.m
 @@ -25,6 +25,12 @@ @implementation AudioRecorder
@@ -35,7 +35,7 @@ index 80d71e8..90a859c 100644
      callback(@[[NSNull null]]);
  }
  
-@@ -210,4 +222,40 @@ - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder
+@@ -210,4 +222,43 @@ - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder
                                                        }];
  }
  
@@ -60,19 +60,52 @@ index 80d71e8..90a859c 100644
 +    if (_prevPowerUpdateTime == nil ||
 +        (([_prevPowerUpdateTime timeIntervalSinceNow] * -1000.0) >= _powerUpdateInterval)) {
 +        _frameId++;
-+        NSMutableDictionary *body = [[NSMutableDictionary alloc] init];
-+        [body setObject:[NSNumber numberWithFloat:_frameId] forKey:@"id"];
++        NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
++        [data setObject:[NSNumber numberWithFloat:_frameId] forKey:@"id"];
 +
 +        [recorder updateMeters];
 +        float _currentLevel = [recorder averagePowerForChannel: 0];
-+        [body setObject:[NSNumber numberWithFloat:_currentLevel] forKey:@"value"];
-+        [body setObject:[NSNumber numberWithFloat:_currentLevel] forKey:@"rawValue"];
++        [data setObject:[NSNumber numberWithFloat:_currentLevel] forKey:@"value"];
++        [data setObject:[NSNumber numberWithFloat:_currentLevel] forKey:@"rawValue"];
 +
-+//        [self.bridge.eventDispatcher sendAppEventWithName:@"frame" body:body];
-+        NSLog(@"******************* %f", _currentLevel);
++        NSString *eventName = [NSString stringWithFormat:@"RCTAudioRecorderEvent:%@", _currentRecorderId];
++        [self.bridge.eventDispatcher sendAppEventWithName:eventName
++                                                   body:@{@"event": @"power",
++                                                          @"data" : data
++                                                          }];
 +
 +        _prevPowerUpdateTime = [NSDate date];
 +    }
 +}
 +
  @end
+diff --git a/node_modules/@react-native-community/audio-toolkit/src/Recorder.js b/node_modules/@react-native-community/audio-toolkit/src/Recorder.js
+index 69e679c..7cfda30 100644
+--- a/node_modules/@react-native-community/audio-toolkit/src/Recorder.js
++++ b/node_modules/@react-native-community/audio-toolkit/src/Recorder.js
+@@ -27,11 +27,12 @@ var defaultRecorderOptions = {
+  * @constructor
+  */
+ class Recorder extends EventEmitter {
+-  constructor(path, options = defaultRecorderOptions) {
++  constructor(path, options = defaultRecorderOptions, onNewPower) {
+     super();
+ 
+     this._path = path;
+     this._options = options;
++    this._onNewPower = onNewPower;
+ 
+     this._recorderId = recorderId++;
+     this._reset();
+@@ -67,6 +68,11 @@ class Recorder extends EventEmitter {
+         this._reset();
+         //this.emit('error', data);
+         break;
++      case 'power':
++        if (this._onNewPower) {
++          this._onNewPower(data);
++        }
++        break;
+     }
+ 
+     this.emit(event, data);

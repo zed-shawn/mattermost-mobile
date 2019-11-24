@@ -3,7 +3,7 @@
 
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {Alert, TouchableOpacity} from 'react-native';
+import {Alert, TouchableOpacity, Animated} from 'react-native';
 import {Recorder} from '@react-native-community/audio-toolkit';
 import Permissions from 'react-native-permissions';
 import DeviceInfo from 'react-native-device-info';
@@ -30,6 +30,8 @@ export default class Record extends PureComponent {
         super(props);
 
         this.recorder = null;
+
+        this.diameter = new Animated.Value(-80);
     }
 
     getPermissionDeniedMessage = () => {
@@ -101,13 +103,18 @@ export default class Record extends PureComponent {
 
         const hasPermission = await this.requestPermissions();
         if (hasPermission) {
-            this.recorder = new Recorder(`voice-message-${generateId()}.aac`, {
+            const recorderOptions = {
                 bitrate: 128000,
                 channels: 2,
                 sampleRate: 44100,
                 format: 'aac',
                 quality: 'high',
-            }).record(this.recordingStarted);
+            };
+            this.recorder = new Recorder(
+                `voice-message-${generateId()}.aac`,
+                recorderOptions,
+                this.onNewPower,
+            ).record(this.recordingStarted);
         }
     };
 
@@ -115,6 +122,7 @@ export default class Record extends PureComponent {
         if (this.recorder) {
             this.recorder.destroy();
             this.postVoiceMessage();
+            this.diameter.setValue(-80);
         }
     };
 
@@ -136,19 +144,36 @@ export default class Record extends PureComponent {
         });
     };
 
+    onNewPower = ({value}) => {
+        this.diameter.setValue(value);
+    }
+
     render() {
         const {theme} = this.props;
+
+        const diameter = this.diameter.interpolate({
+            inputRange: [-80, 80],
+            outputRange: [30, 200],
+        });
 
         return (
             <TouchableOpacity
                 onPressIn={this.startRecord}
                 onPressOut={this.stopRecord}
             >
-                <Icon
-                    name='mic-none'
-                    size={24}
-                    color={changeOpacity(theme.centerChannelColor, 0.9)}
-                />
+                <Animated.View style={{
+                    backgroundColor: 'red',
+                    width: diameter,
+                    height: diameter,
+                    borderRadius: diameter,
+
+                }}>
+                    <Icon
+                        name='mic-none'
+                        size={24}
+                        color={changeOpacity(theme.centerChannelColor, 0.9)}
+                    />
+                </Animated.View>
             </TouchableOpacity>
         );
     }
