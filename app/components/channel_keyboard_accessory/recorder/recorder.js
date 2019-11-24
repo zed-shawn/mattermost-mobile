@@ -3,17 +3,20 @@
 
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {Alert, TouchableOpacity, Animated} from 'react-native';
+import {Alert, Animated} from 'react-native';
 import {Recorder} from '@react-native-community/audio-toolkit';
 import Permissions from 'react-native-permissions';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {intlShape} from 'react-intl';
 import RNFetchBlob from 'rn-fetch-blob';
+import {TapGestureHandler, PanGestureHandler, State as GestureState} from 'react-native-gesture-handler';
 
 import {PermissionTypes} from 'app/constants';
 import {generateId} from 'app/utils/file';
 import {changeOpacity} from 'app/utils/theme';
+
+import RecorderAnimation from './recorder_animation';
 
 export default class Record extends PureComponent {
     static propTypes = {
@@ -32,6 +35,10 @@ export default class Record extends PureComponent {
         this.recorder = null;
 
         this.scale = new Animated.Value(-80);
+        this.panRef = React.createRef();
+        this.state = {
+            what: false,
+        };
     }
 
     getPermissionDeniedMessage = () => {
@@ -96,6 +103,21 @@ export default class Record extends PureComponent {
         return true;
     };
 
+    cancelRecording = () => {
+        console.warn('cancel recording'); // eslint-disable-line no-console
+        if (this.recorder) {
+            this.recorder.destroy();
+            this.deleteRecording();
+            this.recorder = null;
+        }
+    };
+
+    deleteRecording = () => {
+        if (this.recorder.fsPath) {
+            RNFetchBlob.fs.unlink(this.recorder.fsPath);
+        }
+    }
+
     startRecord = async () => {
         if (this.recorder) {
             this.recorder.destroy();
@@ -121,14 +143,17 @@ export default class Record extends PureComponent {
     stopRecord = () => {
         if (this.recorder) {
             this.recorder.destroy();
-            this.postVoiceMessage();
-            this.scale.setValue(-80);
+
+            if (this.recorder.fsPath) {
+                this.scale.setValue(-80);
+                this.postVoiceMessage();
+            }
         }
     };
 
     recordingStarted = (error) => {
-        if (error) {
-            this.stopRecord();
+        if (error && this.recorder) {
+            this.cancelRecording();
         }
     };
 
@@ -138,7 +163,7 @@ export default class Record extends PureComponent {
 
         createVoiceMessage(fsPath, rootId).then(({error, remove}) => {
             if (error && remove) {
-                RNFetchBlob.fs.unlink(fsPath);
+                this.deleteRecording();
             }
             this.recorder = null;
         });
@@ -146,6 +171,66 @@ export default class Record extends PureComponent {
 
     onNewPower = ({value}) => {
         this.scale.setValue(value);
+    };
+
+    onPanHandlerStateChange = ({nativeEvent}) => {
+        switch (nativeEvent.state) {
+        case GestureState.UNDETERMINED:
+            console.log('PAN undetermined', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        case GestureState.FAILED:
+            console.log('PAN failed', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        case GestureState.BEGAN:
+            console.log('PAN began', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        case GestureState.CANCELLED:
+            console.log('PAN cancelled', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        case GestureState.ACTIVE:
+            console.log('PAN active', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        case GestureState.END:
+            console.log('PAN end', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        }
+    };
+
+    onTapHandlerStateChange = ({nativeEvent}) => {
+        switch (nativeEvent.state) {
+        case GestureState.UNDETERMINED:
+            console.log('undetermined', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        case GestureState.FAILED:
+            this.setState({what: false});
+            this.cancelRecording();
+            console.log('failed', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        case GestureState.BEGAN:
+            this.setState({what: true});
+
+            // this.startRecord();
+            console.log('began', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        case GestureState.CANCELLED:
+            console.log('cancelled', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        case GestureState.ACTIVE:
+            console.log('active', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        case GestureState.END:
+            this.setState({what: false});
+            this.stopRecord();
+            console.log('end', nativeEvent.state); // eslint-disable-line no-console
+            break;
+        }
+    }
+
+    onPanGestureEvent = ({nativeEvent}) => {
+        console.log('translationX', nativeEvent.translationX); // eslint-disable-line no-console
+        if (nativeEvent.translationX < -60) {
+            this.cancelRecording();
+        }
     }
 
     render() {
@@ -156,27 +241,45 @@ export default class Record extends PureComponent {
             outputRange: [1, 25],
         });
 
+        const icon = (
+            <Icon
+                name='mic-none'
+                size={40}
+                color={changeOpacity(theme.centerchannelColor, 0.9)}
+                style={{top: 9, left: 1, zIndex: 500}}
+            />
+        );
+
         return (
-            <TouchableOpacity
-                onPressIn={this.startRecord}
-                onPressOut={this.stopRecord}
-            >
-                <Animated.View style={{
-                    backgroundColor: 'red',
-                    width: 30,
-                    height: 30,
-                    transform: [{
-                        scale,
-                    }],
-                    borderRadius: 60,
-                }}>
-                    <Icon
-                        name='mic-none'
-                        size={24}
-                        color={changeOpacity(theme.centerChannelColor, 0.9)}
-                    />
-                </Animated.View>
-            </TouchableOpacity>
+            <React.Fragment>
+                <TapGestureHandler
+                    onHandlerStateChange={this.onTapHandlerStateChange}
+                    simultaneousHandlers={this.panRef}
+                >
+                    <PanGestureHandler
+                        ref={this.panRef}
+                        onHandlerStateChange={this.onPanHandlerStateChange}
+                        onGestureEvent={this.onPanGestureEvent}
+                    >
+                        {icon}
+                    </PanGestureHandler>
+                </TapGestureHandler>
+                <RecorderAnimation
+                    show={this.recorder?.isRecording}
+                    lock={this.state.lock}
+                />
+                <Animated.View
+                    style={{
+                        backgroundColor: 'red',
+                        width: 30,
+                        height: 30,
+                        transform: [{
+                            scale,
+                        }],
+                        borderRadius: 60,
+                    }}
+                />
+            </React.Fragment>
         );
     }
 }
