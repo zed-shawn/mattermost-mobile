@@ -274,6 +274,8 @@
   "mobile.intro_messages.default_message": "This is the first channel teammates see when they sign up - use it for posting updates everyone needs to know.",
   "mobile.intro_messages.default_welcome": "Welcome to {name}!",
   "mobile.intro_messages.DM": "This is the start of your direct message history with {teammate}. Direct messages and files shared here are not shown to people outside this area.",
+  "mobile.ios.mic_permission_denied_title": "{applicationName} would like to access your Microphone",
+  "mobile.ios.mioc_permission_denied_description": "Upload voice notes to your Mattermost instance. Open Settings to grant Mattermost microphone access to record your voice notes.",
   "mobile.ios.photos_permission_denied_description": "Upload photos and videos to your Mattermost instance or save them to your device. Open Settings to grant Mattermost Read and Write access to your photo and video library.",
   "mobile.ios.photos_permission_denied_title": "{applicationName} would like to access your photos",
   "mobile.join_channel.error": "We couldn't join the channel {displayName}. Please check your connection and try again.",
