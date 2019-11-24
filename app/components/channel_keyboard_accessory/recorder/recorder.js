@@ -31,7 +31,7 @@ export default class Record extends PureComponent {
 
         this.recorder = null;
 
-        this.diameter = new Animated.Value(-80);
+        this.scale = new Animated.Value(-80);
     }
 
     getPermissionDeniedMessage = () => {
@@ -122,7 +122,7 @@ export default class Record extends PureComponent {
         if (this.recorder) {
             this.recorder.destroy();
             this.postVoiceMessage();
-            this.diameter.setValue(-80);
+            this.scale.setValue(-80);
         }
     };
 
@@ -145,15 +145,15 @@ export default class Record extends PureComponent {
     };
 
     onNewPower = ({value}) => {
-        this.diameter.setValue(value);
+        this.scale.setValue(value);
     }
 
     render() {
         const {theme} = this.props;
 
-        const diameter = this.diameter.interpolate({
+        const scale = this.scale.interpolate({
             inputRange: [-80, 80],
-            outputRange: [30, 200],
+            outputRange: [1, 25],
         });
 
         return (
@@ -163,10 +163,12 @@ export default class Record extends PureComponent {
             >
                 <Animated.View style={{
                     backgroundColor: 'red',
-                    width: diameter,
-                    height: diameter,
-                    borderRadius: diameter,
-
+                    width: 30,
+                    height: 30,
+                    transform: [{
+                        scale,
+                    }],
+                    borderRadius: 60,
                 }}>
                     <Icon
                         name='mic-none'
