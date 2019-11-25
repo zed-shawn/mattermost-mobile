@@ -93,9 +93,9 @@ export default class Record extends PureComponent {
 
         switch (hasMicPermissions) {
         case PermissionTypes.UNDETERMINED:
-            permissionRequest = await Permissions.request('microphone');
-            if (permissionRequest !== PermissionTypes.AUTHORIZED) {
-                return false;
+            return {
+                hasPermission: permissionRequest === PermissionTypes.AUTHORIZED,
+                requested: true,
             }
             break;
         case PermissionTypes.DENIED: {
@@ -126,11 +126,17 @@ export default class Record extends PureComponent {
                     },
                 ]
             );
-            return false;
+            return {
+                hasPermission: false,
+                requested: true,
+            }
         }
         }
 
-        return true;
+        return {
+            hasPermission: true,
+            requested: false,
+        }
     };
 
     cancelRecording = () => {
@@ -154,8 +160,8 @@ export default class Record extends PureComponent {
             this.recorder.destroy();
         }
 
-        const hasPermission = await this.requestPermissions();
-        if (hasPermission) {
+        const {hasPermission, requested} = await this.requestPermissions();
+        if (hasPermission && !requested) {
             EventEmitter.emit(MediaTypes.STOP_AUDIO, null);
             this.startAnimation(true);
 
