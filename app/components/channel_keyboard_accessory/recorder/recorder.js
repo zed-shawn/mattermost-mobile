@@ -16,6 +16,7 @@ import EventEmitter from 'mattermost-redux/utils/event_emitter';
 
 import {MediaTypes, PermissionTypes} from 'app/constants';
 import {generateId} from 'app/utils/file';
+import {hapticFeedback} from 'app/utils/general';
 import {changeOpacity, makeStyleSheetFromTheme} from 'app/utils/theme';
 
 import RecorderAnimation from './recorder_animation';
@@ -49,6 +50,7 @@ export default class Record extends PureComponent {
 
     startAnimation(show = true) {
         EventEmitter.emit(MediaTypes.START_RECORDING, !show);
+        hapticFeedback('impactMedium');
 
         if (this.recorderAnimationRef.current) {
             const toValue = show ? 1 : 0;
@@ -96,8 +98,7 @@ export default class Record extends PureComponent {
             return {
                 hasPermission: permissionRequest === PermissionTypes.AUTHORIZED,
                 requested: true,
-            }
-            break;
+            };
         case PermissionTypes.DENIED: {
             const canOpenSettings = await Permissions.canOpenSettings();
             let grantOption = null;
@@ -129,14 +130,14 @@ export default class Record extends PureComponent {
             return {
                 hasPermission: false,
                 requested: true,
-            }
+            };
         }
         }
 
         return {
             hasPermission: true,
             requested: false,
-        }
+        };
     };
 
     cancelRecording = () => {
