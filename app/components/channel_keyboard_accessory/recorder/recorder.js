@@ -48,7 +48,7 @@ export default class Record extends PureComponent {
     }
 
     startAnimation(show = true) {
-        EventEmitter.emit(MediaTypes.START_RECORDING, show);
+        EventEmitter.emit(MediaTypes.START_RECORDING, !show);
 
         if (this.recorderAnimationRef.current) {
             const toValue = show ? 1 : 0;
