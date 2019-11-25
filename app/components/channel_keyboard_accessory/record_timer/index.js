@@ -54,7 +54,7 @@ export default class RecordTimer extends PureComponent {
         return (
             <Animated.View style={[style.container, recorderInfoStyle]}>
                 <Animated.View style={[style.indicator, recordStyle]}></Animated.View>
-                <Text>{moment(time).format('mm:ss')}</Text>
+                <Text style={style.text}>{moment(time).format('mm:ss')}</Text>
             </Animated.View>
         );
     }

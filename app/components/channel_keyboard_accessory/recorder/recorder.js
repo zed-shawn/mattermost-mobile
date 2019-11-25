@@ -150,10 +150,10 @@ export default class Record extends PureComponent {
         }
 
         EventEmitter.emit(MediaTypes.STOP_AUDIO, null);
-        this.props.onStartRecording();
-        this.startAnimation(true);
         const hasPermission = await this.requestPermissions();
         if (hasPermission) {
+            this.startAnimation(true);
+
             const recorderOptions = {
                 bitrate: 128000,
                 channels: 2,
@@ -170,22 +170,25 @@ export default class Record extends PureComponent {
     };
 
     stopRecord = () => {
-        this.props.onStopRecording();
         this.startAnimation(false);
 
         if (this.recorder) {
-            this.recorder.destroy();
-
-            if (this.recorder.fsPath) {
-                this.scale.setValue(-80);
-                this.postVoiceMessage();
-            }
+            this.recorder.stop(() => {
+                this.recorder.destroy();
+                const duration = Date.now() - this.startAt;
+                if (duration >= 1000 && this.recorder.fsPath) {
+                    this.scale.setValue(-80);
+                    this.postVoiceMessage();
+                }
+            });
         }
     };
 
     recordingStarted = (error) => {
         if (error && this.recorder) {
             this.cancelRecording();
+        } else {
+            this.startAt = Date.now();
         }
     };
 
