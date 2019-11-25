@@ -94,7 +94,7 @@ export default class FileAttachmentVoiceMessage extends PureComponent {
             }
 
             let duration = '00:00';
-            if (this.player.isPlaying || this.player.isPaused) {
+            if ((this.player.isPlaying || this.player.isPaused) && this.player.currentTime !== -1) {
                 duration = moment(this.player.currentTime).format('mm:ss');
             } else if (this.player.duration !== -1) {
                 duration = moment(this.player.duration).format('mm:ss');
