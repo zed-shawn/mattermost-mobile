@@ -19,20 +19,8 @@ exports[`PostTextBox should match, full snapshot 1`] = `
       ]
     }
   >
-    <AttachmentButton
-      blurTextBox={[Function]}
-      browseFileTypes="public.item"
-      canBrowseFiles={true}
-      canBrowsePhotoLibrary={true}
-      canBrowseVideoLibrary={true}
-      canTakePhoto={true}
-      canTakeVideo={true}
-      extraOptions={null}
-      fileCount={0}
-      maxFileCount={5}
-      maxFileSize={1024}
-      onShowFileMaxWarning={[Function]}
-      onShowFileSizeWarning={[Function]}
+    <RecordTimer
+      opacity={1}
       theme={
         Object {
           "awayIndicator": "#ffbc42",
@@ -62,18 +50,84 @@ exports[`PostTextBox should match, full snapshot 1`] = `
           "type": "Mattermost",
         }
       }
-      uploadFiles={[Function]}
-      validMimeTypes={Array []}
+      translateX={-150}
     />
-    <View
+    <AnimatedComponent
+      style={
+        Object {
+          "transform": Array [
+            Object {
+              "translateY": 0,
+            },
+          ],
+        }
+      }
+    >
+      <AttachmentButton
+        blurTextBox={[Function]}
+        browseFileTypes="public.item"
+        canBrowseFiles={true}
+        canBrowsePhotoLibrary={true}
+        canBrowseVideoLibrary={true}
+        canTakePhoto={true}
+        canTakeVideo={true}
+        extraOptions={null}
+        fileCount={0}
+        maxFileCount={5}
+        maxFileSize={1024}
+        onShowFileMaxWarning={[Function]}
+        onShowFileSizeWarning={[Function]}
+        theme={
+          Object {
+            "awayIndicator": "#ffbc42",
+            "buttonBg": "#166de0",
+            "buttonColor": "#ffffff",
+            "centerChannelBg": "#ffffff",
+            "centerChannelColor": "#3d3c40",
+            "codeTheme": "github",
+            "dndIndicator": "#f74343",
+            "errorTextColor": "#fd5960",
+            "linkColor": "#2389d7",
+            "mentionBg": "#ffffff",
+            "mentionBj": "#ffffff",
+            "mentionColor": "#145dbf",
+            "mentionHighlightBg": "#ffe577",
+            "mentionHighlightLink": "#166de0",
+            "newMessageSeparator": "#ff8800",
+            "onlineIndicator": "#06d6a0",
+            "sidebarBg": "#145dbf",
+            "sidebarHeaderBg": "#1153ab",
+            "sidebarHeaderTextColor": "#ffffff",
+            "sidebarText": "#ffffff",
+            "sidebarTextActiveBorder": "#579eff",
+            "sidebarTextActiveColor": "#ffffff",
+            "sidebarTextHoverBg": "#4578bf",
+            "sidebarUnreadText": "#ffffff",
+            "type": "Mattermost",
+          }
+        }
+        uploadFiles={[Function]}
+        validMimeTypes={Array []}
+      />
+    </AnimatedComponent>
+    <AnimatedComponent
       style={
         Array [
+          Array [
+            Object {
+              "alignItems": "stretch",
+              "backgroundColor": "#ffffff",
+              "flex": 1,
+              "flexDirection": "row",
+              "marginRight": 10,
+            },
+          ],
           Object {
-            "alignItems": "stretch",
-            "backgroundColor": "#ffffff",
-            "flex": 1,
-            "flexDirection": "row",
-            "marginRight": 10,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
           },
         ]
       }
@@ -143,8 +197,10 @@ exports[`PostTextBox should match, full snapshot 1`] = `
           }
         />
       </Fade>
-    </View>
+    </AnimatedComponent>
     <Connect(Record)
+      onStartRecording={[Function]}
+      onStopRecording={[Function]}
       rootId=""
       theme={
         Object {
@@ -175,6 +231,38 @@ exports[`PostTextBox should match, full snapshot 1`] = `
           "type": "Mattermost",
         }
       }
+    />
+    <CancelRecording
+      theme={
+        Object {
+          "awayIndicator": "#ffbc42",
+          "buttonBg": "#166de0",
+          "buttonColor": "#ffffff",
+          "centerChannelBg": "#ffffff",
+          "centerChannelColor": "#3d3c40",
+          "codeTheme": "github",
+          "dndIndicator": "#f74343",
+          "errorTextColor": "#fd5960",
+          "linkColor": "#2389d7",
+          "mentionBg": "#ffffff",
+          "mentionBj": "#ffffff",
+          "mentionColor": "#145dbf",
+          "mentionHighlightBg": "#ffe577",
+          "mentionHighlightLink": "#166de0",
+          "newMessageSeparator": "#ff8800",
+          "onlineIndicator": "#06d6a0",
+          "sidebarBg": "#145dbf",
+          "sidebarHeaderBg": "#1153ab",
+          "sidebarHeaderTextColor": "#ffffff",
+          "sidebarText": "#ffffff",
+          "sidebarTextActiveBorder": "#579eff",
+          "sidebarTextActiveColor": "#ffffff",
+          "sidebarTextHoverBg": "#4578bf",
+          "sidebarUnreadText": "#ffffff",
+          "type": "Mattermost",
+        }
+      }
+      translateX={150}
     />
   </View>
 </React.Fragment>

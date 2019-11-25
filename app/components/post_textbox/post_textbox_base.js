@@ -5,6 +5,7 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {
     Alert,
+    Animated,
     AppState,
     BackHandler,
     findNodeHandle,
@@ -13,8 +14,6 @@ import {
     Platform,
     Text,
     View,
-    Animated,
-    Easing,
 } from 'react-native';
 import {intlShape} from 'react-intl';
 import Button from 'react-native-button';
@@ -41,6 +40,8 @@ import {
 } from 'app/utils/theme';
 
 import Recorder from 'app/components/channel_keyboard_accessory/recorder';
+import RecordTimer from 'app/components/channel_keyboard_accessory/record_timer';
+import SlideToCancel from 'app/components/channel_keyboard_accessory/cancel_recording';
 
 const {RNTextInputReset} = NativeModules;
 
@@ -104,6 +105,7 @@ export default class PostTextBoxBase extends PureComponent {
         super(props);
 
         this.input = React.createRef();
+        this.recordTimerRef = React.createRef();
 
         this.state = {
             cursorPosition: 0,
@@ -773,48 +775,17 @@ export default class PostTextBoxBase extends PureComponent {
             }],
         };
 
-        const slideToCancelStyle = {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            marginTop: 12,
-            transform: [{
-                translateX: this.slideToCancelValue,
-            }],
-        };
-
-        const recorderInfoStyle = {
-            flexDirection: 'row',
-            alignItems: 'center',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            marginTop: 12,
-            transform: [{
-                translateX: this.recorderInfoValue,
-            }],
-        };
-
-        const recordStyle = {
-            backgroundColor: 'red',
-            width: 10,
-            height: 10,
-            borderRadius: 20,
-            marginRight: 5,
-            opacity: this.recordOpacityValue,
-        }
-
-        const slideToCancelText = '< Slide to cancel';
-
         return (
             <View
                 style={[style.inputWrapper, padding(isLandscape)]}
                 onLayout={this.handleLayout}
             >
-                <Animated.View style={recorderInfoStyle}>
-                    <Animated.View style={recordStyle}></Animated.View>
-                    <Text>0:03.98</Text>
-                </Animated.View>
+                <RecordTimer
+                    ref={this.recordTimerRef}
+                    opacity={this.recordOpacityValue}
+                    theme={theme}
+                    translateX={this.recorderInfoValue}
+                />
                 <Animated.View style={writeToStyle}>
                     {this.getAttachmentButton()}
                 </Animated.View>
@@ -851,9 +822,10 @@ export default class PostTextBoxBase extends PureComponent {
                     onStopRecording={this.onStopRecording}
                     theme={theme}
                 />
-                <Animated.View style={slideToCancelStyle}>
-                    <Text>{slideToCancelText}</Text>
-                </Animated.View>
+                <SlideToCancel
+                    theme={theme}
+                    translateX={this.slideToCancelValue}
+                />
             </View>
         );
     };
@@ -871,19 +843,24 @@ export default class PostTextBoxBase extends PureComponent {
                 useNativeDriver: true,
             }),
             Animated.timing(this.recorderInfoValue, {
-                toValue: 5,
+                toValue: 10,
                 duration: 300,
                 useNativeDriver: true,
             }),
         ]).start();
 
-        Animated.loop(
+        this.loop = Animated.loop(
             Animated.timing(this.recordOpacityValue, {
                 toValue: this.recordOpacityValue === 0 ? 1 : 0,
                 duration: 800,
                 useNativeDriver: true,
             }),
-        ).start();
+        );
+
+        this.loop.start();
+        if (this.recordTimerRef.current) {
+            this.recordTimerRef.current.start();
+        }
     }
 
     onStopRecording = () => {
@@ -904,6 +881,13 @@ export default class PostTextBoxBase extends PureComponent {
                 useNativeDriver: true,
             }),
         ]).start();
+
+        if (this.loop) {
+            this.loop.stop();
+            if (this.recordTimerRef.current) {
+                this.recordTimerRef.current.stop();
+            }
+        }
     }
 }
 
