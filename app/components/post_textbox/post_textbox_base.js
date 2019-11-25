@@ -808,20 +808,26 @@ export default class PostTextBoxBase extends PureComponent {
                         onPaste={this.handlePasteFiles}
                         keyboardAppearance={getKeyboardAppearanceFromTheme(theme)}
                     />
-                    <Fade visible={this.isSendButtonVisible()}>
-                        <SendButton
-                            disabled={!this.isSendButtonEnabled()}
-                            handleSendMessage={this.handleSendMessage}
-                            theme={theme}
-                        />
-                    </Fade>
                 </Animated.View>
-                <Recorder
-                    rootId={rootId}
-                    onStartRecording={this.onStartRecording}
-                    onStopRecording={this.onStopRecording}
-                    theme={theme}
-                />
+                <Fade visible={this.isSendButtonVisible()}>
+                    <SendButton
+                        disabled={!this.isSendButtonEnabled()}
+                        handleSendMessage={this.handleSendMessage}
+                        theme={theme}
+                    />
+                </Fade>
+                <Fade
+                    style={style.recorderButton}
+                    visible={!this.isSendButtonVisible()}
+                >
+                    <Recorder
+                        rootId={rootId}
+                        onStartRecording={this.onStartRecording}
+                        onStopRecording={this.onStopRecording}
+                        visible={!this.isSendButtonVisible()}
+                        theme={theme}
+                    />
+                </Fade>
                 <SlideToCancelRecording
                     theme={theme}
                     translateX={this.slideToCancelValue}
@@ -971,5 +977,10 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
         readonlyContainer: {
             marginLeft: 10,
         },
+        recorderButton: {
+            position: 'absolute',
+            top: 5,
+            right: 0,
+        }
     };
 });

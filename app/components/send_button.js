@@ -18,11 +18,16 @@ function SendButton(props) {
         PaperPlane = require('app/components/paper_plane').default;
     }
 
+    let color = theme.buttonColor;
+    if (props.disabled) {
+        color = changeOpacity(color, 0.3);
+    }
+
     const icon = (
         <PaperPlane
             height={13}
             width={15}
-            color={theme.buttonColor}
+            color={color}
         />
     );
 
