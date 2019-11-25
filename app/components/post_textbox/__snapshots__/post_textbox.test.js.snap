@@ -20,7 +20,6 @@ exports[`PostTextBox should match, full snapshot 1`] = `
     }
   >
     <RecordTimer
-      opacity={1}
       theme={
         Object {
           "awayIndicator": "#ffbc42",
@@ -50,6 +49,7 @@ exports[`PostTextBox should match, full snapshot 1`] = `
           "type": "Mattermost",
         }
       }
+      timerOpacity={0}
       translateX={-150}
     />
     <AnimatedComponent
@@ -232,7 +232,8 @@ exports[`PostTextBox should match, full snapshot 1`] = `
         }
       }
     />
-    <CancelRecording
+    <SlideToCancelRecording
+      opacity={0}
       theme={
         Object {
           "awayIndicator": "#ffbc42",

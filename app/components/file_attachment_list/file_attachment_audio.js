@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {
     Platform,
     View,
+    Text,
 } from 'react-native';
 import Slider from 'react-native-slider';
 import {Player} from '@react-native-community/audio-toolkit';
@@ -34,6 +35,8 @@ export default class FileAttachmentAudio extends PureComponent {
             uri: null,
             progress: 0,
             error: null,
+            isPlaying: false,
+            timeRemaining: '00:00',
         };
 
         this.player = null;
@@ -68,7 +71,7 @@ export default class FileAttachmentAudio extends PureComponent {
             }
         }
 
-        this.setState({uri}, this.reloadPlayer);
+        this.setState({uri});
     }
 
     pauseIfPlaying = (fileId) => {
@@ -94,24 +97,21 @@ export default class FileAttachmentAudio extends PureComponent {
     }
 
     playPause = () => {
+        if (!this.player) {
+            this.reloadPlayer();
+        }
+
         if (this.state.uri) {
             this.player.playPause((err, paused) => {
                 if (!paused) {
                     EventEmitter.emit(MediaTypes.STOP_AUDIO, this.props.file.id);
                 }
-                this.updateState(err?.message);
+                this.setState({
+                    error: err?.message,
+                    isPlaying: !paused,
+                });
             });
         }
-    }
-
-    stop = () => {
-        if (!this.player) {
-            return;
-        }
-
-        this.player.stop(() => {
-            this.updateState();
-        });
     }
 
     seek = (percentage) => {
@@ -122,9 +122,7 @@ export default class FileAttachmentAudio extends PureComponent {
         const position = percentage * this.player.duration;
         this.lastSeek = Date.now();
 
-        this.player.seek(position, () => {
-            this.updateState();
-        });
+        this.player.seek(position);
     }
 
     reloadPlayer = () => {
@@ -138,28 +136,17 @@ export default class FileAttachmentAudio extends PureComponent {
 
         this.player = new Player(this.state.uri, {
             autoDestroy: false,
-        }).prepare((error) => {
-            if (error) {
-                console.log('Error prepring player', error); // eslint-disable-line no-console
-            }
-
-            this.updateState(error);
         });
 
         this.player.on('ended', () => {
-            this.updateState();
-        });
-
-        this.player.on('pause', () => {
-            this.updateState();
-        });
-
-        this.updateState();
-    }
-
-    updateState = (error) => {
-        this.setState({
-            error,
+            this.player.destroy();
+            this.player = null;
+            setTimeout(() => {
+                this.setState({
+                    isPlaying: false,
+                    progress: 0,
+                });
+            }, 250);
         });
     }
 
@@ -170,7 +157,9 @@ export default class FileAttachmentAudio extends PureComponent {
         const styles = getStyleSheet(theme);
 
         return (
-            <View style={styles.container}>
+            <View
+                style={styles.container}
+            >
                 <View style={styles.buttonContainer}>
                     <PlayPauseButton
                         onPress={this.playPause}
@@ -183,10 +172,13 @@ export default class FileAttachmentAudio extends PureComponent {
                         step={0.0001}
                         onValueChange={this.updatePercentage}
                         value={this.state.progress}
-                        minimumTrackTintColor={theme.linkColor}
-                        thumbTintColor={theme.linkColor}
+                        minimumTrackTintColor={theme.buttonBg}
+                        thumbTintColor={theme.buttonBg}
                         thumbStyle={styles.thumb}
+                        trackStyle={styles.track}
+                        style={{flex: 1}}
                     />
+                    <Text style={styles.time}>{this.state.timeRemaining}</Text>
                 </View>
             </View>
         );
@@ -198,22 +190,30 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
         container: {
             flex: 1,
             flexDirection: 'row',
-            justifyContent: 'space-between',
         },
         buttonContainer: {
-            flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: theme.centerChannelBg,
         },
         sliderContainer: {
-            flex: 11,
+            flex: 1,
+            flexDirection: 'row',
             marginLeft: 10,
             justifyContent: 'center',
         },
         thumb: {
-            height: 15,
-            width: 15,
+            height: 12,
+            width: 12,
         },
+        track: {
+            height: 2,
+        },
+        time: {
+            marginTop: 12,
+            marginLeft: 10,
+            fontSize: 13,
+            color: theme.centerChannelColor,
+        }
     };
 });

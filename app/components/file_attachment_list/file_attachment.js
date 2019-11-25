@@ -189,11 +189,15 @@ export default class FileAttachment extends PureComponent {
             );
         } else if (isAudio(data)) {
             fileAttachmentComponent = (
-                <FileAttachmentAudio
-                    file={data}
-                    theme={theme}
-                    autoDownload={data.name.startsWith(VOICE_MESSAGE_PREFIX)}
-                />
+                <View style={[style.fileWrapper]}>
+                    <View style={style.audioWrapper}>
+                        <FileAttachmentAudio
+                            file={data}
+                            theme={theme}
+                            autoDownload={data.name.startsWith(VOICE_MESSAGE_PREFIX)}
+                        />
+                    </View>
+                </View>
             );
         } else {
             fileAttachmentComponent = (
@@ -257,6 +261,11 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             borderRadius: 5,
         },
         iconWrapper: {
+            marginHorizontal: 20,
+            marginVertical: 10,
+        },
+        audioWrapper: {
+            flex: 1,
             marginHorizontal: 20,
             marginVertical: 10,
         },

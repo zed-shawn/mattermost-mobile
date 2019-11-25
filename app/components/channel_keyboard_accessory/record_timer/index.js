@@ -23,10 +23,10 @@ export default class RecordTimer extends PureComponent {
             time: 0,
         };
 
-        this.dotOpacityValue = new Animated.Value(1);
+        this.dotOpacityValue = new Animated.Value(0);
         this.loop = Animated.loop(
             Animated.timing(this.dotOpacityValue, {
-                toValue: this.dotOpacityValue === 0 ? 1 : 0,
+                toValue: this.dotOpacityValue === 1 ? 0 : 1,
                 duration: 1200,
                 useNativeDriver: true,
             }),
@@ -44,7 +44,7 @@ export default class RecordTimer extends PureComponent {
             this.loop.start();
         } else {
             this.loop.stop();
-            this.dotOpacityValue.setValue(1);
+            this.dotOpacityValue.setValue(0);
         }
     }
 

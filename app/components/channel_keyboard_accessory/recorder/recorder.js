@@ -44,6 +44,7 @@ export default class Record extends PureComponent {
         this.iconColor = new Animated.Value(0);
         this.panRef = React.createRef();
         this.recorderAnimationRef = React.createRef();
+        this.listenToPower = false;
     }
 
     startAnimation(show = true) {
@@ -59,10 +60,11 @@ export default class Record extends PureComponent {
         }
 
         if (show) {
+            this.listenToPower = true;
             this.props.onStartRecording();
         } else {
+            this.listenToPower = false;
             this.props.onStopRecording();
-            console.log('', 'set to -80')
             this.scale.setValue(-80);
         }
     }
@@ -205,7 +207,9 @@ export default class Record extends PureComponent {
     };
 
     onNewPower = ({value}) => {
-        this.scale.setValue(value);
+        if (this.listenToPower) {
+            this.scale.setValue(value);
+        }
     };
 
     onPanHandlerStateChange = ({nativeEvent}) => {
@@ -245,6 +249,7 @@ export default class Record extends PureComponent {
             console.log('began', nativeEvent.state); // eslint-disable-line no-console
             break;
         case GestureState.CANCELLED:
+            this.cancelRecording();
             console.log('cancelled', nativeEvent.state); // eslint-disable-line no-console
             break;
         case GestureState.ACTIVE:
