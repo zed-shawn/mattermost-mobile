@@ -40,7 +40,7 @@ export default class Record extends PureComponent {
 
         this.recorder = null;
 
-        this.scale = new Animated.Value(-80);
+        this.scale = new Animated.Value(-65);
         this.iconColor = new Animated.Value(0);
         this.panRef = React.createRef();
         this.recorderAnimationRef = React.createRef();
@@ -67,7 +67,7 @@ export default class Record extends PureComponent {
         } else {
             this.listenToPower = false;
             this.props.onStopRecording();
-            this.scale.setValue(-80);
+            this.scale.setValue(-65);
         }
     }
 
@@ -212,7 +212,15 @@ export default class Record extends PureComponent {
 
     onNewPower = ({value}) => {
         if (this.listenToPower) {
-            this.scale.setValue(value);
+            if (this.powerAnimation) {
+                this.powerAnimation.stop();
+            }
+
+            this.powerAnimation = Animated.timing(this.scale, {
+                toValue: value,
+                duration: 100,
+                useNativeDriver: true,
+            }).start();
         }
     };
 
@@ -277,8 +285,8 @@ export default class Record extends PureComponent {
         const style = getStyleSheet(theme);
 
         const scale = this.scale.interpolate({
-            inputRange: [-80, 1],
-            outputRange: [0, 8],
+            inputRange: [-65, 80],
+            outputRange: [0, 20],
         });
 
         const color = this.iconColor.interpolate({
