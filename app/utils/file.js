@@ -192,10 +192,10 @@ export const isAudio = (file) => {
     }
 
     return SUPPORTED_AUDIO_FORMAT.includes(mime);
-}
+};
 
 export const isVoiceMessage = (file) => {
-    return file.name.startsWith('voice-message') && isAudio(file);
+    return file?.name?.startsWith('voice-message') && isAudio(file);
 };
 
 /**
