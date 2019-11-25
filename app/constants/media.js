@@ -5,4 +5,5 @@ import keyMirror from 'mattermost-redux/utils/key_mirror';
 
 export default keyMirror({
     STOP_AUDIO: null,
+    START_RECORDING: null,
 });

@@ -18,6 +18,8 @@ import {
     I18nManager,
 } from 'react-native';
 
+import EventEmitter from 'mattermost-redux/utils/event_emitter';
+import {MediaTypes} from 'app/constants';
 import telemetry from 'app/telemetry';
 
 const MIN_SWIPE_DISTANCE = 3;
@@ -81,6 +83,7 @@ export default class DrawerLayout extends Component {
     _isClosing: boolean;
     _closingAnchorValue: number;
     canClose: boolean;
+    canOpen: boolean;
 
     static defaultProps = {
         drawerWidth: 0,
@@ -107,6 +110,7 @@ export default class DrawerLayout extends Component {
         });
 
         this.canClose = true;
+        this.canOpen = true;
         this.openValue = new Animated.Value(0);
         const deviceWidth = parseFloat(Dimensions.get('window').width);
         this.state = {
@@ -120,6 +124,7 @@ export default class DrawerLayout extends Component {
 
     componentDidMount() {
         Dimensions.addEventListener('change', this.handleDimensionsChange);
+        EventEmitter.on(MediaTypes.START_RECORDING, this.setEnabled)
         if (Platform.OS === 'ios') {
             // on iOS force closing the drawers to prevent them for partially showing
             // when channging the device orientation, probably caused by RN61
@@ -137,6 +142,7 @@ export default class DrawerLayout extends Component {
             this.openValue.removeListener(this.handleOpenValueChanged);
         }
         Dimensions.removeEventListener('change', this.handleDimensionsChange);
+        EventEmitter.off(MediaTypes.START_RECORDING, this.setEnabled)
     }
 
     handleDimensionsChange = ({window}) => {
@@ -292,6 +298,10 @@ export default class DrawerLayout extends Component {
         );
     }
 
+    setEnabled = (enabled) => {
+        this.canOpen = enabled;
+    };
+
     _onOverlayClick = (e: EventType) => {
         e.stopPropagation();
         if (!this._isLockedClosed() && !this._isLockedOpen()) {
@@ -367,7 +377,7 @@ export default class DrawerLayout extends Component {
             return false;
         }
 
-        if (this._isLockedClosed() || this._isLockedOpen() || !this.canClose) {
+        if (this._isLockedClosed() || this._isLockedOpen() || !this.canClose || !this.canOpen) {
             return false;
         }
 

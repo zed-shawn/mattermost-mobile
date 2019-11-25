@@ -48,6 +48,8 @@ export default class Record extends PureComponent {
     }
 
     startAnimation(show = true) {
+        EventEmitter.emit(MediaTypes.START_RECORDING, false);
+
         if (this.recorderAnimationRef.current) {
             const toValue = show ? 1 : 0;
             this.recorderAnimationRef.current.animate(show);
@@ -152,9 +154,9 @@ export default class Record extends PureComponent {
             this.recorder.destroy();
         }
 
-        EventEmitter.emit(MediaTypes.STOP_AUDIO, null);
         const hasPermission = await this.requestPermissions();
         if (hasPermission) {
+            EventEmitter.emit(MediaTypes.STOP_AUDIO, null);
             this.startAnimation(true);
 
             const recorderOptions = {
