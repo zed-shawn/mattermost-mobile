@@ -21,10 +21,9 @@ import {emptyFunction} from 'app/utils/general';
 import {DeviceTypes, MediaTypes} from 'app/constants';
 const {AUDIO_PATH} = DeviceTypes;
 
-export default class FileAttachmentAudio extends PureComponent {
+export default class FileAttachmentVoiceMessage extends PureComponent {
     static propTypes = {
         file: PropTypes.object.isRequired,
-        autoDownload: PropTypes.bool.isRequired,
         theme: PropTypes.object.isRequired,
     };
 
