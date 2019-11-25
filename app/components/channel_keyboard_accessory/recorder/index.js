@@ -3,17 +3,9 @@
 
 import {connect} from 'react-redux';
 
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
-
 import {createVoiceMessage} from 'app/actions/views/voice';
 
 import Recorder from './recorder';
-
-function mapStateToProps(state) {
-    return {
-        theme: getTheme(state),
-    };
-};
 
 const mapDispatchToProps = {
     createVoiceMessage,
