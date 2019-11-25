@@ -5,7 +5,11 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Animated, Easing} from 'react-native';
 
+import {makeStyleSheetFromTheme} from 'app/utils/theme';
+
 const scaleExpand = 3;
+const maxOpacity = 1;
+const initialValue = 0;
 
 export default class RecorderAnimation extends PureComponent {
     static propTypes = {
@@ -15,23 +19,21 @@ export default class RecorderAnimation extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            visible: false,
-            expanded: false,
-            scale: new Animated.Value(1),
-            opacity: new Animated.Value(0),
+            scale: new Animated.Value(initialValue),
+            opacity: new Animated.Value(initialValue),
         };
     }
 
     animate = (show = true) => {
         Animated.parallel([
             Animated.timing(this.state.scale, {
-                toValue: show ? scaleExpand : 0,
+                toValue: show ? scaleExpand : initialValue,
                 duration: 500,
                 easing: Easing.bounce,
                 useNativeDriver: true,
             }),
             Animated.timing(this.state.opacity, {
-                toValue: show ? 1 : 0,
+                toValue: show ? maxOpacity : initialValue,
                 duration: 250,
                 easing: Easing.linear,
                 useNativeDriver: true,
@@ -42,23 +44,30 @@ export default class RecorderAnimation extends PureComponent {
     }
 
     render() {
+        const {theme} = this.props;
         const {scale, opacity} = this.state;
+        const style = getStyleSheet(theme);
+        const animatedStyle = {
+            opacity,
+            transform: [{
+                scale,
+            }],
+        };
+
         return (
-            <Animated.View
-                style={{
-                    position: 'absolute',
-                    backgroundColor: this.props.theme.centerChannelColor,
-                    opacity,
-                    top: 3,
-                    right: 0,
-                    width: 40,
-                    height: 40,
-                    borderRadius: 40 / 2,
-                    transform: [{
-                        scale,
-                    }],
-                }}
-            />
+            <Animated.View style={[style.container, animatedStyle]}/>
         );
     }
 }
+
+const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
+    container: {
+        backgroundColor: theme.centerChannelColor,
+        borderRadius: 40 / 2,
+        height: 40,
+        position: 'absolute',
+        right: 0,
+        top: 3,
+        width: 40,
+    },
+}));
