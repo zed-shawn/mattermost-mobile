@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Slider from 'react-native-slider';
 import {Player} from '@react-native-community/audio-toolkit';
+import moment from 'moment';
 
 import {Client4} from 'mattermost-redux/client';
 import EventEmitter from 'mattermost-redux/utils/event_emitter';
@@ -35,21 +36,22 @@ export default class FileAttachmentVoiceMessage extends PureComponent {
             progress: 0,
             error: null,
             isPlaying: false,
-            timeRemaining: '00:00',
+            duration: '00:00',
         };
 
         this.player = null;
         this.lastSeek = 0;
+        this.mounted = false;
     }
 
     componentDidMount() {
+        this.mounted = true;
         EventEmitter.on(MediaTypes.STOP_AUDIO, this.pauseIfPlaying);
-
-        this.progressInterval = setInterval(this.updateProgress, 100);
         this.loadAudio();
     }
 
     componentWillUnmount() {
+        this.mounted = false;
         EventEmitter.off(MediaTypes.STOP_AUDIO, this.pauseIfPlaying);
         clearInterval(this.progressInterval);
         if (this.player) {
@@ -70,7 +72,11 @@ export default class FileAttachmentVoiceMessage extends PureComponent {
             }
         }
 
-        this.setState({uri});
+        if (this.mounted) {
+            this.setState({uri}, () => {
+                this.reloadPlayer();
+            });
+        }
     }
 
     pauseIfPlaying = (fileId) => {
@@ -86,7 +92,17 @@ export default class FileAttachmentVoiceMessage extends PureComponent {
             if (isNaN(progress)) {
                 progress = 0;
             }
-            this.setState({progress});
+
+            let duration = '00:00';
+            if (this.player.isPlaying || this.player.isPaused) {
+                duration = moment(this.player.currentTime).format('mm:ss');
+            } else if (this.player.duration !== -1) {
+                duration = moment(this.player.duration).format('mm:ss');
+            }
+
+            if (this.mounted) {
+                this.setState({progress, duration});
+            }
         }
     };
 
@@ -96,19 +112,25 @@ export default class FileAttachmentVoiceMessage extends PureComponent {
     }
 
     playPause = () => {
-        if (!this.player) {
-            this.reloadPlayer();
-        }
-
         if (this.state.uri) {
+            if (!this.player) {
+                this.reloadPlayer();
+            }
+
             this.player.playPause((err, paused) => {
                 if (!paused) {
                     EventEmitter.emit(MediaTypes.STOP_AUDIO, this.props.file.id);
+                    this.progressInterval = setInterval(this.updateProgress, 100);
+                } else {
+                    clearInterval(this.progressInterval);
                 }
-                this.setState({
-                    error: err?.message,
-                    isPlaying: !paused,
-                });
+
+                if (this.mounted) {
+                    this.setState({
+                        error: err?.message,
+                        isPlaying: !paused,
+                    });
+                }
             });
         }
     }
@@ -135,16 +157,29 @@ export default class FileAttachmentVoiceMessage extends PureComponent {
 
         this.player = new Player(this.state.uri, {
             autoDestroy: false,
+        }).prepare((error) => {
+            if (error && this.mounted) {
+                this.setState({error});
+            } else {
+                this.player.seek(0, () => {
+                    if (this.mounted) {
+                        this.setState({
+                            duration: moment(this.player.duration).format('mm:ss'),
+                        });
+                    }
+                });
+            }
         });
 
         this.player.on('ended', () => {
-            this.player.destroy();
-            this.player = null;
+            clearInterval(this.progressInterval);
             setTimeout(() => {
-                this.setState({
-                    isPlaying: false,
-                    progress: 0,
-                });
+                if (this.mounted) {
+                    this.setState({
+                        isPlaying: false,
+                        progress: 0,
+                    });
+                }
             }, 250);
         });
     }
@@ -175,9 +210,9 @@ export default class FileAttachmentVoiceMessage extends PureComponent {
                         thumbTintColor={theme.buttonBg}
                         thumbStyle={styles.thumb}
                         trackStyle={styles.track}
-                        style={{flex: 1}}
+                        style={styles.slider}
                     />
-                    <Text style={styles.time}>{this.state.timeRemaining}</Text>
+                    <Text style={styles.time}>{this.state.duration}</Text>
                 </View>
             </View>
         );
@@ -200,6 +235,9 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             flexDirection: 'row',
             marginLeft: 10,
             justifyContent: 'center',
+        },
+        slider: {
+            flex: 1,
         },
         thumb: {
             height: 12,
