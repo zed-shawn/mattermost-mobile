@@ -118,11 +118,11 @@ export default class FileAttachmentVoiceMessage extends PureComponent {
             }
 
             this.player.playPause((err, paused) => {
-                if (!paused) {
+                if (paused) {
+                    clearInterval(this.progressInterval);
+                } else {
                     EventEmitter.emit(MediaTypes.STOP_AUDIO, this.props.file.id);
                     this.progressInterval = setInterval(this.updateProgress, 100);
-                } else {
-                    clearInterval(this.progressInterval);
                 }
 
                 if (this.mounted) {
@@ -251,6 +251,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             marginLeft: 10,
             fontSize: 13,
             color: theme.centerChannelColor,
-        }
+        },
     };
 });

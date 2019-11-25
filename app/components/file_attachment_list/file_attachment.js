@@ -23,8 +23,6 @@ import FileAttachmentIcon from './file_attachment_icon';
 import FileAttachmentImage from './file_attachment_image';
 import FileAttachmentVoiceMessage from './file_attachment_voice_message';
 
-const VOICE_MESSAGE_PREFIX = 'voice-message';
-
 export default class FileAttachment extends PureComponent {
     static propTypes = {
         canDownloadFiles: PropTypes.bool.isRequired,
