@@ -212,11 +212,7 @@ export default class Record extends PureComponent {
 
     onNewPower = ({value}) => {
         if (this.listenToPower) {
-            if (this.powerAnimation) {
-                this.powerAnimation.stop();
-            }
-
-            this.powerAnimation = Animated.timing(this.scale, {
+            Animated.timing(this.scale, {
                 toValue: value,
                 duration: 100,
                 useNativeDriver: true,
