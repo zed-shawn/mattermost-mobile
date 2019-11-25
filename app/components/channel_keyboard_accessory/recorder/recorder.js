@@ -16,7 +16,7 @@ import EventEmitter from 'mattermost-redux/utils/event_emitter';
 
 import {MediaTypes, PermissionTypes} from 'app/constants';
 import {generateId} from 'app/utils/file';
-import {changeOpacity} from 'app/utils/theme';
+import {changeOpacity, makeStyleSheetFromTheme} from 'app/utils/theme';
 
 import RecorderAnimation from './recorder_animation';
 
@@ -44,16 +44,10 @@ export default class Record extends PureComponent {
         this.iconColor = new Animated.Value(0);
         this.panRef = React.createRef();
         this.recorderAnimationRef = React.createRef();
-        this.state = {
-            what: false,
-        };
     }
 
     startAnimation(show = true) {
         if (this.recorderAnimationRef.current) {
-            if (!show) {
-                this.scale.setValue(-80);
-            }
             const toValue = show ? 1 : 0;
             this.recorderAnimationRef.current.animate(show);
             Animated.timing(
@@ -62,6 +56,13 @@ export default class Record extends PureComponent {
                     duration: 250,
                 }
             ).start();
+        }
+
+        if (show) {
+            this.props.onStartRecording();
+        } else {
+            this.props.onStopRecording();
+            this.scale.setValue(-80);
         }
     }
 
@@ -257,7 +258,6 @@ export default class Record extends PureComponent {
     }
 
     onPanGestureEvent = ({nativeEvent}) => {
-        console.log('translationX', nativeEvent.translationX); // eslint-disable-line no-console
         if (nativeEvent.translationX < -60) {
             this.cancelRecording();
         }
@@ -265,6 +265,7 @@ export default class Record extends PureComponent {
 
     render() {
         const {theme} = this.props;
+        const style = getStyleSheet(theme);
 
         const scale = this.scale.interpolate({
             inputRange: [-80, 1],
@@ -280,9 +281,13 @@ export default class Record extends PureComponent {
             <AnimatedIcon
                 name='mic-none'
                 size={30}
-                style={{zIndex: 500, right: 5, color}}
+                style={[style.mic, {color}]}
             />
         );
+
+        const animatedStyle = {
+            transform: [{scale}],
+        };
 
         return (
             <React.Fragment>
@@ -298,21 +303,7 @@ export default class Record extends PureComponent {
                         {icon}
                     </PanGestureHandler>
                 </TapGestureHandler>
-                <Animated.View
-                    style={{
-                        position: 'absolute',
-                        opacity: 0.1,
-                        backgroundColor: theme.centerChannelColor,
-                        width: 40,
-                        height: 40,
-                        top: 3,
-                        right: 0,
-                        transform: [{
-                            scale,
-                        }],
-                        borderRadius: 50,
-                    }}
-                />
+                <Animated.View style={[style.container, animatedStyle]}/>
                 <RecorderAnimation
                     ref={this.recorderAnimationRef}
                     theme={theme}
@@ -321,3 +312,20 @@ export default class Record extends PureComponent {
         );
     }
 }
+
+const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
+    container: {
+        backgroundColor: theme.centerChannelColor,
+        borderRadius: 20,
+        height: 40,
+        opacity: 0.1,
+        position: 'absolute',
+        right: 0,
+        top: 3,
+        width: 40,
+    },
+    mic: {
+        right: 5,
+        zIndex: 500,
+    },
+}));
