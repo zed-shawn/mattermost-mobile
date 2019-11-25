@@ -792,11 +792,11 @@ export default class PostTextBoxBase extends PureComponent {
                             theme={theme}
                         />
                     </Fade>
-                    <Recorder
-                        rootId={rootId}
-                        theme={theme}
-                    />
                 </View>
+                <Recorder
+                    rootId={rootId}
+                    theme={theme}
+                />
             </View>
         );
     };

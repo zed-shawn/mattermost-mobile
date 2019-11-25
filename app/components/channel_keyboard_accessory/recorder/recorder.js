@@ -12,11 +12,15 @@ import {intlShape} from 'react-intl';
 import RNFetchBlob from 'rn-fetch-blob';
 import {TapGestureHandler, PanGestureHandler, State as GestureState} from 'react-native-gesture-handler';
 
-import {PermissionTypes} from 'app/constants';
+import EventEmitter from 'mattermost-redux/utils/event_emitter';
+
+import {MediaTypes, PermissionTypes} from 'app/constants';
 import {generateId} from 'app/utils/file';
 import {changeOpacity} from 'app/utils/theme';
 
 import RecorderAnimation from './recorder_animation';
+
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 export default class Record extends PureComponent {
     static propTypes = {
@@ -35,10 +39,28 @@ export default class Record extends PureComponent {
         this.recorder = null;
 
         this.scale = new Animated.Value(-80);
+        this.iconColor = new Animated.Value(0);
         this.panRef = React.createRef();
+        this.recorderAnimationRef = React.createRef();
         this.state = {
             what: false,
         };
+    }
+
+    startAnimation(show = true) {
+        if (this.recorderAnimationRef.current) {
+            if (!show) {
+                this.scale.setValue(-80);
+            }
+            const toValue = show ? 1 : 0;
+            this.recorderAnimationRef.current.animate(show);
+            Animated.timing(
+                this.iconColor, {
+                    toValue,
+                    duration: 250,
+                }
+            ).start();
+        }
     }
 
     getPermissionDeniedMessage = () => {
@@ -104,7 +126,8 @@ export default class Record extends PureComponent {
     };
 
     cancelRecording = () => {
-        console.warn('cancel recording'); // eslint-disable-line no-console
+        this.startAnimation(false);
+
         if (this.recorder) {
             this.recorder.destroy();
             this.deleteRecording();
@@ -123,6 +146,8 @@ export default class Record extends PureComponent {
             this.recorder.destroy();
         }
 
+        EventEmitter.emit(MediaTypes.STOP_AUDIO, null);
+        this.startAnimation(true);
         const hasPermission = await this.requestPermissions();
         if (hasPermission) {
             const recorderOptions = {
@@ -141,6 +166,8 @@ export default class Record extends PureComponent {
     };
 
     stopRecord = () => {
+        this.startAnimation(false);
+
         if (this.recorder) {
             this.recorder.destroy();
 
@@ -202,14 +229,13 @@ export default class Record extends PureComponent {
             console.log('undetermined', nativeEvent.state); // eslint-disable-line no-console
             break;
         case GestureState.FAILED:
-            this.setState({what: false});
             this.cancelRecording();
             console.log('failed', nativeEvent.state); // eslint-disable-line no-console
             break;
         case GestureState.BEGAN:
             this.setState({what: true});
 
-            // this.startRecord();
+            this.startRecord();
             console.log('began', nativeEvent.state); // eslint-disable-line no-console
             break;
         case GestureState.CANCELLED:
@@ -237,16 +263,20 @@ export default class Record extends PureComponent {
         const {theme} = this.props;
 
         const scale = this.scale.interpolate({
-            inputRange: [-80, 80],
-            outputRange: [1, 25],
+            inputRange: [-80, 1],
+            outputRange: [0, 8],
+        });
+
+        const color = this.iconColor.interpolate({
+            inputRange: [0, 1],
+            outputRange: [changeOpacity(theme.centerChannelColor, 0.9), theme.centerChannelBg],
         });
 
         const icon = (
-            <Icon
+            <AnimatedIcon
                 name='mic-none'
-                size={40}
-                color={changeOpacity(theme.centerchannelColor, 0.9)}
-                style={{top: 9, left: 1, zIndex: 500}}
+                size={30}
+                style={{zIndex: 500, right: 5, color}}
             />
         );
 
@@ -264,20 +294,24 @@ export default class Record extends PureComponent {
                         {icon}
                     </PanGestureHandler>
                 </TapGestureHandler>
-                <RecorderAnimation
-                    show={this.recorder?.isRecording}
-                    lock={this.state.lock}
-                />
                 <Animated.View
                     style={{
-                        backgroundColor: 'red',
-                        width: 30,
-                        height: 30,
+                        position: 'absolute',
+                        opacity: 0.1,
+                        backgroundColor: theme.centerChannelColor,
+                        width: 40,
+                        height: 40,
+                        top: 3,
+                        right: 0,
                         transform: [{
                             scale,
                         }],
-                        borderRadius: 60,
+                        borderRadius: 50,
                     }}
+                />
+                <RecorderAnimation
+                    ref={this.recorderAnimationRef}
+                    theme={theme}
                 />
             </React.Fragment>
         );

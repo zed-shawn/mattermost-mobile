@@ -5,65 +5,50 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Animated, Easing} from 'react-native';
 
-const scaleExpand = 5;
-const scaleShrink = 1;
+const scaleExpand = 3;
 
 export default class RecorderAnimation extends PureComponent {
     static propTypes = {
-        show: PropTypes.bool,
-        locked: PropTypes.bool,
         theme: PropTypes.object,
     }
-
-    // static getDerivedStateFromProps(props, state) {
-    //     if (state.visible !== props.show) {
-
-    //         return {
-    //             visible: props.show,
-    //         };
-    //     }
-    // }
 
     constructor(props) {
         super(props);
         this.state = {
             visible: false,
             expanded: false,
-            scale: new Animated.Value(0),
+            scale: new Animated.Value(1),
+            opacity: new Animated.Value(0),
         };
     }
 
-    componentDidMount() {
-        this.animate();
-    }
-
-    animate = () => {
-        const toValue = this.state.expanded ? scaleShrink : scaleExpand;
-        Animated.timing(this.state.scale, {
-            toValue,
-            duration: 500,
-            easing: Easing.bounce,
-            useNativeDriver: true,
-        }).start(() => {
+    animate = (show = true) => {
+        Animated.parallel([
+            Animated.timing(this.state.scale, {
+                toValue: show ? scaleExpand : 0,
+                duration: 500,
+                easing: Easing.bounce,
+                useNativeDriver: true,
+            }),
+            Animated.timing(this.state.opacity, {
+                toValue: show ? 1 : 0,
+                duration: 250,
+                easing: Easing.linear,
+                useNativeDriver: true,
+            }),
+        ]).start(() => {
             this.setState({expanded: !this.state.expanded});
         });
     }
 
-    getLeftPosition = () => {
-        return 0;
-    }
-
-    getTopPosition = () => {
-        return 4;
-    }
-
     render() {
-        const {scale} = this.state;
+        const {scale, opacity} = this.state;
         return (
             <Animated.View
                 style={{
                     position: 'absolute',
-                    backgroundColor: 'white',
+                    backgroundColor: this.props.theme.centerChannelColor,
+                    opacity,
                     top: 3,
                     right: 0,
                     width: 40,
