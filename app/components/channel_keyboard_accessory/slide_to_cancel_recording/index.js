@@ -10,18 +10,20 @@ import FormattedText from 'app/components/formatted_text';
 
 import {makeStyleSheetFromTheme} from 'app/utils/theme';
 
-export default class CancelRecording extends PureComponent {
+export default class SlideToCancelRecording extends PureComponent {
     static propTypes = {
         theme: PropTypes.object,
         translateX: PropTypes.any,
+        opacity: PropTypes.any,
     };
 
     render() {
-        const {theme, translateX} = this.props;
+        const {theme, translateX, opacity} = this.props;
         const style = getStyleSheet(theme);
 
         const slideToCancelStyle = {
             transform: [{translateX}],
+            opacity,
         };
 
         return (

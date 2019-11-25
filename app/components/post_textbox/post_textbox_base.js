@@ -41,7 +41,7 @@ import {
 
 import Recorder from 'app/components/channel_keyboard_accessory/recorder';
 import RecordTimer from 'app/components/channel_keyboard_accessory/record_timer';
-import SlideToCancel from 'app/components/channel_keyboard_accessory/cancel_recording';
+import SlideToCancelRecording from 'app/components/channel_keyboard_accessory/slide_to_cancel_recording';
 
 const {RNTextInputReset} = NativeModules;
 
@@ -118,8 +118,8 @@ export default class PostTextBoxBase extends PureComponent {
 
         this.writeToValue = new Animated.Value(0);
         this.slideToCancelValue = new Animated.Value(150);
+        this.slideToCancelOpacity = new Animated.Value(0);
         this.recorderInfoValue = new Animated.Value(-150);
-        this.recordOpacityValue = new Animated.Value(1);
     }
 
     componentDidMount(prevProps) {
@@ -782,7 +782,7 @@ export default class PostTextBoxBase extends PureComponent {
             >
                 <RecordTimer
                     ref={this.recordTimerRef}
-                    opacity={this.recordOpacityValue}
+                    timerOpacity={this.slideToCancelOpacity}
                     theme={theme}
                     translateX={this.recorderInfoValue}
                 />
@@ -822,9 +822,10 @@ export default class PostTextBoxBase extends PureComponent {
                     onStopRecording={this.onStopRecording}
                     theme={theme}
                 />
-                <SlideToCancel
+                <SlideToCancelRecording
                     theme={theme}
                     translateX={this.slideToCancelValue}
+                    opacity={this.slideToCancelOpacity}
                 />
             </View>
         );
@@ -842,6 +843,11 @@ export default class PostTextBoxBase extends PureComponent {
                 duration: 300,
                 useNativeDriver: true,
             }),
+            Animated.timing(this.slideToCancelOpacity, {
+                toValue: 1,
+                duration: 300,
+                useNativeDriver: true,
+            }),
             Animated.timing(this.recorderInfoValue, {
                 toValue: 10,
                 duration: 300,
@@ -849,15 +855,6 @@ export default class PostTextBoxBase extends PureComponent {
             }),
         ]).start();
 
-        this.loop = Animated.loop(
-            Animated.timing(this.recordOpacityValue, {
-                toValue: this.recordOpacityValue === 0 ? 1 : 0,
-                duration: 800,
-                useNativeDriver: true,
-            }),
-        );
-
-        this.loop.start();
         if (this.recordTimerRef.current) {
             this.recordTimerRef.current.start();
         }
@@ -875,6 +872,11 @@ export default class PostTextBoxBase extends PureComponent {
                 duration: 300,
                 useNativeDriver: true,
             }),
+            Animated.timing(this.slideToCancelOpacity, {
+                toValue: 0,
+                duration: 300,
+                useNativeDriver: true,
+            }),
             Animated.timing(this.recorderInfoValue, {
                 toValue: -150,
                 duration: 300,
@@ -882,11 +884,8 @@ export default class PostTextBoxBase extends PureComponent {
             }),
         ]).start();
 
-        if (this.loop) {
-            this.loop.stop();
-            if (this.recordTimerRef.current) {
-                this.recordTimerRef.current.stop();
-            }
+        if (this.recordTimerRef.current) {
+            this.recordTimerRef.current.stop();
         }
     }
 }

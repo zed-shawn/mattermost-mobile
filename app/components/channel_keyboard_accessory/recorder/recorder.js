@@ -62,6 +62,7 @@ export default class Record extends PureComponent {
             this.props.onStartRecording();
         } else {
             this.props.onStopRecording();
+            console.log('', 'set to -80')
             this.scale.setValue(-80);
         }
     }
@@ -177,7 +178,6 @@ export default class Record extends PureComponent {
                 this.recorder.destroy();
                 const duration = Date.now() - this.startAt;
                 if (duration >= 1000 && this.recorder.fsPath) {
-                    this.scale.setValue(-80);
                     this.postVoiceMessage();
                 }
             });
@@ -241,8 +241,6 @@ export default class Record extends PureComponent {
             console.log('failed', nativeEvent.state); // eslint-disable-line no-console
             break;
         case GestureState.BEGAN:
-            this.setState({what: true});
-
             this.startRecord();
             console.log('began', nativeEvent.state); // eslint-disable-line no-console
             break;
@@ -253,7 +251,6 @@ export default class Record extends PureComponent {
             console.log('active', nativeEvent.state); // eslint-disable-line no-console
             break;
         case GestureState.END:
-            this.setState({what: false});
             this.stopRecord();
             console.log('end', nativeEvent.state); // eslint-disable-line no-console
             break;
@@ -261,7 +258,7 @@ export default class Record extends PureComponent {
     }
 
     onPanGestureEvent = ({nativeEvent}) => {
-        if (nativeEvent.translationX < -60) {
+        if (nativeEvent.translationX < -60 && this.recorder?.isRecording) {
             this.cancelRecording();
         }
     }

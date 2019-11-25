@@ -10,7 +10,7 @@ import {makeStyleSheetFromTheme} from 'app/utils/theme';
 
 export default class RecordTimer extends PureComponent {
     static propTypes = {
-        opacity: PropTypes.any,
+        timerOpacity: PropTypes.any,
         theme: PropTypes.object,
         translateX: PropTypes.any,
     };
@@ -22,6 +22,15 @@ export default class RecordTimer extends PureComponent {
         this.state = {
             time: 0,
         };
+
+        this.dotOpacityValue = new Animated.Value(1);
+        this.loop = Animated.loop(
+            Animated.timing(this.dotOpacityValue, {
+                toValue: this.dotOpacityValue === 0 ? 1 : 0,
+                duration: 1200,
+                useNativeDriver: true,
+            }),
+        );
     }
 
     setTime = () => {
@@ -30,31 +39,45 @@ export default class RecordTimer extends PureComponent {
         });
     };
 
+    animateDotOpacity = (start = true) => {
+        if (start) {
+            this.loop.start();
+        } else {
+            this.loop.stop();
+            this.dotOpacityValue.setValue(1);
+        }
+    }
+
     start = () => {
         clearInterval(this.timer);
         this.startedAt = Date.now();
         this.timer = setInterval(this.setTime, 1000);
+        this.animateDotOpacity(true);
     }
 
     stop = () => {
         clearInterval(this.timer);
         this.setState({time: 0});
+        this.animateDotOpacity(false);
     }
 
     render() {
-        const {opacity, theme, translateX} = this.props;
+        const {timerOpacity, theme, translateX} = this.props;
         const {time} = this.state;
         const style = getStyleSheet(theme);
 
-        const recordStyle = {opacity};
+        const dotStyle = {opacity: this.dotOpacityValue};
+        const timerStyle = {opacity: timerOpacity};
         const recorderInfoStyle = {
             transform: [{translateX}],
         };
 
         return (
             <Animated.View style={[style.container, recorderInfoStyle]}>
-                <Animated.View style={[style.indicator, recordStyle]}></Animated.View>
-                <Text style={style.text}>{moment(time).format('mm:ss')}</Text>
+                <Animated.View style={[style.indicator, dotStyle]}></Animated.View>
+                <Animated.View style={timerStyle}>
+                    <Text style={style.text}>{moment(time).format('mm:ss')}</Text>
+                </Animated.View>
             </Animated.View>
         );
     }
