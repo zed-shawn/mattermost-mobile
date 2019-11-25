@@ -13,6 +13,8 @@ import {
     Platform,
     Text,
     View,
+    Animated,
+    Easing,
 } from 'react-native';
 import {intlShape} from 'react-intl';
 import Button from 'react-native-button';
@@ -111,6 +113,11 @@ export default class PostTextBoxBase extends PureComponent {
             channelTimezoneCount: 0,
             longMessageAlertShown: false,
         };
+
+        this.writeToValue = new Animated.Value(0);
+        this.slideToCancelValue = new Animated.Value(150);
+        this.recorderInfoValue = new Animated.Value(-150);
+        this.recordOpacityValue = new Animated.Value(1);
     }
 
     componentDidMount(prevProps) {
@@ -760,13 +767,58 @@ export default class PostTextBoxBase extends PureComponent {
         const textValue = channelIsLoading ? '' : value;
         const placeholder = this.getPlaceHolder();
 
+        const writeToStyle = {
+            transform: [{
+                translateY: this.writeToValue,
+            }],
+        };
+
+        const slideToCancelStyle = {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            marginTop: 12,
+            transform: [{
+                translateX: this.slideToCancelValue,
+            }],
+        };
+
+        const recorderInfoStyle = {
+            flexDirection: 'row',
+            alignItems: 'center',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            marginTop: 12,
+            transform: [{
+                translateX: this.recorderInfoValue,
+            }],
+        };
+
+        const recordStyle = {
+            backgroundColor: 'red',
+            width: 10,
+            height: 10,
+            borderRadius: 20,
+            marginRight: 5,
+            opacity: this.recordOpacityValue,
+        }
+
+        const slideToCancelText = '< Slide to cancel';
+
         return (
             <View
                 style={[style.inputWrapper, padding(isLandscape)]}
                 onLayout={this.handleLayout}
             >
-                {this.getAttachmentButton()}
-                <View style={this.getInputContainerStyle()}>
+                <Animated.View style={recorderInfoStyle}>
+                    <Animated.View style={recordStyle}></Animated.View>
+                    <Text>0:03.98</Text>
+                </Animated.View>
+                <Animated.View style={writeToStyle}>
+                    {this.getAttachmentButton()}
+                </Animated.View>
+                <Animated.View style={[this.getInputContainerStyle(), writeToStyle]}>
                     <PasteableTextInput
                         ref={this.input}
                         value={textValue}
@@ -792,14 +844,67 @@ export default class PostTextBoxBase extends PureComponent {
                             theme={theme}
                         />
                     </Fade>
-                </View>
+                </Animated.View>
                 <Recorder
                     rootId={rootId}
+                    onStartRecording={this.onStartRecording}
+                    onStopRecording={this.onStopRecording}
                     theme={theme}
                 />
+                <Animated.View style={slideToCancelStyle}>
+                    <Text>{slideToCancelText}</Text>
+                </Animated.View>
             </View>
         );
     };
+
+    onStartRecording = () => {
+        Animated.parallel([
+            Animated.timing(this.writeToValue, {
+                toValue: 100,
+                duration: 300,
+                useNativeDriver: true,
+            }),
+            Animated.timing(this.slideToCancelValue, {
+                toValue: -150,
+                duration: 300,
+                useNativeDriver: true,
+            }),
+            Animated.timing(this.recorderInfoValue, {
+                toValue: 5,
+                duration: 300,
+                useNativeDriver: true,
+            }),
+        ]).start();
+
+        Animated.loop(
+            Animated.timing(this.recordOpacityValue, {
+                toValue: this.recordOpacityValue === 0 ? 1 : 0,
+                duration: 800,
+                useNativeDriver: true,
+            }),
+        ).start();
+    }
+
+    onStopRecording = () => {
+        Animated.parallel([
+            Animated.timing(this.writeToValue, {
+                toValue: 0,
+                duration: 300,
+                useNativeDriver: true,
+            }),
+            Animated.timing(this.slideToCancelValue, {
+                toValue: 150,
+                duration: 300,
+                useNativeDriver: true,
+            }),
+            Animated.timing(this.recorderInfoValue, {
+                toValue: -150,
+                duration: 300,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    }
 }
 
 const getStyleSheet = makeStyleSheetFromTheme((theme) => {

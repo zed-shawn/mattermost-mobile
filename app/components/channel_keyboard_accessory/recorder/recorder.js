@@ -27,6 +27,8 @@ export default class Record extends PureComponent {
         createVoiceMessage: PropTypes.func.isRequired,
         theme: PropTypes.object.isRequired,
         rootId: PropTypes.string,
+        onStartRecording: PropTypes.func,
+        onStopRecording: PropTypes.func,
     };
 
     static contextTypes = {
@@ -147,6 +149,7 @@ export default class Record extends PureComponent {
         }
 
         EventEmitter.emit(MediaTypes.STOP_AUDIO, null);
+        this.props.onStartRecording();
         this.startAnimation(true);
         const hasPermission = await this.requestPermissions();
         if (hasPermission) {
@@ -166,6 +169,7 @@ export default class Record extends PureComponent {
     };
 
     stopRecord = () => {
+        this.props.onStopRecording();
         this.startAnimation(false);
 
         if (this.recorder) {
