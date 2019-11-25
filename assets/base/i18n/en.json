@@ -488,6 +488,7 @@
   "mobile.video_playback.failed_title": "Video playback failed",
   "mobile.video.save_error_message": "To save the video file you need to download it first.",
   "mobile.video.save_error_title": "Save Video Error",
+  "mobile.voice_message.slide": "Slide to cancel",
   "mobile.youtube_playback_error.description": "An error occurred while trying to play the YouTube video.\nDetails: {details}",
   "mobile.youtube_playback_error.title": "YouTube playback error",
   "modal.manual_status.auto_responder.message_": "Would you like to switch your status to \"{status}\" and disable Automatic Replies?",
