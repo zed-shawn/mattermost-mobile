@@ -181,6 +181,8 @@ export default class Record extends PureComponent {
                 const duration = Date.now() - this.startAt;
                 if (duration >= 1000 && this.recorder.fsPath) {
                     this.postVoiceMessage();
+                } else {
+                    this.deleteRecording();
                 }
             });
         }
