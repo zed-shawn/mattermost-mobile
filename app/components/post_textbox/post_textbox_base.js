@@ -981,6 +981,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             position: 'absolute',
             top: 5,
             right: 0,
-        }
+        },
     };
 });

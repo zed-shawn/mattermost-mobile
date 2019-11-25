@@ -28,7 +28,7 @@ exports[`SendButton should change theme backgroundColor to 0.3 opacity 1`] = `
     }
   >
     <PaperPlane
-      color="#ffffff"
+      color="rgba(255,255,255,0.3)"
       height={13}
       width={15}
     />

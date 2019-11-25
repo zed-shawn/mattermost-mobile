@@ -270,7 +270,7 @@ describe('PostTextBox', () => {
                 <PostTextbox {...baseProps}/>
             );
 
-            expect(wrapper.find(Fade).prop('visible')).toBe(false);
+            expect(wrapper.find(Fade).first().prop('visible')).toBe(false);
             expect(wrapper.find(SendButton).prop('disabled')).toBe(true);
         });
 
@@ -284,7 +284,7 @@ describe('PostTextBox', () => {
                 <PostTextbox {...props}/>
             );
 
-            expect(wrapper.find(Fade).prop('visible')).toBe(true);
+            expect(wrapper.find(Fade).first().prop('visible')).toBe(true);
             expect(wrapper.find(SendButton).prop('disabled')).toBe(true);
         });
 
@@ -298,7 +298,7 @@ describe('PostTextBox', () => {
                 <PostTextbox {...props}/>
             );
 
-            expect(wrapper.find(Fade).prop('visible')).toBe(true);
+            expect(wrapper.find(Fade).first().prop('visible')).toBe(true);
             expect(wrapper.find(SendButton).prop('disabled')).toBe(false);
         });
 
@@ -312,7 +312,7 @@ describe('PostTextBox', () => {
                 <PostTextbox {...props}/>
             );
 
-            expect(wrapper.find(Fade).prop('visible')).toBe(true);
+            expect(wrapper.find(Fade).first().prop('visible')).toBe(true);
             expect(wrapper.find(SendButton).prop('disabled')).toBe(false);
         });
 
@@ -328,7 +328,7 @@ describe('PostTextBox', () => {
 
             wrapper.setState({sendingMessage: true});
 
-            expect(wrapper.find(Fade).prop('visible')).toBe(true);
+            expect(wrapper.find(Fade).first().prop('visible')).toBe(true);
             expect(wrapper.find(SendButton).prop('disabled')).toBe(true);
         });
     });
