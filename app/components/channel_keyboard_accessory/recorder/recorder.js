@@ -95,6 +95,7 @@ export default class Record extends PureComponent {
 
         switch (hasMicPermissions) {
         case PermissionTypes.UNDETERMINED:
+            permissionRequest = await Permissions.request('microphone');
             return {
                 hasPermission: permissionRequest === PermissionTypes.AUTHORIZED,
                 requested: true,
