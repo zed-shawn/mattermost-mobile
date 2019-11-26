@@ -383,7 +383,7 @@ const getStyleFromTheme = makeStyleSheetFromTheme((theme) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            top: DeviceTypes.IS_IPHONE_WITH_INSETS ? 88 : 68,
+            top: DeviceTypes.IS_IPHONE_WITH_INSETS ? 88 : 64,
             width: '100%',
             height: 60,
             backgroundColor: theme.sidebarHeaderBg,
