@@ -401,8 +401,8 @@ const getStyleFromTheme = makeStyleSheetFromTheme((theme) => {
             borderColor: theme.sidebarHeaderTextColor,
             borderRadius: 9,
             borderWidth: 0,
-            right: 25,
-            top: -5,
+            right: 5,
+            top: -1,
         },
         mention: {
             color: theme.sidebarHeaderBg,
