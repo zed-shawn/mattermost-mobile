@@ -392,20 +392,20 @@ const getStyleFromTheme = makeStyleSheetFromTheme((theme) => {
             zIndex: 9,
         },
         badge: {
-            backgroundColor: theme.mentionBg,
+            backgroundColor: theme.sidebarHeaderTextColor,
             padding: 3,
             position: 'relative',
             height: 18,
         },
         badgeContainer: {
-            borderColor: theme.sidebarHeaderBg,
+            borderColor: theme.sidebarHeaderTextColor,
             borderRadius: 9,
             borderWidth: 0,
             right: 25,
             top: -5,
         },
         mention: {
-            color: theme.mentionColor,
+            color: theme.sidebarHeaderBg,
             fontSize: 10,
         },
     };
