@@ -24,6 +24,7 @@ export default class PostOptions extends PureComponent {
             addReaction: PropTypes.func.isRequired,
             deletePost: PropTypes.func.isRequired,
             flagPost: PropTypes.func.isRequired,
+            getChannelStats: PropTypes.func.isRequired,
             pinPost: PropTypes.func.isRequired,
             removePost: PropTypes.func.isRequired,
             unflagPost: PropTypes.func.isRequired,
@@ -39,6 +40,7 @@ export default class PostOptions extends PureComponent {
         canPin: PropTypes.bool,
         canEdit: PropTypes.bool,
         canEditUntil: PropTypes.number.isRequired,
+        currentChannelId: PropTypes.string.isRequired,
         currentTeamUrl: PropTypes.string.isRequired,
         currentUserId: PropTypes.string.isRequired,
         deviceHeight: PropTypes.number.isRequired,
@@ -318,11 +320,12 @@ export default class PostOptions extends PureComponent {
     };
 
     handlePinPost = () => {
-        const {actions, post} = this.props;
+        const {actions, currentChannelId, post} = this.props;
 
         this.closeWithAnimation();
-        requestAnimationFrame(() => {
-            actions.pinPost(post.id);
+        requestAnimationFrame(async () => {
+            await actions.pinPost(post.id);
+            actions.getChannelStats(currentChannelId);
         });
     };
 
@@ -389,11 +392,12 @@ export default class PostOptions extends PureComponent {
     };
 
     handleUnpinPost = () => {
-        const {actions, post} = this.props;
+        const {actions, currentChannelId, post} = this.props;
 
         this.closeWithAnimation();
-        requestAnimationFrame(() => {
-            actions.unpinPost(post.id);
+        requestAnimationFrame(async () => {
+            await actions.unpinPost(post.id);
+            actions.getChannelStats(currentChannelId);
         });
     };
 

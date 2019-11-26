@@ -4,6 +4,7 @@
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
+import {getChannelStats} from 'mattermost-redux/actions/channels';
 import {
     deletePost,
     flagPost,
@@ -115,6 +116,7 @@ export function makeMapStateToProps() {
             canDelete,
             canFlag,
             canPin,
+            currentChannelId,
             currentTeamUrl: getCurrentTeamUrl(state),
             currentUserId,
             isMyPost: currentUserId === post.user_id,
@@ -130,6 +132,7 @@ function mapDispatchToProps(dispatch) {
             addReaction,
             deletePost,
             flagPost,
+            getChannelStats,
             pinPost,
             removePost,
             unflagPost,
