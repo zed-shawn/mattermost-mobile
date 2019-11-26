@@ -880,7 +880,7 @@ export default class PostTextBoxBase extends PureComponent {
             }),
             Animated.timing(this.slideToCancelOpacity, {
                 toValue: 0,
-                duration: 300,
+                duration: 100,
                 useNativeDriver: true,
             }),
             Animated.timing(this.recorderInfoValue, {

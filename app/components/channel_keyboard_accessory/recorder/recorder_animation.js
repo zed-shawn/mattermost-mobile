@@ -25,13 +25,22 @@ export default class RecorderAnimation extends PureComponent {
     }
 
     animate = (show = true) => {
-        Animated.parallel([
-            Animated.timing(this.state.scale, {
-                toValue: show ? scaleExpand : initialValue,
-                duration: 500,
-                easing: Easing.bounce,
+        let scaleAnimation;
+        if (show) {
+            scaleAnimation = Animated.spring(this.state.scale, {
+                toValue: scaleExpand,
+                bounciness: 20,
                 useNativeDriver: true,
-            }),
+            });
+        } else {
+            scaleAnimation = Animated.spring(this.state.scale, {
+                toValue: initialValue,
+                bounciness: 0,
+                useNativeDriver: true,
+            });
+        }
+        Animated.parallel([
+            scaleAnimation,
             Animated.timing(this.state.opacity, {
                 toValue: show ? maxOpacity : initialValue,
                 duration: 250,
@@ -67,7 +76,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
         height: 40,
         position: 'absolute',
         right: 0,
-        top: 3,
+        top: -5,
         width: 40,
     },
 }));

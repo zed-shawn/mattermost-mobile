@@ -58,7 +58,7 @@ export default class Record extends PureComponent {
             Animated.timing(
                 this.iconColor, {
                     toValue,
-                    duration: 250,
+                    duration: show ? 250 : 500,
                 }
             ).start();
         }
@@ -219,10 +219,11 @@ export default class Record extends PureComponent {
     };
 
     onNewPower = ({value}) => {
-        if (this.listenToPower) {
-            Animated.timing(this.scale, {
+        if (this.listenToPower && value >= -65) {
+            Animated.spring(this.scale, {
                 toValue: value,
-                duration: 100,
+                bounciness: 12,
+                speed: 60,
                 useNativeDriver: true,
             }).start();
         }
@@ -342,7 +343,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
         opacity: 0.1,
         position: 'absolute',
         right: 0,
-        top: 3,
+        top: -5,
         width: 40,
     },
     mic: {

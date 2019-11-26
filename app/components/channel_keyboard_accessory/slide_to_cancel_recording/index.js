@@ -57,7 +57,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
         color: theme.centerChannelColor,
     },
     icon: {
-        right: -10,
+        right: -5,
         top: -10,
     },
 }));
