@@ -16,6 +16,7 @@ describe('ChannelTitle', () => {
         hasGuests: false,
         canHaveSubtitle: false,
         isSelfDMChannel: false,
+        quickActionsVisible: false,
     };
 
     test('should match snapshot', () => {

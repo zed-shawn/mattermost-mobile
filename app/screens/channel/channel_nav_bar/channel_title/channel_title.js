@@ -29,6 +29,7 @@ export default class ChannelTitle extends PureComponent {
         hasGuests: PropTypes.bool.isRequired,
         canHaveSubtitle: PropTypes.bool.isRequired,
         isSelfDMChannel: PropTypes.bool.isRequired,
+        quickActionsVisible: PropTypes.bool.isRequired,
     };
 
     static defaultProps = {
@@ -120,6 +121,7 @@ export default class ChannelTitle extends PureComponent {
         const {
             isChannelMuted,
             onPress,
+            quickActionsVisible,
             theme,
         } = this.props;
 
@@ -133,7 +135,7 @@ export default class ChannelTitle extends PureComponent {
                 <Icon
                     style={style.icon}
                     size={12}
-                    name='chevron-down'
+                    name={quickActionsVisible ? 'chevron-up' : 'chevron-down'}
                 />
             );
         }

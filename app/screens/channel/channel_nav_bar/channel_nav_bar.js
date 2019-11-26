@@ -77,6 +77,7 @@ export default class ChannelNavBar extends PureComponent {
             isSplitView: false,
             fade: '',
             show: false,
+            opened: false,
         };
     }
 
@@ -113,9 +114,9 @@ export default class ChannelNavBar extends PureComponent {
 
     toggleQuickActions = () => {
         if (this.state.show) {
-            this.setState({fade: 'fadeOutUp'});
+            this.setState({fade: 'fadeOutUp', opened: false});
         } else {
-            this.setState({fade: 'fadeInDown', show: true});
+            this.setState({fade: 'fadeInDown', show: true, opened: true});
         }
     }
 
@@ -289,6 +290,7 @@ export default class ChannelNavBar extends PureComponent {
                         visible={drawerButtonVisible}
                     />
                     <ChannelTitle
+                        quickActionsVisible={this.state.opened}
                         onPress={this.toggleQuickActions}
                         canHaveSubtitle={canHaveSubtitle}
                     />
