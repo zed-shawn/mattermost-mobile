@@ -16,7 +16,7 @@ export default class PostTextBoxIOS extends PostTextBoxBase {
 
         return (
             <React.Fragment>
-                <Typing/>
+                {/* <Typing/> */}
                 {this.renderTextBox()}
             </React.Fragment>
         );

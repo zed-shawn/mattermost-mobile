@@ -14,6 +14,7 @@ import SafeAreaView from 'app/components/safe_area_view';
 import StatusBar from 'app/components/status_bar';
 import {DeviceTypes} from 'app/constants';
 import {peek} from 'app/actions/navigation';
+import Typing from 'app/components/post_textbox/components/typing';
 
 import LocalConfig from 'assets/config';
 
@@ -71,6 +72,7 @@ export default class ChannelIOS extends ChannelBase {
                     />
                     {LocalConfig.EnableMobileClientUpgrade && <ClientUpgradeListener/>}
                 </SafeAreaView>
+                <Typing/>
                 <KeyboardTrackingView
                     ref={this.keyboardTracker}
                     scrollViewNativeID={currentChannelId}

@@ -82,6 +82,7 @@ export default class PostList extends PureComponent {
         super(props);
 
         this.hasDoneInitialScroll = false;
+        this.prevContentOffsetY = 0;
         this.contentOffsetY = 0;
         this.shouldScrollToBottom = false;
         this.makeExtraData = makeExtraData();
@@ -112,6 +113,9 @@ export default class PostList extends PureComponent {
             actions.setDeepLinkURL('');
         }
 
+        if (prevProps.postIds.length === postIds.length && this.prevContentOffsetY === 0) {
+            this.shouldScrollToBottom = true;
+        }
         if (this.shouldScrollToBottom && prevProps.channelId === channelId && prevProps.postIds.length === postIds.length) {
             this.scrollToBottom();
             this.shouldScrollToBottom = false;
@@ -201,13 +205,14 @@ export default class PostList extends PureComponent {
 
     handleScroll = (event) => {
         const pageOffsetY = event.nativeEvent.contentOffset.y;
+        this.prevContentOffsetY = this.contentOffsetY;
+        this.contentOffsetY = pageOffsetY;
         if (pageOffsetY > 0) {
             const contentHeight = event.nativeEvent.contentSize.height;
             const direction = (this.contentOffsetY < pageOffsetY) ?
                 ListTypes.VISIBILITY_SCROLL_UP :
                 ListTypes.VISIBILITY_SCROLL_DOWN;
 
-            this.contentOffsetY = pageOffsetY;
             if (
                 direction === ListTypes.VISIBILITY_SCROLL_UP &&
                 (contentHeight - pageOffsetY) < (this.state.postListHeight * SCROLL_UP_MULTIPLIER)
@@ -302,7 +307,7 @@ export default class PostList extends PureComponent {
     scrollToBottom = () => {
         setTimeout(() => {
             if (this.flatListRef.current) {
-                this.flatListRef.current.scrollToOffset({offset: 0, animated: true});
+                this.flatListRef.current.scrollToOffset({offset: 0, animated: false});
             }
         }, 250);
     };
