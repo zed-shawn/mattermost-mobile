@@ -24,10 +24,6 @@ import {popTopScreen, dismissModal} from 'app/actions/navigation';
 
 export default class ClientUpgrade extends PureComponent {
     static propTypes = {
-        actions: PropTypes.shape({
-            logError: PropTypes.func.isRequired,
-            setLastUpgradeCheck: PropTypes.func.isRequired,
-        }).isRequired,
         componentId: PropTypes.string,
         currentVersion: PropTypes.string,
         closeAction: PropTypes.func,
@@ -72,14 +68,14 @@ export default class ClientUpgrade extends PureComponent {
     }
 
     checkUpgrade = ({minVersion, latestVersion}) => {
-        const {actions, currentVersion, downloadLink} = this.props;
+        const {currentVersion, downloadLink} = this.props;
 
         // We need at least minVersion or latestVersion and the app downloadlink
         if (!(latestVersion || minVersion) || !downloadLink) {
             return;
         }
 
-        const upgradeType = checkUpgradeType(currentVersion, minVersion, latestVersion, actions.logError);
+        const upgradeType = checkUpgradeType(currentVersion, minVersion, latestVersion);
 
         if (upgradeType === UpgradeTypes.NO_UPGRADE) {
             return;
@@ -88,8 +84,6 @@ export default class ClientUpgrade extends PureComponent {
         this.setState({
             upgradeType,
         });
-
-        actions.setLastUpgradeCheck();
     }
 
     handleClose = () => {

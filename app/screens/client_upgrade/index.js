@@ -1,18 +1,25 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
 
-import {logError} from 'mattermost-redux/actions/errors';
+import {realmConnect} from 'realm-react-redux';
 
-import {setLastUpgradeCheck} from 'app/actions/views/client_upgrade';
-import getClientUpgrade from 'app/selectors/client_upgrade';
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {General, Preferences} from 'app/constants';
+
+import {getClientUpgrade} from 'app/realm/utils/general';
+import {getTheme} from 'app/realm/selectors/preference';
+import options from 'app/store/realm_options';
 
 import ClientUpgrade from './client_upgrade';
 
-function mapStateToProps(state) {
-    const {currentVersion, downloadLink, forceUpgrade, latestVersion, minVersion} = getClientUpgrade(state);
+function mapPropsToQueries(realm) {
+    const general = realm.objectForPrimaryKey('General', General.REALM_SCHEMA_ID) || General.REALM_EMPTY_OBJECT;
+    const themePreferences = realm.objects('Preference').filtered('category = $0', Preferences.CATEGORY_THEME);
+
+    return [general, themePreferences];
+}
+
+function mapQueriesToProps([general, themePreferences]) {
+    const {currentVersion, downloadLink, forceUpgrade, latestVersion, minVersion} = getClientUpgrade(general);
 
     return {
         currentVersion,
@@ -20,17 +27,8 @@ function mapStateToProps(state) {
         forceUpgrade,
         latestVersion,
         minVersion,
-        theme: getTheme(state),
+        theme: getTheme([general], themePreferences),
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators({
-            logError,
-            setLastUpgradeCheck,
-        }, dispatch),
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ClientUpgrade);
+export default realmConnect(mapPropsToQueries, mapQueriesToProps, null, null, options)(ClientUpgrade);
