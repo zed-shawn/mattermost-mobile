@@ -16,8 +16,9 @@ import 'app/init/fetch';
 import globalEventHandler from 'app/init/global_event_handler';
 import pushNotificationsHandler from 'app/init/push_notifications_handler';
 import {registerScreens} from 'app/screens';
-import {configureRealmStore, configureAppStore} from 'app/store';
 import EphemeralStore from 'app/store/ephemeral_store';
+import {configureRealmStore, configureAppStore} from 'app/store';
+import {waitForHydration} from 'app/store/utils';
 import telemetry from 'app/telemetry';
 
 const {MattermostShare} = NativeModules;
@@ -56,20 +57,22 @@ const init = async () => {
     }
 };
 
-const launchApp = async (credentials) => {
+const launchApp = (credentials) => {
     telemetry.start([
         'start:select_server_screen',
         'start:channel_screen',
     ]);
 
     if (credentials) {
-        reduxStore.dispatch(loadMeRedux());
-
         if (realmStore) {
             realmStore.dispatch(loadMe());
         }
 
-        resetToChannel({skipMetrics: true});
+        // TODO: Remove waitForHydration once redux is removed
+        waitForHydration(reduxStore, () => {
+            reduxStore.dispatch(loadMeRedux());
+            resetToChannel({skipMetrics: true});
+        });
     } else {
         resetToSelectServer(emmProvider.allowOtherServers);
     }
