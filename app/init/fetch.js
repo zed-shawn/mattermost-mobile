@@ -15,6 +15,8 @@ import mattermostBucket from 'app/mattermost_bucket';
 import mattermostManaged from 'app/mattermost_managed';
 import LocalConfig from 'assets/config';
 
+import {getPosts} from 'app/realm/readers/post';
+
 import {t} from 'app/utils/i18n';
 
 /* eslint-disable no-throw-literal */

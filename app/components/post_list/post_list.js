@@ -500,7 +500,7 @@ export default class PostList extends PureComponent {
             />);
 
         const hasPostsKey = postIds.length ? 'true' : 'false';
-
+        
         return (
             <FlatList
                 key={`recyclerFor-${channelId}-${hasPostsKey}`}
@@ -509,7 +509,7 @@ export default class PostList extends PureComponent {
                 contentContainerStyle={styles.postListContent}
                 data={postIds}
                 extraData={this.makeExtraData(channelId, highlightPostId, extraData, loadMorePostsVisible)}
-                initialNumToRender={INITIAL_BATCH_TO_RENDER}
+                // initialNumToRender={INITIAL_BATCH_TO_RENDER}
                 inverted={true}
                 keyboardDismissMode={'interactive'}
                 keyboardShouldPersistTaps={'handled'}
