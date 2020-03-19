@@ -68,6 +68,7 @@
     "react-navigation": "4.0.10",
     "react-navigation-stack": "1.9.4",
     "react-redux": "7.2.0",
+    "realm": "5.0.0",
     "redux": "4.0.5",
     "redux-batched-actions": "0.4.1",
     "redux-offline": "github:mattermost/redux-offline#885024de96b6ec73650c340c8928066585c413df",
