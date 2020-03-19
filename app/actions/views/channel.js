@@ -18,6 +18,8 @@ import {
     getPostsBefore,
     getPostsSince,
     getPostThread,
+    receivedPosts,
+    receivedPostsInChannel,
 } from 'mattermost-redux/actions/posts';
 import {getFilesForPost} from 'mattermost-redux/actions/files';
 import {savePreferences} from 'mattermost-redux/actions/preferences';
@@ -26,7 +28,6 @@ import {getTeamMembersByIds, selectTeam} from 'mattermost-redux/actions/teams';
 import {getProfilesInChannel} from 'mattermost-redux/actions/users';
 import {Client4} from 'mattermost-redux/client';
 import {General, Preferences} from 'mattermost-redux/constants';
-import {getPostIdsInChannel} from 'mattermost-redux/selectors/entities/posts';
 import {
     getCurrentChannelId,
     getRedirectChannelNameForTeam,
@@ -55,6 +56,8 @@ import {getChannelReachable} from 'app/selectors/channel';
 import telemetry from 'app/telemetry';
 import {isDirectChannelVisible, isGroupChannelVisible, isDirectMessageVisible, isGroupMessageVisible, isDirectChannelAutoClosed} from 'app/utils/channels';
 import {buildPreference} from 'app/utils/preferences';
+
+import {readPosts} from 'app/realm/readers/post';
 
 import {forceLogoutIfNecessary} from './user';
 
@@ -178,19 +181,21 @@ export function loadProfilesAndTeamMembersForDMSidebar(teamId) {
 
 export function loadPostsIfNecessaryWithRetry(channelId) {
     return async (dispatch, getState) => {
+        const results = await readPosts(channelId);
+        const posts = Object.values(results);
+        const order = posts.map((post) => post.id);
+
+        dispatch(batchActions([
+            receivedPosts({posts}),
+            receivedPostsInChannel({posts, order}, channelId, true, false),
+        ]));
+
         const state = getState();
-        const {posts} = state.entities.posts;
-        const postsIds = getPostIdsInChannel(state, channelId);
-        const actions = [];
-
         const time = Date.now();
-
         let loadMorePostsVisible = true;
+
         let postAction;
-        if (!postsIds || postsIds.length < ViewTypes.POST_VISIBILITY_CHUNK_SIZE) {
-            // Get the first page of posts if it appears we haven't gotten it yet, like the webapp
-            postAction = getPosts(channelId);
-        } else {
+        if (posts.length) {
             const lastConnectAt = state.websocket?.lastConnectAt || 0;
             const lastGetPosts = state.views.channel.lastGetPosts[channelId];
 
@@ -201,15 +206,18 @@ export function loadPostsIfNecessaryWithRetry(channelId) {
             } else {
                 // Trust that we've received all posts since the last time the websocket disconnected
                 // so just get any that have changed since the latest one we've received
-                const postsForChannel = postsIds.map((id) => posts[id]);
-                since = getLastCreateAt(postsForChannel);
+                since = getLastCreateAt(posts);
             }
 
             postAction = getPostsSince(channelId, since);
+        } else {
+            // Get the first page of posts if it appears we haven't gotten it yet, like the webapp
+            postAction = getPosts(channelId);
         }
 
         const received = await retryGetPostsAction(postAction, dispatch, getState);
 
+        const actions = [];
         if (received) {
             actions.push({
                 type: ViewTypes.RECEIVED_POSTS_FOR_CHANNEL_AT_TIME,
