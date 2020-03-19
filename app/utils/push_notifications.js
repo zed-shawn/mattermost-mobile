@@ -5,13 +5,13 @@ import {Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
 import {setDeviceToken} from 'mattermost-redux/actions/general';
+import {getPosts} from 'mattermost-redux/actions/posts';
 import {Client4} from 'mattermost-redux/client';
 import {General} from 'mattermost-redux/constants';
 import EventEmitter from 'mattermost-redux/utils/event_emitter';
 
 import {markChannelViewedAndRead, retryGetPostsAction} from 'app/actions/views/channel';
 import {dismissAllModals, popToRoot} from 'app/actions/navigation';
-import {getPosts} from 'app/actions/views/post';
 import {
     createPostForNotificationReply,
     loadFromPushNotification,

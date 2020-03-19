@@ -13,6 +13,12 @@ import {
     markChannelAsViewed,
     leaveChannel as serviceLeaveChannel,
 } from 'mattermost-redux/actions/channels';
+import {
+    getPosts,
+    getPostsBefore,
+    getPostsSince,
+    getPostThread,
+} from 'mattermost-redux/actions/posts';
 import {getFilesForPost} from 'mattermost-redux/actions/files';
 import {savePreferences} from 'mattermost-redux/actions/preferences';
 import {loadRolesIfNeeded} from 'mattermost-redux/actions/roles';
@@ -50,7 +56,6 @@ import telemetry from 'app/telemetry';
 import {isDirectChannelVisible, isGroupChannelVisible, isDirectMessageVisible, isGroupMessageVisible, isDirectChannelAutoClosed} from 'app/utils/channels';
 import {buildPreference} from 'app/utils/preferences';
 
-import {getPosts, getPostsBefore, getPostsSince, getPostThread} from './post';
 import {forceLogoutIfNecessary} from './user';
 
 const MAX_RETRIES = 3;
