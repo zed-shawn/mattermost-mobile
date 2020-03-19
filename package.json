@@ -23,7 +23,7 @@
     "fuse.js": "3.6.1",
     "intl": "1.2.5",
     "jail-monkey": "2.3.2",
-    "mattermost-redux": "github:mattermost/mattermost-redux#21d68fc617f44cad43adc2f1d79169bf7245e3c0",
+    "mattermost-redux": "github:mattermost/mattermost-redux#f2b01818b1e25c100f508fdfe6bf9fcb043ebf93",
     "mime-db": "1.43.0",
     "moment-timezone": "0.5.28",
     "prop-types": "15.7.2",
