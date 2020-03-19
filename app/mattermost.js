@@ -24,6 +24,8 @@ import EphemeralStore from 'app/store/ephemeral_store';
 import telemetry from 'app/telemetry';
 import pushNotificationsUtils from 'app/utils/push_notifications';
 
+import Realm from 'app/realm';
+
 const init = async () => {
     const credentials = await getAppCredentials();
     if (EphemeralStore.appStarted) {
@@ -52,6 +54,7 @@ const launchApp = (credentials) => {
 
     if (credentials) {
         waitForHydration(store, async () => {
+            await Realm.init();
             store.dispatch(loadMe());
             resetToChannel({skipMetrics: true});
         });

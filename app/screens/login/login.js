@@ -33,6 +33,8 @@ import {GlobalStyles} from 'app/styles';
 
 import telemetry from 'app/telemetry';
 
+import Realm from 'app/realm';
+
 export const mfaExpectedErrors = ['mfa.validate_token.authenticate.app_error', 'ent.mfa.validate_token.authenticate.app_error'];
 
 export default class Login extends PureComponent {
@@ -175,7 +177,7 @@ export default class Login extends PureComponent {
         }
     };
 
-    checkLoginResponse = (data) => {
+    checkLoginResponse = async (data) => {
         if (mfaExpectedErrors.includes(data?.error?.server_error_id)) { // eslint-disable-line camelcase
             this.goToMfa();
             this.setState({isLoading: false});
@@ -190,6 +192,7 @@ export default class Login extends PureComponent {
             return false;
         }
 
+        await Realm.init();
         this.setState({isLoading: false});
         resetToChannel();
         return true;
