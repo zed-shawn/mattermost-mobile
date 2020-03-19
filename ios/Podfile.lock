@@ -273,7 +273,7 @@ PODS:
     - React
     - React-RCTImage
     - React-RCTText
-  - RealmJS (5.0.0):
+  - RealmJS (4.0.0-beta.0):
     - GCDWebServer
     - React
   - rn-fetch-blob (0.12.0):
@@ -562,7 +562,7 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   ReactNativeKeyboardTrackingView: a240a6a0dba852bb107109a7ec7e98b884055977
   ReactNativeNavigation: 4f06df65c965c1e96f29c5cc907f22a186ead8e3
-  RealmJS: d1ff3399d09f061f17520c47c20db1aac1a8f0d0
+  RealmJS: 93647ef6552a313242a3ebf5ce1a1a09271b5a2a
   rn-fetch-blob: 17961aec08caae68bb8fc0e5b40f93b3acfa6932
   RNCAsyncStorage: 00bdf63f7f1e0f11d3323533dba4f222e58bf092
   RNDeviceInfo: fd8296de6fca8b743cdc499b896f48e8a9f1faf5
