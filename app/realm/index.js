@@ -16,6 +16,8 @@ import {
     PostMetadataEmbedSchema,
     PostMetadataEmbedDataSchema,
     PostMetadataEmbedDataImageSchema,
+    PostMetadataEmbedDataAudioSchema,
+    PostMetadataEmbedDataVideoSchema,
 } from 'app/realm/schemas/post';
 
 const postSchemas = [
@@ -29,6 +31,8 @@ const postSchemas = [
     PostMetadataEmbedSchema,
     PostMetadataEmbedDataSchema,
     PostMetadataEmbedDataImageSchema,
+    PostMetadataEmbedDataAudioSchema,
+    PostMetadataEmbedDataVideoSchema,
 ];
 
 const hash = (s) => {

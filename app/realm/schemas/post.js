@@ -124,13 +124,35 @@ export const PostMetadataEmbedDataSchema = {
         locale: 'string',
         locales_alternate: 'string?',
         images: 'PostMetadataEmbedDataImage[]',
-        audios: 'string?',
-        videos: 'string?',
+        audios: 'PostMetadataEmbedDataAudio[]',
+        videos: 'PostMetadataEmbedDataVideo[]',
     },
 };
 
 export const PostMetadataEmbedDataImageSchema = {
     name: 'PostMetadataEmbedDataImage',
+    properties: {
+        url: 'string',
+        secure_url: 'string',
+        type: 'string',
+        width: 'int',
+        height: 'int',
+    },
+};
+
+export const PostMetadataEmbedDataAudioSchema = {
+    name: 'PostMetadataEmbedDataAudio',
+    properties: {
+        url: 'string',
+        secure_url: 'string',
+        type: 'string',
+        width: 'int',
+        height: 'int',
+    },
+};
+
+export const PostMetadataEmbedDataVideoSchema = {
+    name: 'PostMetadataEmbedDataVideo',
     properties: {
         url: 'string',
         secure_url: 'string',

@@ -56,18 +56,17 @@ const parseMetadataEmbeds = (embeds = []) => {
             let embed = {...embeds[i]};
 
             if (embed.data) {
-                let images;
-                if (!embed.data.images) {
-                    images = [];
-                } else if (!Array.isArray(embed.data.images)) {
-                    images = Object.values(embed.data.images);
-                }
+                const images = intoArray(embed.data.images);
+                const audios = intoArray(embed.data.audios);
+                const videos = intoArray(embed.data.videos);
 
                 embed = {
                     ...embed,
                     data: {
                         ...embed.data,
                         images,
+                        audios,
+                        videos,
                     },
                 };
             }
@@ -79,10 +78,15 @@ const parseMetadataEmbeds = (embeds = []) => {
     return parsedEmbeds;
 };
 
-const parseMetadataReactions = (reactions = []) => {
-    if (reactions && !Array.isArray(reactions)) {
-        return Object.values(reactions);
+const parseMetadataReactions = (reactions) => {
+    return intoArray(reactions);
+};
+
+const intoArray = (value) => {
+    let arr = value || [];
+    if (!Array.isArray(arr)) {
+        return Object.values(arr);
     }
 
-    return reactions;
-};
+    return arr;
+}
