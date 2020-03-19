@@ -45,7 +45,7 @@ class MMRealm {
         const userId = Client4.userId;
 
         if (serverUrl && userId && !this.realm) {
-            const dbName = hash(serverUrl + userId);
+            const dbName = hash(serverUrl.trim() + userId.trim());
             const config = {
                 path: `${dbName}.realm`,
                 schema: postSchemas,
