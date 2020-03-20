@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {selectPost} from 'mattermost-redux/actions/posts';
-import {getPostIdsInCurrentChannel} from 'mattermost-redux/selectors/entities/posts';
+import {getPostIdsInChannel} from 'mattermost-redux/selectors/entities/posts';
 import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/channels';
 import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
 import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
@@ -31,7 +31,7 @@ function mapStateToProps(state) {
         channelRefreshingFailed,
         currentUserId: getCurrentUserId(state),
         deviceHeight: state.device.dimension.deviceHeight,
-        postIds: getPostIdsInCurrentChannel(state) || Types.EMPTY_ARRAY,
+        postIds: getPostIdsInChannel(state, channelId) || Types.EMPTY_ARRAY,
         lastViewedAt: state.views.channel.lastChannelViewTime[channelId],
         loadMorePostsVisible: state.views.channel.loadMorePostsVisible,
         refreshing: state.views.channel.refreshing,

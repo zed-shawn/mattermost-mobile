@@ -185,6 +185,8 @@ export function loadPostsIfNecessaryWithRetry(channelId) {
         const posts = Object.values(results);
         const order = posts.map((post) => post.id);
 
+        console.log('REALM POSTS', channelId, posts.length)
+
         dispatch(batchActions([
             receivedPosts({posts}),
             receivedPostsInChannel({posts, order}, channelId, true, false),
