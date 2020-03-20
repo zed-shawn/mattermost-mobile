@@ -1,25 +1,27 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import MMRealm from 'app/realm';
+import {getConfig} from 'app/realm';
 
 export const readPosts = async (channelId) => {
     const posts = {};
 
     try {
-        const results = MMRealm.realm.objects('Post').
-            filtered(`channel_id = "${channelId}"`).
-            sorted([['create_at', true]]);
+        Realm.open(getConfig()).then((realm) => {
+            const results = realm.objects('Post').
+                filtered(`channel_id = "${channelId}"`).
+                sorted([['create_at', true]]);
 
-        for (const result of results) {
-            const post = result.toJSON();
+            for (const result of results) {
+                const post = JSON.parse(JSON.stringify(result));
 
-            posts[post.id] = {
-                ...post,
-                file_ids: parseFileIds(post.file_ids),
-                metadata: parseMetadata(post.metadata),
-            };
-        }
+                posts[post.id] = {
+                    ...post,
+                    file_ids: parseFileIds(post.file_ids),
+                    metadata: parseMetadata(post.metadata),
+                };
+            }
+        });
     } catch (error) {
         console.log('READ', error); // eslint-disable-line no-console
     }

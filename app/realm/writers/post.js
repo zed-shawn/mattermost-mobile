@@ -1,17 +1,19 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import MMRealm from 'app/realm';
+import {getConfig} from 'app/realm';
 
 export const writePosts = async (posts) => {
-    MMRealm.realm.write(() => {
-        Object.values(posts).forEach((post) => {
-            const properties = buildPostProperties(post);
-            try {
-                MMRealm.realm.create('Post', properties, true);
-            } catch (error) {
-                console.log('WRITE ERROR', error); // eslint-disable-line no-console
-            }
+    Realm.open(getConfig()).then((realm) => {
+        realm.write(() => {
+            Object.values(posts).forEach((post) => {
+                const properties = buildPostProperties(post);
+                try {
+                    realm.create('Post', properties, true);
+                } catch (error) {
+                    console.log('WRITE ERROR', error); // eslint-disable-line no-console
+                }
+            });
         });
     });
 };
