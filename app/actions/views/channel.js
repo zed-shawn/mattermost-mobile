@@ -366,8 +366,6 @@ export function handleSelectChannel(channelId) {
         const channel = channels[channelId];
         const member = myMembers[channelId];
 
-        dispatch(loadPostsIfNecessaryWithRetry(channelId));
-
         if (channel && currentChannelId !== channelId) {
             const actions = markAsViewedAndReadBatch(state, channelId, currentChannelId);
             actions.push({
@@ -381,6 +379,8 @@ export function handleSelectChannel(channelId) {
             });
             dispatch(batchActions(actions));
         }
+
+        dispatch(loadPostsIfNecessaryWithRetry(channelId));
 
         console.log('channel switch to', channel?.display_name, channelId, (Date.now() - dt), 'ms'); //eslint-disable-line
     };
