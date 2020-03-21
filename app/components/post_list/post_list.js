@@ -90,7 +90,6 @@ export default class PostList extends PureComponent {
         super(props);
 
         this.cancelScrollToIndex = false;
-        this.contentOffsetY = 0;
         this.contentHeight = 0;
         this.hasDoneInitialScroll = false;
         this.shouldScrollToBottom = false;
@@ -248,22 +247,6 @@ export default class PostList extends PureComponent {
         }
     };
 
-    handleScroll = (event) => {
-        const pageOffsetY = event.nativeEvent.contentOffset.y;
-        if (pageOffsetY > 0) {
-            const contentHeight = event.nativeEvent.contentSize.height;
-            const direction = (this.contentOffsetY < pageOffsetY) ? ListTypes.VISIBILITY_SCROLL_UP : ListTypes.VISIBILITY_SCROLL_DOWN;
-
-            this.contentOffsetY = pageOffsetY;
-            if (
-                direction === ListTypes.VISIBILITY_SCROLL_UP &&
-                (contentHeight - pageOffsetY) < (this.postListHeight * SCROLL_UP_MULTIPLIER)
-            ) {
-                this.props.onLoadMoreUp();
-            }
-        }
-    };
-
     handleScrollBeginDrag = () => {
         this.cancelScrollToIndex = true;
     }
@@ -406,7 +389,6 @@ export default class PostList extends PureComponent {
     };
 
     resetPostList = () => {
-        this.contentOffsetY = 0;
         this.hasDoneInitialScroll = false;
         this.cancelScrollToIndex = false;
 
@@ -518,7 +500,6 @@ export default class PostList extends PureComponent {
             <FlatList
                 contentContainerStyle={styles.postListContent}
                 data={postIds}
-                disableVirtualization={true}
                 extraData={this.makeExtraData(channelId, highlightPostId, extraData, loadMorePostsVisible)}
                 initialNumToRender={INITIAL_BATCH_TO_RENDER}
                 inverted={true}
@@ -529,11 +510,12 @@ export default class PostList extends PureComponent {
                 ListFooterComponent={this.props.renderFooter}
                 listKey={`recyclerFor-${channelId}`}
                 maintainVisibleContentPosition={SCROLL_POSITION_CONFIG}
-                maxToRenderPerBatch={5}
+                maxToRenderPerBatch={10}
                 nativeID={scrollViewNativeID}
                 onContentSizeChange={this.handleContentSizeChange}
                 onLayout={this.handleLayout}
-                onScroll={this.handleScroll}
+                onEndReached={this.props.onLoadMoreUp}
+                onEndReachedThreshold={0.4}
                 onScrollBeginDrag={this.handleScrollBeginDrag}
                 onScrollToIndexFailed={this.handleScrollToIndexFailed}
                 ref={this.flatListRef}
