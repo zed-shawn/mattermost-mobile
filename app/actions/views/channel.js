@@ -179,19 +179,8 @@ export function loadProfilesAndTeamMembersForDMSidebar(teamId) {
     };
 }
 
-export function loadPostsIfNecessaryWithRetry(channelId) {
+export function loadPostsIfNecessaryWithRetry(channelId, posts = []) {
     return async (dispatch, getState) => {
-        const results = await readPosts(channelId);
-        const posts = Object.values(results);
-        const order = posts.map((post) => post.id);
-
-        console.log('REALM POSTS', channelId, posts.length)
-
-        dispatch(batchActions([
-            receivedPosts({posts}),
-            receivedPostsInChannel({posts, order}, channelId, true, false),
-        ]));
-
         const state = getState();
         const time = Date.now();
         let loadMorePostsVisible = true;
@@ -366,21 +355,36 @@ export function handleSelectChannel(channelId) {
         const channel = channels[channelId];
         const member = myMembers[channelId];
 
-        if (channel && currentChannelId !== channelId) {
-            const actions = markAsViewedAndReadBatch(state, channelId, currentChannelId);
-            actions.push({
-                type: ChannelTypes.SELECT_CHANNEL,
-                data: channelId,
-                extra: {
-                    channel,
-                    member,
-                    teamId: channel.team_id || currentTeamId,
-                },
-            });
-            dispatch(batchActions(actions));
+        const actions = [];
+        const results = await readPosts(channelId);
+        const posts = Object.values(results);
+        const order = posts.map((post) => post.id);
+
+        dispatch(loadPostsIfNecessaryWithRetry(channelId, posts));
+
+        if (posts.length) {
+            actions.push(
+                receivedPosts({posts}),
+                receivedPostsInChannel({posts, order}, channelId, true, false));
         }
 
-        dispatch(loadPostsIfNecessaryWithRetry(channelId));
+        if (channel && currentChannelId !== channelId) {
+            actions.push(
+                ...markAsViewedAndReadBatch(state, channelId, currentChannelId),
+                {
+                    type: ChannelTypes.SELECT_CHANNEL,
+                    data: channelId,
+                    extra: {
+                        channel,
+                        member,
+                        teamId: channel.team_id || currentTeamId,
+                },
+            });
+        }
+
+        if (actions.length) {
+            dispatch(batchActions(actions));
+        }
 
         console.log('channel switch to', channel?.display_name, channelId, (Date.now() - dt), 'ms'); //eslint-disable-line
     };
