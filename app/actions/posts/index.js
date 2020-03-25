@@ -5,9 +5,10 @@ import * as PostActions from 'mattermost-redux/actions/posts';
 
 import {Client4} from 'mattermost-redux/client';
 import {Posts} from 'mattermost-redux/constants';
-import {PostTypes, UserTypes} from 'mattermost-redux/action_types';
+import {PostTypes, UserTypes, ChannelTypes, FileTypes} from 'mattermost-redux/action_types';
 import {batchActions} from 'mattermost-redux/types/actions';
 import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/common';
+import {isPostIdSending} from 'mattermost-redux/selectors/entities/posts';
 import {removeUserFromList} from 'mattermost-redux/utils/user_utils';
 
 import {getEmojisInPosts} from 'app/actions/views/emoji';
@@ -50,7 +51,7 @@ PostActions.createPost = (post, files) => {
         const timestamp = Date.now();
         const pendingPostId = post.pending_post_id || `${currentUserId}:${timestamp}`;
 
-        if (Selectors.isPostIdSending(state, pendingPostId)) {
+        if (isPostIdSending(state, pendingPostId)) {
             return {data: true};
         }
 
@@ -64,11 +65,11 @@ PostActions.createPost = (post, files) => {
         writePosts([newPost]);
 
         // We are retrying a pending post that had files
-        if (newPost.file_ids && !files.length) {
+        if (newPost.file_ids && !files?.length) {
             files = newPost.file_ids.map((id) => state.entities.files.files[id]); // eslint-disable-line
         }
 
-        if (files.length) {
+        if (files?.length) {
             const fileIds = files.map((file) => file.id);
 
             newPost = {
@@ -96,7 +97,7 @@ PostActions.createPost = (post, files) => {
                         effect: () => Client4.createPost({...newPost, create_at: 0}),
                         commit: (result, payload) => {
                             const actions = [
-                                receivedPost(payload),
+                                PostActions.receivedPost(payload),
                                 {
                                     type: PostTypes.CREATE_POST_SUCCESS,
                                 },
@@ -143,9 +144,9 @@ PostActions.createPost = (post, files) => {
                                 error.server_error_id === 'api.post.create_post.town_square_read_only' ||
                                 error.server_error_id === 'plugin.message_will_be_posted.dismiss_post'
                             ) {
-                                dispatch(removePost(data));
+                                dispatch(PostActions.removePost(data));
                             } else {
-                                dispatch(receivedPost(data));
+                                dispatch(PostActions.receivedPost(data));
                             }
                         },
                     },
