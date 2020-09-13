@@ -8,16 +8,16 @@ import {
     View,
 } from 'react-native';
 import {intlShape} from 'react-intl';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import SearchBar from 'app/components/search_bar';
-import {ViewTypes} from 'app/constants';
-import {paddingLeft as padding} from 'app/components/safe_area_view/iphone_x_spacing';
+import CompassIcon from '@components/compass_icon';
+import SearchBar from '@components/search_bar';
+import {paddingLeft as padding} from '@components/safe_area_view/iphone_x_spacing';
+import {ViewTypes} from '@constants';
 import {
     changeOpacity,
     makeStyleSheetFromTheme,
     getKeyboardAppearanceFromTheme,
-} from 'app/utils/theme';
+} from '@utils/theme';
 
 import List from './list';
 import SwitchTeamsButton from './switch_teams_button';
@@ -48,7 +48,7 @@ export default class ChannelsList extends PureComponent {
             term: '',
         };
 
-        MaterialIcon.getImageSource('close', 20, this.props.theme.sidebarHeaderTextColor).then((source) => {
+        CompassIcon.getImageSource('close', 20, this.props.theme.sidebarHeaderTextColor).then((source) => {
             this.closeButton = source;
         });
     }

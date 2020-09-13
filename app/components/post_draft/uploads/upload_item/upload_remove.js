@@ -4,8 +4,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {View, Platform} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import CompassIcon from '@components/compass_icon';
 import TouchableWithFeedback from '@components/touchable_with_feedback';
 import {makeStyleSheetFromTheme, changeOpacity} from '@utils/theme';
 
@@ -34,7 +34,7 @@ export default class UploadRemove extends PureComponent {
                 type={'opacity'}
             >
                 <View style={style.removeButton}>
-                    <Icon
+                    <CompassIcon
                         name='close-circle'
                         color={changeOpacity(theme.centerChannelColor, 0.64)}
                         size={21}

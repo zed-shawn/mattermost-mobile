@@ -5,11 +5,12 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Platform, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+
+import {Client4} from '@mm-redux/client';
 
 import placeholder from '@assets/images/profile.jpg';
+import CompassIcon from '@components/compass_icon';
 import UserStatus from '@components/user_status';
-import {Client4} from '@mm-redux/client';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 const STATUS_BUFFER = Platform.select({
@@ -122,8 +123,8 @@ export default class ProfilePicture extends PureComponent {
                 backgroundColor: theme.centerChannelBg,
             };
             statusIcon = (
-                <FontAwesomeIcon
-                    name='camera'
+                <CompassIcon
+                    name='camera-outline'
                     size={this.props.statusSize / 1.7}
                     color={iconColor}
                 />

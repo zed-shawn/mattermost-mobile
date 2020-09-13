@@ -10,11 +10,11 @@ import {
     TouchableHighlight,
     View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
-import FormattedText from 'app/components/formatted_text';
-import {changeOpacity, makeStyleSheetFromTheme} from 'app/utils/theme';
-import {paddingHorizontal as padding} from 'app/components/safe_area_view/iphone_x_spacing';
+import CompassIcon from '@components/compass_icon';
+import FormattedText from '@components/formatted_text';
+import {paddingHorizontal as padding} from '@components/safe_area_view/iphone_x_spacing';
+import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 function createTouchableComponent(children, action) {
     return (
@@ -36,7 +36,7 @@ function channelInfoRow(props) {
     let iconElement = null;
     if (image == null) {
         iconElement = (
-            <Icon
+            <CompassIcon
                 name={icon}
                 size={15}
                 color={iconColor || changeOpacity(theme.centerChannelColor, 0.5)}
@@ -62,8 +62,8 @@ function channelInfoRow(props) {
         );
     } else if (rightArrow) {
         actionElement = (
-            <Icon
-                name='angle-right'
+            <CompassIcon
+                name='chevron-right'
                 size={20}
                 style={style.rightIcon}
             />

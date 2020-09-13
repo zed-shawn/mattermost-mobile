@@ -14,12 +14,12 @@ import {
     Text,
     View,
 } from 'react-native';
-import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {Navigation} from 'react-native-navigation';
 import HWKeyboardEvent from 'react-native-hw-keyboard-event';
 
 import {goToScreen, showModalOverCurrentContext, dismissModal} from '@actions/navigation';
 import Autocomplete from '@components/autocomplete';
+import CompassIcon from '@components/compass_icon';
 import KeyboardLayout from '@components/layout/keyboard_layout';
 import DateHeader from '@components/post_list/date_header';
 import FormattedText from '@components/formatted_text';
@@ -193,8 +193,8 @@ export default class Search extends PureComponent {
             archivedIndicator = (
                 <View style={style.archivedIndicator}>
                     <Text>
-                        <AwesomeIcon
-                            name='archive'
+                        <CompassIcon
+                            name='archive-outline'
                             style={style.archivedText}
                         />
                         {' '}

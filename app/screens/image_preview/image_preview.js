@@ -16,7 +16,6 @@ import {
     findNodeHandle,
 } from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
-import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {intlShape} from 'react-intl';
 import Permissions from 'react-native-permissions';
@@ -26,18 +25,19 @@ import FastImage from 'react-native-fast-image';
 
 import EventEmitter from '@mm-redux/utils/event_emitter';
 
-import FileAttachmentDocument from 'app/components/file_attachment_list/file_attachment_document';
-import FileAttachmentIcon from 'app/components/file_attachment_list/file_attachment_icon';
-import {DeviceTypes, NavigationTypes} from 'app/constants';
-import {getLocalFilePathFromFile, isDocument, isVideo} from 'app/utils/file';
-import {emptyFunction} from 'app/utils/general';
-import {calculateDimensions} from 'app/utils/images';
-import {t} from 'app/utils/i18n';
-import BottomSheet from 'app/utils/bottom_sheet';
+import CompassIcon from '@components/compass_icon';
+import FileAttachmentDocument from '@components/file_attachment_list/file_attachment_document';
+import FileAttachmentIcon from '@components/file_attachment_list/file_attachment_icon';
+import {DeviceTypes, NavigationTypes} from '@constants';
+import {getLocalFilePathFromFile, isDocument, isVideo} from '@utils/file';
+import {emptyFunction} from '@utils/general';
+import {calculateDimensions} from '@utils/images';
+import {t} from '@utils/i18n';
+import BottomSheet from '@utils/bottom_sheet';
 import {
     dismissModal,
     mergeNavigationOptions,
-} from 'app/actions/navigation';
+} from '@actions/navigation';
 
 import Downloader from './downloader';
 import VideoPreview from './video_preview';
@@ -251,15 +251,15 @@ export default class ImagePreview extends PureComponent {
                 action = this.showDownloadOptions;
                 if (Platform.OS === 'android') {
                     icon = (
-                        <Icon
-                            name='ellipsis-vertical'
+                        <CompassIcon
+                            name='dots-vertical'
                             size={32}
                             color='#fff'
                         />
                     );
                 } else if (file.source || isVideo(file.data)) {
                     icon = (
-                        <Icon
+                        <CompassIcon
                             name='download-outline'
                             size={26}
                             color='#fff'
@@ -354,8 +354,8 @@ export default class ImagePreview extends PureComponent {
                             onPress={this.close}
                             style={style.headerIcon}
                         >
-                            <Icon
-                                name='md-close'
+                            <CompassIcon
+                                name='close'
                                 size={26}
                                 color='#fff'
                             />

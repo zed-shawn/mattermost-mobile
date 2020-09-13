@@ -4,10 +4,11 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Text, TouchableOpacity, View} from 'react-native';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import {paddingRight, paddingLeft} from 'app/components/safe_area_view/iphone_x_spacing';
-import FormattedText from 'app/components/formatted_text';
-import VectorIcon from 'app/components/vector_icon.js';
+
+import CompassIcon from '@components/compass_icon';
+import {paddingRight, paddingLeft} from '@components/safe_area_view/iphone_x_spacing';
+import FormattedText from '@components/formatted_text';
+import VectorIcon from '@components/vector_icon.js';
 
 import getStyleSheet from './style';
 
@@ -102,8 +103,8 @@ export default class SettingsItem extends PureComponent {
         let additionalComponent;
         if (showArrow) {
             additionalComponent = (
-                <FontAwesomeIcon
-                    name='angle-right'
+                <CompassIcon
+                    name='chevron-right'
                     style={style.arrow}
                 />
             );

@@ -4,10 +4,10 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Text, TouchableHighlight, View} from 'react-native';
-import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-import {changeOpacity, makeStyleSheetFromTheme} from 'app/utils/theme';
+import CompassIcon from '@components/compass_icon';
 import {paddingHorizontal as padding} from 'app/components/safe_area_view/iphone_x_spacing';
+import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 export const MODIFIER_LABEL_HEIGHT = 58;
 
@@ -43,9 +43,9 @@ export default class Modifier extends PureComponent {
                     <View style={[style.modifierItemWrapper, padding(isLandscape)]}>
                         <View style={style.modifierItemLabelContainer}>
                             <View style={style.modifierLabelIconContainer}>
-                                <AwesomeIcon
+                                <CompassIcon
                                     style={style.modifierLabelIcon}
-                                    name='plus-square-o'
+                                    name='plus-box'
                                 />
                             </View>
                             <Text

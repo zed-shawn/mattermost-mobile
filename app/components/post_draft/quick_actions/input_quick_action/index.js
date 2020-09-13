@@ -4,8 +4,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Image} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import CompassIcon from '@components/compass_icon';
 import TouchableWithFeedback from '@components/touchable_with_feedback';
 import {ICON_SIZE} from '@constants/post_draft';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
@@ -49,7 +49,7 @@ export default class InputQuickAction extends PureComponent {
                 changeOpacity(theme.centerChannelColor, 0.64);
 
             return (
-                <MaterialCommunityIcons
+                <CompassIcon
                     color={color}
                     name='at'
                     size={ICON_SIZE}

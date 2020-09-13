@@ -9,10 +9,10 @@ import {
     View,
     ViewPropTypes,
 } from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import FormattedText from 'app/components/formatted_text';
-import {makeStyleSheetFromTheme} from 'app/utils/theme';
+import CompassIcon from '@components/compass_icon';
+import FormattedText from '@components/formatted_text';
+import {makeStyleSheetFromTheme} from '@utils/theme';
 
 export default class UnreadIndicatorBase extends PureComponent {
     static propTypes = {
@@ -36,9 +36,9 @@ export default class UnreadIndicatorBase extends PureComponent {
                 style={[style.wrapper, this.props.style]}
                 pointerEvents={visible ? 'auto' : 'none'}
             >
-                <MaterialIcon
+                <CompassIcon
                     size={15}
-                    name='arrow-upward'
+                    name='arrow-up'
                     color={theme.mentionColor}
                     style={style.arrow}
                 />

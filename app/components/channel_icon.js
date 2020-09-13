@@ -10,7 +10,8 @@ import {
 
 import {General} from '@mm-redux/constants';
 
-import Icon from 'app/components/vector_icon';
+import Icon from '@components/vector_icon';
+import CompassIcon from '@components/compass_icon';
 
 import {changeOpacity, makeStyleSheetFromTheme} from 'app/utils/theme';
 
@@ -82,42 +83,37 @@ export default class ChannelIcon extends React.PureComponent {
         let icon;
         if (isArchived) {
             icon = (
-                <Icon
-                    name='archive'
+                <CompassIcon
+                    name='archive-outline'
                     style={[style.icon, unreadIcon, activeIcon, {fontSize: size}]}
-                    type='mattermost'
                 />
             );
         } else if (isBot) {
             icon = (
-                <Icon
-                    name='bot'
+                <CompassIcon
+                    name='robot-happy'
                     style={[style.icon, unreadIcon, activeIcon, {fontSize: (size - 1), left: -1.5, top: -1}]}
-                    type='mattermost'
                 />
             );
         } else if (hasDraft) {
             icon = (
-                <Icon
-                    name='draft'
+                <CompassIcon
+                    name='pencil-outline'
                     style={[style.icon, unreadIcon, activeIcon, {fontSize: size}]}
-                    type='mattermost'
                 />
             );
         } else if (type === General.OPEN_CHANNEL) {
             icon = (
-                <Icon
-                    name='public'
+                <CompassIcon
+                    name='globe'
                     style={[style.icon, unreadIcon, activeIcon, {fontSize: size}]}
-                    type='mattermost'
                 />
             );
         } else if (type === General.PRIVATE_CHANNEL) {
             icon = (
-                <Icon
-                    name='private'
+                <CompassIcon
+                    name='lock-outline'
                     style={[style.icon, unreadIcon, activeIcon, {fontSize: size, left: 0.5}]}
-                    type='mattermost'
                 />
             );
         } else if (type === General.GM_CHANNEL) {

@@ -12,7 +12,7 @@ const categoryToI18n = {
     activity: {
         id: t('mobile.emoji_picker.activity'),
         defaultMessage: 'ACTIVITY',
-        icon: 'futbol-o',
+        icon: 'soccer',
     },
     custom: {
         id: t('mobile.emoji_picker.custom'),
@@ -22,12 +22,12 @@ const categoryToI18n = {
     flags: {
         id: t('mobile.emoji_picker.flags'),
         defaultMessage: 'FLAGS',
-        icon: 'flag-o',
+        icon: 'flag-outline',
     },
     foods: {
         id: t('mobile.emoji_picker.foods'),
         defaultMessage: 'FOODS',
-        icon: 'cutlery',
+        icon: 'food-fork-drink',
     },
     nature: {
         id: t('mobile.emoji_picker.nature'),
@@ -37,27 +37,27 @@ const categoryToI18n = {
     objects: {
         id: t('mobile.emoji_picker.objects'),
         defaultMessage: 'OBJECTS',
-        icon: 'lightbulb-o',
+        icon: 'lightbulb-outline',
     },
     people: {
         id: t('mobile.emoji_picker.people'),
         defaultMessage: 'PEOPLE',
-        icon: 'smile-o',
+        icon: 'emoticon-happy-outline',
     },
     places: {
         id: t('mobile.emoji_picker.places'),
         defaultMessage: 'PLACES',
-        icon: 'plane',
+        icon: 'airplane',
     },
     recent: {
         id: t('mobile.emoji_picker.recent'),
         defaultMessage: 'RECENTLY USED',
-        icon: 'clock-o',
+        icon: 'clock-outline',
     },
     symbols: {
         id: t('mobile.emoji_picker.symbols'),
         defaultMessage: 'SYMBOLS',
-        icon: 'heart-o',
+        icon: 'heart-outline',
     },
 };
 

@@ -4,7 +4,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {
-    Image,
     Text,
     Platform,
     TouchableHighlight,
@@ -12,30 +11,10 @@ import {
     View,
 } from 'react-native';
 
-import copy from '@assets/images/post_menu/copy.png';
-import edit from '@assets/images/post_menu/edit.png';
-import emoji from '@assets/images/post_menu/emoji.png';
-import flag from '@assets/images/post_menu/flag.png';
-import link from '@assets/images/post_menu/link.png';
-import pin from '@assets/images/post_menu/pin.png';
-import trash from '@assets/images/post_menu/trash.png';
-import reply from '@assets/images/post_menu/reply.png';
-import bookmark from '@assets/images/post_menu/bookmark.png';
+import CompassIcon from '@components/compass_icon';
 import {paddingLeft as padding} from '@components/safe_area_view/iphone_x_spacing';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 import {preventDoubleTap} from '@utils/tap';
-
-const icons = {
-    copy,
-    edit,
-    emoji,
-    flag,
-    link,
-    pin,
-    trash,
-    reply,
-    bookmark,
-};
 
 export default class PostOption extends PureComponent {
     static propTypes = {
@@ -54,7 +33,6 @@ export default class PostOption extends PureComponent {
     render() {
         const {destructive, icon, text, isLandscape, theme} = this.props;
         const style = getStyleSheet(theme);
-        const image = icons[icon];
 
         const Touchable = Platform.select({
             ios: TouchableHighlight,
@@ -82,9 +60,9 @@ export default class PostOption extends PureComponent {
                 >
                     <View style={style.row}>
                         <View style={[style.icon]}>
-                            <Image
-                                source={image}
-                                style={[style.iconImage, destructive ? style.destructiveIconImage : null]}
+                            <CompassIcon
+                                name={icon}
+                                style={destructive ? style.destructive : null}
                             />
                         </View>
                         <View style={style.textContainer}>
@@ -109,9 +87,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
         destructive: {
             color: '#D0021B',
         },
-        destructiveIconImage: {
-            tintColor: '#D0021B',
-        },
         row: {
             flex: 1,
             flexDirection: 'row',
@@ -121,9 +96,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             height: 50,
             justifyContent: 'center',
             width: 60,
-        },
-        iconImage: {
-            tintColor: theme.centerChannelColor,
         },
         textContainer: {
             justifyContent: 'center',

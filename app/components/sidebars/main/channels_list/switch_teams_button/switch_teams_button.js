@@ -7,13 +7,12 @@ import {
     TouchableHighlight,
     View,
 } from 'react-native';
-import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-import Badge from 'app/components/badge';
-import {preventDoubleTap} from 'app/utils/tap';
-import {changeOpacity, makeStyleSheetFromTheme} from 'app/utils/theme';
-
+import Badge from '@components/badge';
+import CompassIcon from '@components/compass_icon';
 import TeamIcon from 'app/components/team_icon';
+import {preventDoubleTap} from '@utils/tap';
+import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 export default class SwitchTeamsButton extends React.PureComponent {
     static propTypes = {
@@ -68,7 +67,7 @@ export default class SwitchTeamsButton extends React.PureComponent {
                     underlayColor={changeOpacity(theme.sidebarHeaderBg, 0.5)}
                 >
                     <View style={styles.switcherContainer}>
-                        <AwesomeIcon
+                        <CompassIcon
                             name='chevron-left'
                             size={12}
                             style={styles.switcherArrow}
