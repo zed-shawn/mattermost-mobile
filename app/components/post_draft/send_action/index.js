@@ -38,11 +38,11 @@ function SendButton(props) {
             type={'opacity'}
         >
             <View style={style.sendButton}>
-            <CompassIcon
-                name='send'
-                size={24}
-                color={theme.buttonColor}
-            />
+                <CompassIcon
+                    name='send'
+                    size={24}
+                    color={theme.buttonColor}
+                />
             </View>
         </TouchableWithFeedback>
     );
