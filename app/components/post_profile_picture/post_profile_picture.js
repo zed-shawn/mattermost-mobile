@@ -7,7 +7,7 @@ import {Platform, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import webhookIcon from '@assets/images/icons/webhook.jpg';
-import AppIcon from '@components/app_icon';
+import CompassIcon from '@components/compass_icon';
 import ProfilePicture from '@components/profile_picture';
 import TouchableWithFeedback from '@components/touchable_with_feedback';
 import {ViewTypes} from '@constants';
@@ -48,10 +48,10 @@ export default class PostProfilePicture extends PureComponent {
         if (isSystemMessage && !fromAutoResponder && !isBot) {
             return (
                 <View style={style.buffer}>
-                    <AppIcon
+                    <CompassIcon
+                        name='mattermost'
                         color={theme.centerChannelColor}
-                        height={ViewTypes.PROFILE_PICTURE_SIZE}
-                        width={ViewTypes.PROFILE_PICTURE_SIZE}
+                        size={ViewTypes.PROFILE_PICTURE_SIZE}
                     />
                 </View>
             );
