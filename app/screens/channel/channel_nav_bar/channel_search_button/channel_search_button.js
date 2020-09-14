@@ -66,7 +66,6 @@ const getStyle = makeStyleSheetFromTheme((theme) => {
         },
         wrapper: {
             position: 'relative',
-            top: -1,
             alignItems: 'flex-end',
             flex: 1,
             flexDirection: 'column',
