@@ -113,7 +113,7 @@ export default class AnnouncementBanner extends PureComponent {
                     </Text>
                     <CompassIcon
                         color={bannerTextColor}
-                        name='info-outlined'
+                        name='info-outline'
                         size={16}
                     />
                 </TouchableOpacity>
