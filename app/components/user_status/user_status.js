@@ -33,7 +33,7 @@ export default class UserStatus extends PureComponent {
             iconColor = theme.awayIndicator;
             break;
         case General.DND:
-            iconName= 'minus-circle-outline';
+            iconName = 'minus-circle-outline';
             iconColor = theme.dndIndicator;
             break;
         case General.ONLINE:

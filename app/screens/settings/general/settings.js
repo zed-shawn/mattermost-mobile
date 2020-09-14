@@ -177,8 +177,7 @@ class Settings extends PureComponent {
                     <SettingsItem
                         defaultMessage='Notifications'
                         i18nId={t('user.settings.modal.notifications')}
-                        iconName='ios-notifications'
-                        iconType='ion'
+                        iconName='bell-outline'
                         onPress={this.goToNotifications}
                         showArrow={showArrow}
                         theme={theme}
@@ -188,8 +187,7 @@ class Settings extends PureComponent {
                     <SettingsItem
                         defaultMessage='Display'
                         i18nId={t('user.settings.modal.display')}
-                        iconName='ios-apps'
-                        iconType='ion'
+                        iconName='layers-outline'
                         onPress={this.goToDisplaySettings}
                         showArrow={showArrow}
                         theme={theme}
@@ -211,37 +209,10 @@ class Settings extends PureComponent {
                         />
                     </React.Fragment>
                     }
-                    {showHelp &&
-                    <React.Fragment>
-                        <SettingsItem
-                            defaultMessage='Help'
-                            i18nId={t('mobile.help.title')}
-                            iconName='md-help'
-                            iconType='ion'
-                            onPress={this.openHelp}
-                            showArrow={showArrow}
-                            theme={theme}
-                            separator={true}
-                            isLandscape={isLandscape}
-                        />
-                    </React.Fragment>
-                    }
-                    <SettingsItem
-                        defaultMessage='Report a Problem'
-                        i18nId={t('sidebar_right_menu.report')}
-                        iconName='exclamation'
-                        iconType='fontawesome'
-                        onPress={this.openErrorEmail}
-                        showArrow={showArrow}
-                        theme={theme}
-                        separator={true}
-                        isLandscape={isLandscape}
-                    />
                     <SettingsItem
                         defaultMessage='Advanced Settings'
                         i18nId={t('mobile.advanced_settings.title')}
-                        iconName='ios-hammer'
-                        iconType='ion'
+                        iconName='tune'
                         onPress={this.goToAdvancedSettings}
                         showArrow={showArrow}
                         theme={theme}
@@ -267,13 +238,43 @@ class Settings extends PureComponent {
                         defaultMessage='About {appTitle}'
                         messageValues={{appTitle: config.SiteName || 'Mattermost'}}
                         i18nId={t('about.title')}
-                        iconName='ios-information-circle'
-                        iconType='ion'
+                        iconName='information-outline'
                         onPress={this.goToAbout}
                         separator={false}
                         showArrow={showArrow}
                         theme={theme}
                         isLandscape={isLandscape}
+                    />
+                    <View style={style.divider}/>
+                </ScrollView>
+                <ScrollView
+                    alwaysBounceVertical={false}
+                    contentContainerStyle={style.wrapper}
+                >
+                    <View style={style.divider}/>
+                    {showHelp &&
+                    <React.Fragment>
+                        <SettingsItem
+                            defaultMessage='Help'
+                            i18nId={t('mobile.help.title')}
+                            onPress={this.openHelp}
+                            showArrow={false}
+                            theme={theme}
+                            separator={true}
+                            isLandscape={isLandscape}
+                            isLink={true}
+                        />
+                    </React.Fragment>
+                    }
+                    <SettingsItem
+                        defaultMessage='Report a Problem'
+                        i18nId={t('sidebar_right_menu.report')}
+                        onPress={this.openErrorEmail}
+                        showArrow={false}
+                        theme={theme}
+                        separator={false}
+                        isLandscape={isLandscape}
+                        isLink={true}
                     />
                     <View style={style.divider}/>
                 </ScrollView>
@@ -285,7 +286,6 @@ class Settings extends PureComponent {
 const getStyleSheet = makeStyleSheetFromTheme((theme) => {
     return {
         container: {
-            flex: 1,
             backgroundColor: theme.centerChannelBg,
         },
         wrapper: {

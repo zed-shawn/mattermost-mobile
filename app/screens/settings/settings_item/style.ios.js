@@ -11,18 +11,16 @@ export default makeStyleSheetFromTheme((theme) => {
             flexDirection: 'row',
             height: 45,
         },
+        linkContainer: {
+            marginHorizontal: 15,
+            color: theme.linkColor,
+        },
         iconContainer: {
-            width: 29,
-            height: 29,
-            backgroundColor: theme.buttonBg,
-            borderRadius: 7,
-            alignItems: 'center',
-            justifyContent: 'center',
             marginHorizontal: 15,
         },
         icon: {
-            color: theme.buttonColor,
-            fontSize: 18,
+            color: theme.centerChannelColor,
+            fontSize: 24,
             marginTop: 2,
         },
         wrapper: {
@@ -48,11 +46,16 @@ export default makeStyleSheetFromTheme((theme) => {
         },
         arrow: {
             color: changeOpacity(theme.centerChannelColor, 0.25),
-            fontSize: 18,
+            fontSize: 24,
+        },
+        dividerContainer: {
+            backgroundColor: theme.centerChannelBg,
+            height: 1,
         },
         divider: {
-            backgroundColor: changeOpacity(theme.centerChannelColor, 0.1),
+            backgroundColor: changeOpacity(theme.centerChannelColor, 0.08),
             height: 1,
+            marginHorizontal: 15,
         },
         destructor: {
             color: theme.errorTextColor,

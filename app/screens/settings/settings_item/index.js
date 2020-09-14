@@ -8,7 +8,6 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import CompassIcon from '@components/compass_icon';
 import {paddingRight, paddingLeft} from '@components/safe_area_view/iphone_x_spacing';
 import FormattedText from '@components/formatted_text';
-import VectorIcon from '@components/vector_icon.js';
 
 import getStyleSheet from './style';
 
@@ -18,7 +17,7 @@ export default class SettingsItem extends PureComponent {
         messageValues: PropTypes.object,
         i18nId: PropTypes.string,
         iconName: PropTypes.string,
-        iconType: PropTypes.oneOf(['fontawesome', 'foundation', 'ion', 'material']),
+        isLink: PropTypes.bool,
         isDestructor: PropTypes.bool,
         centered: PropTypes.bool,
         onPress: PropTypes.func,
@@ -33,6 +32,7 @@ export default class SettingsItem extends PureComponent {
         isDestructor: false,
         separator: true,
         isLandscape: false,
+        isLink: false,
     };
 
     renderText = () => {
@@ -42,6 +42,7 @@ export default class SettingsItem extends PureComponent {
             messageValues,
             i18nId,
             isDestructor,
+            isLink,
             theme,
         } = this.props;
         const style = getStyleSheet(theme);
@@ -54,6 +55,10 @@ export default class SettingsItem extends PureComponent {
 
         if (centered) {
             textStyle.push(style.centerLabel);
+        }
+
+        if (isLink) {
+            textStyle.push(style.linkContainer);
         }
 
         if (!i18nId) {
@@ -73,28 +78,34 @@ export default class SettingsItem extends PureComponent {
     render() {
         const {
             iconName,
-            iconType,
             onPress,
             rightComponent,
             separator,
             showArrow,
             theme,
             isLandscape,
+            isDestructor,
         } = this.props;
         const style = getStyleSheet(theme);
 
         let divider;
         if (separator) {
-            divider = (<View style={style.divider}/>);
+            divider = (
+                <View style={style.dividerContainer}>
+                    <View style={style.divider}/>
+                </View>
+            );
         }
 
         let icon;
-        if (iconType && iconName) {
+        if (iconName) {
             const iconStyle = [style.icon];
+            if (isDestructor) {
+                iconStyle.push(style.destructor);
+            }
             icon = (
-                <VectorIcon
+                <CompassIcon
                     name={iconName}
-                    type={iconType}
                     style={iconStyle}
                 />
             );
@@ -131,9 +142,9 @@ export default class SettingsItem extends PureComponent {
                             </View>
                             }
                         </View>
-                        {divider}
                     </View>
                 </View>
+                {divider}
             </TouchableOpacity>
         );
     }

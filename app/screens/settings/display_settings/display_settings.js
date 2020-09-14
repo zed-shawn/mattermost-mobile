@@ -95,8 +95,7 @@ export default class DisplaySettings extends PureComponent {
                 <SettingsItem
                     defaultMessage='Timezone'
                     i18nId='mobile.advanced_settings.timezone'
-                    iconName='ios-globe'
-                    iconType='ion'
+                    iconName='globe'
                     onPress={this.goToTimezoneSettings}
                     separator={false}
                     showArrow={false}
@@ -133,8 +132,7 @@ export default class DisplaySettings extends PureComponent {
                         <SettingsItem
                             defaultMessage='Theme'
                             i18nId='mobile.display_settings.theme'
-                            iconName='ios-color-palette'
-                            iconType='ion'
+                            iconName='palette-outline'
                             onPress={this.goToThemeSettings}
                             separator={true}
                             showArrow={false}
@@ -145,8 +143,7 @@ export default class DisplaySettings extends PureComponent {
                     <SettingsItem
                         defaultMessage='Clock Display'
                         i18nId='mobile.advanced_settings.clockDisplay'
-                        iconName='ios-time'
-                        iconType='ion'
+                        iconName='clock-outline'
                         onPress={this.goToClockDisplaySettings}
                         separator={disableClockDisplaySeparator}
                         showArrow={false}
