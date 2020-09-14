@@ -27,7 +27,6 @@ import {getFormattedFileSize, lookupMimeType} from '@mm-redux/utils/file_utils';
 
 import CompassIcon from '@components/compass_icon';
 import Loading from '@components/loading';
-import PaperPlane from '@components/post_draft/send_action/paper_plane';
 import {MAX_FILE_COUNT, MAX_MESSAGE_LENGTH_FALLBACK} from '@constants/post_draft';
 import {getCurrentServerUrl, getAppCredentials} from '@init/credentials';
 import {getExtensionFromMime} from '@utils/file';
@@ -557,10 +556,10 @@ export default class ExtensionPost extends PureComponent {
             onPress={this.onPost}
         >
             <View style={styles.left}>
-                <PaperPlane
+                <CompassIcon
+                    name='send'
+                    size={20}
                     color={defaultTheme.sidebarHeaderTextColor}
-                    height={20}
-                    width={20}
                 />
             </View>
         </TouchableOpacity>
