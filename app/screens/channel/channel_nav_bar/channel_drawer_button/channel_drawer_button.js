@@ -112,7 +112,7 @@ export default class ChannelDrawerButton extends PureComponent {
             icon = (
                 <CompassIcon
                     name='menu-variant'
-                    size={25}
+                    size={24}
                     color={theme.sidebarHeaderTextColor}
                 />
             );
