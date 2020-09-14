@@ -133,7 +133,7 @@ export default class ChannelTitle extends PureComponent {
             icon = (
                 <CompassIcon
                     style={style.icon}
-                    size={12}
+                    size={24}
                     name='chevron-down'
                 />
             );
@@ -144,7 +144,7 @@ export default class ChannelTitle extends PureComponent {
             mutedIcon = (
                 <CompassIcon
                     style={[style.icon, style.muted]}
-                    size={15}
+                    size={24}
                     name='bell-off-outline'
                 />
             );

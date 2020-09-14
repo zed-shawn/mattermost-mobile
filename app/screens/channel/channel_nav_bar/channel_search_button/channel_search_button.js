@@ -46,7 +46,7 @@ export default class ChannelSearchButton extends PureComponent {
                     <View style={style.wrapper}>
                         <CompassIcon
                             name='magnify'
-                            size={18}
+                            size={24}
                             style={style.icon}
                         />
                     </View>
