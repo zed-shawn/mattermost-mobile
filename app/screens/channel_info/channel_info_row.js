@@ -38,9 +38,8 @@ function channelInfoRow(props) {
         iconElement = (
             <CompassIcon
                 name={icon}
-                size={15}
+                size={24}
                 color={iconColor || changeOpacity(theme.centerChannelColor, 0.5)}
-                style={style.leftIcon}
             />
         );
     } else {
@@ -64,7 +63,7 @@ function channelInfoRow(props) {
         actionElement = (
             <CompassIcon
                 name='chevron-right'
-                size={20}
+                size={24}
                 style={style.rightIcon}
             />
         );
@@ -134,9 +133,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             marginLeft: 15,
             fontSize: 15,
             paddingVertical: 15,
-        },
-        leftIcon: {
-            width: 17,
         },
         rightIcon: {
             color: changeOpacity(theme.centerChannelColor, 0.5),

@@ -142,7 +142,7 @@ export default class Archive extends PureComponent<ArchiveProps> {
                 <ChannelInfoRow
                     action={this.handleUnarchive}
                     defaultMessage='Unarchive Channel'
-                    icon='archive-outline'
+                    icon='archive-arrow-up-outline'
                     iconColor='#CA3B27'
                     textColor='#CA3B27'
                     textId={t('mobile.routes.channelInfo.unarchive_channel')}
