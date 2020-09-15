@@ -172,7 +172,7 @@ export default class SettingsSidebarBase extends PureComponent {
     renderUserStatusIcon = (userId) => {
         return (
             <UserStatus
-                size={18}
+                size={24}
                 userId={userId}
             />
         );
