@@ -52,7 +52,7 @@ export default class PostOption extends PureComponent {
         });
 
         return (
-            <View style={style.container} >
+            <View style={style.container}>
                 <Touchable
                     onPress={this.handleOnPress}
                     {...touchableProps}
@@ -62,6 +62,7 @@ export default class PostOption extends PureComponent {
                         <View style={[style.icon]}>
                             <CompassIcon
                                 name={icon}
+                                size={24}
                                 style={destructive ? style.destructive : null}
                             />
                         </View>
@@ -72,7 +73,7 @@ export default class PostOption extends PureComponent {
                         </View>
                     </View>
                 </Touchable>
-                <View style={style.footer}/>
+                <View style={style.footer} />
             </View>
         );
     }
@@ -111,9 +112,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             letterSpacing: -0.45,
         },
         footer: {
-            height: 1,
-            marginLeft: 60,
-            borderBottomWidth: 1,
+            marginHorizontal: 17,
+            borderBottomWidth: 0.5,
             borderBottomColor: changeOpacity(theme.centerChannelColor, 0.2),
         },
     };
