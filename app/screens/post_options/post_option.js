@@ -73,7 +73,7 @@ export default class PostOption extends PureComponent {
                         </View>
                     </View>
                 </Touchable>
-                <View style={style.footer} />
+                <View style={style.footer}/>
             </View>
         );
     }
