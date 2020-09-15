@@ -29,15 +29,15 @@ export default class UserStatus extends PureComponent {
         let iconColor;
         switch (status) {
         case General.AWAY:
-            iconName = 'clock-outline';
+            iconName = 'clock';
             iconColor = theme.awayIndicator;
             break;
         case General.DND:
-            iconName = 'minus-circle-outline';
+            iconName = 'minus-circle';
             iconColor = theme.dndIndicator;
             break;
         case General.ONLINE:
-            iconName = 'check-circle-outline';
+            iconName = 'check-circle';
             iconColor = theme.onlineIndicator;
             break;
         default:
