@@ -37,7 +37,7 @@ export default class UploadRemove extends PureComponent {
                     <CompassIcon
                         name='close-circle'
                         color={changeOpacity(theme.centerChannelColor, 0.64)}
-                        size={21}
+                        size={24}
                         style={style.removeIcon}
                     />
                 </View>
@@ -51,10 +51,10 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
         tappableContainer: {
             position: 'absolute',
             elevation: 11,
-            top: -5,
-            right: -10,
-            width: 32,
-            height: 32,
+            top: -7,
+            right: -8,
+            width: 24,
+            height: 24,
         },
         removeButton: {
             borderRadius: 12,
@@ -64,6 +64,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
                 android: 4.75,
             }),
             backgroundColor: theme.centerChannelBg,
+            width: 24,
+            height: 25,
         },
         removeIcon: {
             position: 'relative',
