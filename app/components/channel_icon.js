@@ -90,7 +90,7 @@ export default class ChannelIcon extends React.PureComponent {
             icon = (
                 <CompassIcon
                     name='robot-happy'
-                    style={[style.icon, unreadIcon, activeIcon, {fontSize: (size - 1), left: -1.5, top: -1}]}
+                    style={[style.icon, unreadIcon, activeIcon, {fontSize: size, left: -1.5, top: -1}]}
                 />
             );
         } else if (hasDraft) {
