@@ -168,7 +168,7 @@ export default class ImageQuickAction extends PureComponent {
             >
                 <CompassIcon
                     color={color}
-                    name='file-image-outline'
+                    name='image-outline'
                     size={ICON_SIZE}
                 />
             </TouchableWithFeedback>

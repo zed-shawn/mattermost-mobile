@@ -102,7 +102,7 @@ export default class Post extends PureComponent {
         };
 
         if (!this.closeButton) {
-            this.closeButton = await CompassIcon.getImageSource('close', 20, theme.sidebarHeaderTextColor);
+            this.closeButton = await CompassIcon.getImageSource('close', 24, theme.sidebarHeaderTextColor);
         }
 
         const options = {

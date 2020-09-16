@@ -240,8 +240,8 @@ export default class ImagePreview extends PureComponent {
         const file = this.getCurrentFile();
 
         if (file?.data?.localPath) {
-            // we already have the file locally we don't need to download it
-            return null;
+            // We already have the file locally so we don't need to download it
+            return <View style={style.headerIcon} />;
         }
 
         if (file) {
@@ -253,7 +253,7 @@ export default class ImagePreview extends PureComponent {
                     icon = (
                         <CompassIcon
                             name='dots-vertical'
-                            size={32}
+                            size={24}
                             color='#fff'
                         />
                     );
@@ -261,7 +261,7 @@ export default class ImagePreview extends PureComponent {
                     icon = (
                         <CompassIcon
                             name='download-outline'
-                            size={26}
+                            size={24}
                             color='#fff'
                         />
                     );
@@ -356,7 +356,7 @@ export default class ImagePreview extends PureComponent {
                         >
                             <CompassIcon
                                 name='close'
-                                size={26}
+                                size={24}
                                 color='#fff'
                             />
                         </TouchableOpacity>

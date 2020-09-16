@@ -189,7 +189,7 @@ const getStyle = makeStyleSheetFromTheme((theme) => {
         },
         icon: {
             color: theme.sidebarHeaderTextColor,
-            marginHorizontal: 5,
+            marginHorizontal: 1,
         },
         text: {
             color: theme.sidebarHeaderTextColor,

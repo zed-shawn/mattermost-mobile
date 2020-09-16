@@ -22,7 +22,7 @@ export default class InteractiveDialogController extends PureComponent {
     constructor(props) {
         super(props);
 
-        CompassIcon.getImageSource('close', 20, props.theme.sidebarHeaderTextColor).then((source) => {
+        CompassIcon.getImageSource('close', 24, props.theme.sidebarHeaderTextColor).then((source) => {
             this.closeButton = source;
         });
     }

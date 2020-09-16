@@ -43,7 +43,7 @@ export default class CustomListRow extends React.PureComponent {
                                 {this.props.selected &&
                                     <CompassIcon
                                         name='check'
-                                        size={16}
+                                        size={24}
                                         color='#fff'
                                     />
                                 }
@@ -93,7 +93,7 @@ const style = StyleSheet.create({
         backgroundColor: '#888',
     },
     selectorFilled: {
-        backgroundColor: '#378FD2',
+        backgroundColor: '#166DE0',
         borderWidth: 0,
     },
 });

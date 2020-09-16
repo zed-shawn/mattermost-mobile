@@ -178,7 +178,7 @@ export default class ChannelBase extends PureComponent {
         const {theme} = this.props;
         const screen = 'ChannelInfo';
         const title = intl.formatMessage({id: 'mobile.routes.channelInfo', defaultMessage: 'Info'});
-        CompassIcon.getImageSource('close', 20, theme.sidebarHeaderTextColor).then((source) => {
+        CompassIcon.getImageSource('close', 24, theme.sidebarHeaderTextColor).then((source) => {
             const options = {
                 topBar: {
                     leftButtons: [{
@@ -281,7 +281,7 @@ export default class ChannelBase extends PureComponent {
         const {isSupportedServer, isSystemAdmin, theme} = this.props;
         const screen = 'TermsOfService';
         const title = intl.formatMessage({id: 'mobile.tos_link', defaultMessage: 'Terms of Service'});
-        CompassIcon.getImageSource('close', 20, theme.sidebarHeaderTextColor).then((closeButton) => {
+        CompassIcon.getImageSource('close', 24, theme.sidebarHeaderTextColor).then((closeButton) => {
             const passProps = {
                 closeButton,
                 isSupportedServer,

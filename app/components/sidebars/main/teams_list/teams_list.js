@@ -57,7 +57,7 @@ export default class TeamsList extends PureComponent {
             serverUrl: '',
         };
 
-        CompassIcon.getImageSource('close', 20, props.theme.sidebarHeaderTextColor).then((source) => {
+        CompassIcon.getImageSource('close', 24, props.theme.sidebarHeaderTextColor).then((source) => {
             this.closeButton = source;
         });
 

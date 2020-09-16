@@ -108,7 +108,7 @@ export default class ChannelInfo extends PureComponent {
         showModalOverCurrentContext(screen, passProps, options);
     };
 
-    actionsRows = (style, channelIsArchived) => {
+    actionsRows = (channelIsArchived) => {
         const {currentChannel, currentUserId, isLandscape, theme} = this.props;
 
         if (channelIsArchived) {
@@ -209,7 +209,7 @@ export default class ChannelInfo extends PureComponent {
                     />
                     }
                     <View style={style.rowsContainer}>
-                        {this.actionsRows(style, channelIsArchived)}
+                        {this.actionsRows(channelIsArchived)}
                     </View>
                     <View style={style.footer}>
                         <Leave

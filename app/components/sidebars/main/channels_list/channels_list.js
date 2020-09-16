@@ -48,7 +48,7 @@ export default class ChannelsList extends PureComponent {
             term: '',
         };
 
-        CompassIcon.getImageSource('close', 20, this.props.theme.sidebarHeaderTextColor).then((source) => {
+        CompassIcon.getImageSource('close', 24, this.props.theme.sidebarHeaderTextColor).then((source) => {
             this.closeButton = source;
         });
     }

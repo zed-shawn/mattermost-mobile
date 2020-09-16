@@ -25,7 +25,7 @@ export default class MarkdownBlockQuote extends PureComponent {
                 <CompassIcon
                     name='format-quote-open'
                     style={this.props.iconStyle}
-                    size={14}
+                    size={20}
                 />
             );
         }

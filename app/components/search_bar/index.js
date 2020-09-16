@@ -237,8 +237,9 @@ export default class Search extends PureComponent {
             clearIcon = (
                 <CompassIcon
                     name='close-circle'
-                    size={17}
+                    size={18}
                     style={{color: searchBarStyle.clearIconColorIos}}
+                    onPress={this.onClear}
                 />
             );
 
@@ -418,7 +419,7 @@ const getSearchBarStyle = memoizeResult((
     },
     searchIcon: {
         color: tintColorSearch || placeholderTextColor,
-        top: 10,
+        top: 8,
     },
     searchIconColor: tintColorSearch || placeholderTextColor,
 }));

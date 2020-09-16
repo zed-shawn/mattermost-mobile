@@ -39,7 +39,7 @@ function channelInfoRow(props) {
             <CompassIcon
                 name={icon}
                 size={24}
-                color={iconColor || changeOpacity(theme.centerChannelColor, 0.5)}
+                color={iconColor || changeOpacity(theme.centerChannelColor, 0.64)}
             />
         );
     } else {
@@ -124,7 +124,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             alignItems: 'center',
         },
         detail: {
-            marginHorizontal: 15,
+            marginHorizontal: 7,
             color: changeOpacity(theme.centerChannelColor, 0.5),
             fontSize: 15,
         },
@@ -135,7 +135,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             paddingVertical: 15,
         },
         rightIcon: {
-            color: changeOpacity(theme.centerChannelColor, 0.5),
+            color: changeOpacity(theme.centerChannelColor, 0.32),
+            marginRight: -4,
         },
     };
 });

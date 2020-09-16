@@ -133,7 +133,7 @@ export default class SettingsSidebarBase extends PureComponent {
         this.closeSettingsSidebar();
 
         if (!this.closeButton) {
-            this.closeButton = await CompassIcon.getImageSource('close', 20, this.props.theme.sidebarHeaderTextColor);
+            this.closeButton = await CompassIcon.getImageSource('close', 24, this.props.theme.sidebarHeaderTextColor);
         }
 
         const options = {

@@ -59,11 +59,11 @@ export default class PostOption extends PureComponent {
                     style={[style.row, padding(isLandscape)]}
                 >
                     <View style={style.row}>
-                        <View style={[style.icon]}>
+                        <View style={[style.iconContainer]}>
                             <CompassIcon
                                 name={icon}
                                 size={24}
-                                style={destructive ? style.destructive : null}
+                                style={[style.icon, destructive ? style.destructive : null]}
                             />
                         </View>
                         <View style={style.textContainer}>
@@ -92,11 +92,14 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             flex: 1,
             flexDirection: 'row',
         },
-        icon: {
+        iconContainer: {
             alignItems: 'center',
             height: 50,
             justifyContent: 'center',
             width: 60,
+        },
+        icon: {
+            color: changeOpacity(theme.centerChannelColor, 0.64),
         },
         textContainer: {
             justifyContent: 'center',

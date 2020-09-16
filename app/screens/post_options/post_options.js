@@ -253,7 +253,7 @@ export default class PostOptions extends PureComponent {
         const {theme} = this.props;
         const {formatMessage} = this.context.intl;
 
-        CompassIcon.getImageSource('close', 20, theme.sidebarHeaderTextColor).then((source) => {
+        CompassIcon.getImageSource('close', 24, theme.sidebarHeaderTextColor).then((source) => {
             const screen = 'AddReaction';
             const title = formatMessage({id: 'mobile.post_info.add_reaction', defaultMessage: 'Add Reaction'});
             const passProps = {
@@ -355,7 +355,7 @@ export default class PostOptions extends PureComponent {
         const {theme, post} = this.props;
         const {intl} = this.context;
 
-        CompassIcon.getImageSource('close', 20, theme.sidebarHeaderTextColor).then((source) => {
+        CompassIcon.getImageSource('close', 24, theme.sidebarHeaderTextColor).then((source) => {
             const screen = 'EditPost';
             const title = intl.formatMessage({id: 'mobile.edit_post.title', defaultMessage: 'Editing Message'});
             const passProps = {

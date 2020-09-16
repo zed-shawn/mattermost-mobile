@@ -46,7 +46,7 @@ export default class ClientUpgradeListener extends PureComponent {
     constructor(props) {
         super(props);
 
-        CompassIcon.getImageSource('close', 20, this.props.theme.sidebarHeaderTextColor).then((source) => {
+        CompassIcon.getImageSource('close', 24, this.props.theme.sidebarHeaderTextColor).then((source) => {
             this.closeButton = source;
         });
 

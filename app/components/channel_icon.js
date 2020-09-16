@@ -170,7 +170,7 @@ export default class ChannelIcon extends React.PureComponent {
 const getStyleSheet = makeStyleSheetFromTheme((theme) => {
     return {
         container: {
-            marginRight: 12,
+            marginRight: 8,
             alignItems: 'center',
         },
         icon: {
