@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {Animated, ImageBackground, View, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import thumb from '@assets/images/thumb.png';
+import FileAttachmentIcon from '@components/file_attachment_list/file_attachment_icon';
 import CustomPropTypes from '@constants/custom_prop_types';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
@@ -26,6 +26,7 @@ export default class ProgressiveImage extends PureComponent {
         style: CustomPropTypes.Style,
         theme: PropTypes.object.isRequired,
         tintDefaultSource: PropTypes.bool,
+        backgroundColor: PropTypes.string,
     };
 
     static defaultProps = {
@@ -62,6 +63,7 @@ export default class ProgressiveImage extends PureComponent {
             style,
             theme,
             tintDefaultSource,
+            backgroundColor,
         } = this.props;
 
         let DefaultComponent;
@@ -121,12 +123,9 @@ export default class ProgressiveImage extends PureComponent {
 
         return (
             <Animated.View style={[styles.defaultImageContainer, style, containerStyle]}>
-                <DefaultComponent
-                    resizeMode={resizeMode}
-                    resizeMethod={resizeMethod}
-                    onError={onError}
-                    source={thumb}
-                    style={[imageStyle, {tintColor: theme.centerChannelColor, opacity: defaultOpacity}]}
+                <FileAttachmentIcon
+                    backgroundColor={backgroundColor}
+                    theme={theme}
                 />
                 <ImageComponent
                     resizeMode={resizeMode}

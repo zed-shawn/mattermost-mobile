@@ -209,11 +209,7 @@ export default class ImagePreview extends PureComponent {
                     backgroundColor='transparent'
                     canDownloadFiles={canDownloadFiles}
                     file={file}
-                    iconHeight={200}
-                    iconWidth={200}
                     theme={theme}
-                    wrapperHeight={200}
-                    wrapperWidth={200}
                 />
             </View>
         );
@@ -226,10 +222,7 @@ export default class ImagePreview extends PureComponent {
                     backgroundColor='transparent'
                     file={file}
                     theme={this.props.theme}
-                    iconHeight={200}
-                    iconWidth={200}
-                    wrapperHeight={200}
-                    wrapperWidth={200}
+                    iconSize={120}
                 />
             </View>
         );
@@ -241,7 +234,7 @@ export default class ImagePreview extends PureComponent {
 
         if (file?.data?.localPath) {
             // We already have the file locally so we don't need to download it
-            return <View style={style.headerIcon} />;
+            return <View style={style.headerIcon}/>;
         }
 
         if (file) {

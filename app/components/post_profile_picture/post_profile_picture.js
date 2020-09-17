@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import {Platform, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import webhookIcon from '@assets/images/icons/webhook.jpg';
 import CompassIcon from '@components/compass_icon';
 import ProfilePicture from '@components/profile_picture';
 import TouchableWithFeedback from '@components/touchable_with_feedback';
@@ -58,10 +57,31 @@ export default class PostProfilePicture extends PureComponent {
         }
 
         if (fromWebHook && enablePostIconOverride) {
-            const icon = overrideIconUrl ? {uri: overrideIconUrl} : webhookIcon;
             const frameSize = ViewTypes.PROFILE_PICTURE_SIZE;
             const pictureSize = isEmoji ? ViewTypes.PROFILE_PICTURE_EMOJI_SIZE : ViewTypes.PROFILE_PICTURE_SIZE;
             const borderRadius = isEmoji ? 0 : ViewTypes.PROFILE_PICTURE_SIZE / 2;
+
+            let iconComponent;
+            if (overrideIconUrl) {
+                const source = {uri: overrideIconUrl};
+                iconComponent = (
+                    <FastImage
+                        source={source}
+                        style={{
+                            height: pictureSize,
+                            width: pictureSize,
+                        }}
+                    />
+                );
+            } else {
+                iconComponent = (
+                    <CompassIcon
+                        name='webhook'
+                        size={32}
+                    />
+                );
+            }
+
             return (
                 <View
                     style={[{
@@ -73,13 +93,7 @@ export default class PostProfilePicture extends PureComponent {
                         width: frameSize,
                     }, style.buffer]}
                 >
-                    <FastImage
-                        source={icon}
-                        style={{
-                            height: pictureSize,
-                            width: pictureSize,
-                        }}
-                    />
+                    {iconComponent}
                 </View>
             );
         }
