@@ -70,6 +70,8 @@ export default class AtMentionItem extends PureComponent {
                         userId={userId}
                         theme={theme}
                         size={20}
+                        iconSize={18}
+                        statusSize={10}
                         status={null}
                     />
                 </View>

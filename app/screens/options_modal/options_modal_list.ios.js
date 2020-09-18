@@ -80,7 +80,7 @@ export default class OptionsModalList extends PureComponent {
                         {item.icon &&
                         <CompassIcon
                             name={item.icon}
-                            size={18}
+                            size={24}
                             style={optionIconStyle}
                         />
                         }

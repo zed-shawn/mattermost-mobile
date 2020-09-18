@@ -84,14 +84,13 @@ const getStyleFromTheme = makeStyleSheetFromTheme((theme) => {
         modifierLabelValueContainer: {
             alignItems: 'center',
             marginRight: 5,
-            backgroundColor: 'rgba(61, 60, 64, 0.08)',
+            backgroundColor: changeOpacity(theme.centerChannelColor, 0.08),
             borderRadius: 4,
             padding: 4,
         },
         modifierLabelValue: {
             fontSize: 10,
-
-            // color: changeOpacity(theme.centerChannelColor, 0.5),
+            color: changeOpacity(theme.centerChannelColor, 0.5),
         },
         modifierItemLabel: {
             fontSize: 14,

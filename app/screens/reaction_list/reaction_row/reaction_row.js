@@ -92,6 +92,7 @@ export default class ReactionRow extends React.PureComponent {
                                 userId={id}
                                 showStatus={false}
                                 size={24}
+                                iconSize={18}
                             />
                         </View>
                     </TouchableOpacity>

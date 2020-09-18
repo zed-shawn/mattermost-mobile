@@ -319,9 +319,10 @@ export default class UserProfile extends PureComponent {
                     <View style={style.top}>
                         <ProfilePicture
                             userId={user.id}
-                            size={150}
+                            size={153}
+                            iconSize={104}
                             statusBorderWidth={6}
-                            statusSize={40}
+                            statusSize={36}
                         />
                         {this.getDisplayName()}
                         <Text style={style.username}>{`@${user.username}`}</Text>

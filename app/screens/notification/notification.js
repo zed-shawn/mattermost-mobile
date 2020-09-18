@@ -182,6 +182,7 @@ export default class Notification extends PureComponent {
                 <ProfilePicture
                     userId={user.id}
                     size={IMAGE_SIZE}
+                    iconSize={24}
                 />
             );
         }
