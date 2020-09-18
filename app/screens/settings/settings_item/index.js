@@ -8,6 +8,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import CompassIcon from '@components/compass_icon';
 import {paddingRight, paddingLeft} from '@components/safe_area_view/iphone_x_spacing';
 import FormattedText from '@components/formatted_text';
+import {changeOpacity} from '@utils/theme';
 
 import getStyleSheet from './style';
 
@@ -99,7 +100,7 @@ export default class SettingsItem extends PureComponent {
 
         let icon;
         if (iconName) {
-            const iconStyle = [style.icon];
+            const iconStyle = [style.icon, {color: changeOpacity(theme.centerChannelColor, 0.64)}];
             if (isDestructor) {
                 iconStyle.push(style.destructor);
             }

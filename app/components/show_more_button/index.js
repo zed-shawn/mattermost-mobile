@@ -135,7 +135,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme, showMore) => {
         },
         text: {
             color: theme.linkColor,
-            fontSize: 13,
+            fontSize: 15,
             fontWeight: '600',
         },
         dividerRight: {

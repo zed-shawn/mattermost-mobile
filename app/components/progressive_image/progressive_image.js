@@ -124,6 +124,7 @@ export default class ProgressiveImage extends PureComponent {
         return (
             <Animated.View style={[styles.defaultImageContainer, style, containerStyle]}>
                 <FileAttachmentIcon
+                    defaultImage={true}
                     backgroundColor={backgroundColor}
                     theme={theme}
                 />

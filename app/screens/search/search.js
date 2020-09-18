@@ -597,14 +597,14 @@ export default class Search extends PureComponent {
 
         const sectionsData = [{
             value: 'from:',
-            modifier: `from:${intl.formatMessage({id: 'mobile.search.from_modifier_title', defaultMessage: 'username'})}`,
+            modifier: `${intl.formatMessage({id: 'mobile.search.from_modifier_title', defaultMessage: 'username'})}`,
             description: intl.formatMessage({
                 id: 'mobile.search.from_modifier_description',
                 defaultMessage: 'to find posts from specific users',
             }),
         }, {
             value: 'in:',
-            modifier: `in:${intl.formatMessage({id: 'mobile.search.in_modifier_title', defaultMessage: 'channel-name'})}`,
+            modifier: `${intl.formatMessage({id: 'mobile.search.in_modifier_title', defaultMessage: 'channel-name'})}`,
             description: intl.formatMessage({
                 id: 'mobile.search.in_modifier_description',
                 defaultMessage: 'to find posts in specific channels',
@@ -615,7 +615,7 @@ export default class Search extends PureComponent {
         if (this.props.enableDateSuggestion) {
             sectionsData.push({
                 value: 'on:',
-                modifier: 'on: YYYY-MM-DD',
+                modifier: 'YYYY-MM-DD',
                 description: intl.formatMessage({
                     id: 'mobile.search.on_modifier_description',
                     defaultMessage: 'to find posts on a specific date',
@@ -623,7 +623,7 @@ export default class Search extends PureComponent {
             });
             sectionsData.push({
                 value: 'after:',
-                modifier: 'after: YYYY-MM-DD',
+                modifier: 'YYYY-MM-DD',
                 description: intl.formatMessage({
                     id: 'mobile.search.after_modifier_description',
                     defaultMessage: 'to find posts after a specific date',
@@ -631,7 +631,7 @@ export default class Search extends PureComponent {
             });
             sectionsData.push({
                 value: 'before:',
-                modifier: 'before: YYYY-MM-DD',
+                modifier: 'YYYY-MM-DD',
                 description: intl.formatMessage({
                     id: 'mobile.search.before_modifier_description',
                     defaultMessage: 'to find posts before a specific date',

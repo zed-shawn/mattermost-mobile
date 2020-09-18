@@ -36,6 +36,7 @@ export default class FileAttachmentIcon extends PureComponent {
     static propTypes = {
         backgroundColor: PropTypes.string,
         failed: PropTypes.bool,
+        defaultImage: PropTypes.bool,
         file: PropTypes.object,
         onCaptureRef: PropTypes.func,
         iconSize: PropTypes.number,
@@ -44,12 +45,17 @@ export default class FileAttachmentIcon extends PureComponent {
 
     static defaultProps = {
         failed: false,
+        defaultImage: false,
         iconSize: 48,
     };
 
     getFileIconNameAndColor(file) {
         if (this.props.failed) {
             return FAILED_ICON_NAME_AND_COLOR;
+        }
+
+        if (this.props.defaultImage) {
+            return ICON_NAME_AND_COLOR_FROM_FILE_TYPE.image;
         }
 
         const fileType = Utils.getFileType(file);

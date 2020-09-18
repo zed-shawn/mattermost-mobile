@@ -69,7 +69,7 @@ export default class SwitchTeamsButton extends React.PureComponent {
                     <View style={styles.switcherContainer}>
                         <CompassIcon
                             name='chevron-left'
-                            size={12}
+                            size={24}
                             style={styles.switcherArrow}
                         />
                         <TeamIcon
@@ -121,8 +121,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
         },
         switcherArrow: {
             color: theme.sidebarHeaderBg,
-            marginRight: 8,
             top: 1,
+            left: -2,
         },
         switcherContainer: {
             alignItems: 'center',
@@ -130,9 +130,9 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             borderRadius: 2,
             flexDirection: 'row',
             justifyContent: 'center',
-            height: 32,
+            height: 36,
             marginRight: 12,
-            width: 56,
+            width: 57,
         },
         teamIcon: {
             width: 24,

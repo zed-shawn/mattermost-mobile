@@ -135,7 +135,7 @@ export default class ChannelsList extends PureComponent {
                     placeholder={intl.formatMessage({id: 'mobile.channel_drawer.search', defaultMessage: 'Jump to...'})}
                     cancelTitle={intl.formatMessage({id: 'mobile.post.cancel', defaultMessage: 'Cancel'})}
                     backgroundColor='transparent'
-                    inputHeight={33}
+                    inputHeight={36}
                     inputStyle={searchBarInput}
                     containerStyle={styles.searchBar}
                     placeholderTextColor={changeOpacity(theme.sidebarHeaderTextColor, 0.5)}

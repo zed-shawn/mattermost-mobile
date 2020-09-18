@@ -13,7 +13,6 @@ import {
 import CompassIcon from '@components/compass_icon';
 import {makeStyleSheetFromTheme} from '@utils/theme';
 
-
 const tilePadding = 8;
 
 const ThemeTile = (props) => {

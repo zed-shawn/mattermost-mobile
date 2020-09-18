@@ -230,7 +230,7 @@ export default class SettingsSidebarBase extends PureComponent {
                         <DrawerItem
                             defaultMessage='Edit Profile'
                             i18nId='mobile.routes.edit_profile'
-                            iconName='account-outline'
+                            iconName='pencil-outline'
                             onPress={this.goToEditProfile}
                             separator={true}
                             theme={theme}
@@ -238,7 +238,7 @@ export default class SettingsSidebarBase extends PureComponent {
                         <DrawerItem
                             defaultMessage='Settings'
                             i18nId='mobile.routes.settings'
-                            iconName='tune'
+                            iconName='settings-outline'
                             onPress={this.goToSettings}
                             separator={false}
                             theme={theme}

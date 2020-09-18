@@ -8,7 +8,6 @@ import FastImage from 'react-native-fast-image';
 
 import {Client4} from '@mm-redux/client';
 
-import placeholder from '@assets/images/profile.jpg';
 import CompassIcon from '@components/compass_icon';
 import UserStatus from '@components/user_status';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
@@ -160,9 +159,9 @@ export default class ProfilePicture extends PureComponent {
             );
         } else {
             image = (
-                <FastImage
-                    style={{width: this.props.size, height: this.props.size, borderRadius: this.props.size / 2}}
-                    source={placeholder}
+                <CompassIcon
+                    name='account-outline'
+                    size={this.props.size}
                 />
             );
         }

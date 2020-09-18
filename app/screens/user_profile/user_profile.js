@@ -326,12 +326,14 @@ export default class UserProfile extends PureComponent {
                         {this.getDisplayName()}
                         <Text style={style.username}>{`@${user.username}`}</Text>
                     </View>
+                    <View style={style.divider}/>
                     {this.renderDetailsBlock(style)}
+                    <View style={style.divider}/>
                     <UserProfileRow
                         action={this.sendMessage}
                         defaultMessage='Send Message'
-                        icon='paper-plane-o'
-                        iconType='fontawesome'
+                        icon='send-outline'
+                        iconSize={24}
                         textId={t('mobile.routes.user_profile.send_message')}
                         theme={theme}
                         isLandscape={isLandscape}
@@ -386,6 +388,12 @@ const createStyleSheet = makeStyleSheetFromTheme((theme) => {
         indicatorContainer: {
             marginTop: 15,
             flexDirection: 'row',
+        },
+        divider: {
+            height: 1,
+            marginLeft: 16,
+            marginRight: 22,
+            backgroundColor: '#EBEBEC',
         },
     };
 });

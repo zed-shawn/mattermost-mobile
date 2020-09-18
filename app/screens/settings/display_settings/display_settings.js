@@ -98,7 +98,7 @@ export default class DisplaySettings extends PureComponent {
                     iconName='globe'
                     onPress={this.goToTimezoneSettings}
                     separator={false}
-                    showArrow={false}
+                    showArrow={true}
                     theme={theme}
                     isLandscape={isLandscape}
                 />
@@ -111,11 +111,10 @@ export default class DisplaySettings extends PureComponent {
                 <SettingsItem
                     defaultMessage='Sidebar'
                     i18nId='mobile.display_settings.sidebar'
-                    iconName='columns'
-                    iconType='fontawesome'
+                    iconName='dock-left'
                     onPress={this.goToSidebarSettings}
                     separator={true}
-                    showArrow={false}
+                    showArrow={true}
                     theme={theme}
                     isLandscape={isLandscape}
                 />
@@ -135,7 +134,7 @@ export default class DisplaySettings extends PureComponent {
                             iconName='palette-outline'
                             onPress={this.goToThemeSettings}
                             separator={true}
-                            showArrow={false}
+                            showArrow={true}
                             theme={theme}
                             isLandscape={isLandscape}
                         />
@@ -146,7 +145,7 @@ export default class DisplaySettings extends PureComponent {
                         iconName='clock-outline'
                         onPress={this.goToClockDisplaySettings}
                         separator={disableClockDisplaySeparator}
-                        showArrow={false}
+                        showArrow={true}
                         theme={theme}
                         isLandscape={isLandscape}
                     />

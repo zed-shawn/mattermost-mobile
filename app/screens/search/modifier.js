@@ -5,7 +5,6 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Text, TouchableHighlight, View} from 'react-native';
 
-import CompassIcon from '@components/compass_icon';
 import {paddingHorizontal as padding} from 'app/components/safe_area_view/iphone_x_spacing';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
@@ -42,11 +41,12 @@ export default class Modifier extends PureComponent {
                 <View style={style.modifierItemContainer}>
                     <View style={[style.modifierItemWrapper, padding(isLandscape)]}>
                         <View style={style.modifierItemLabelContainer}>
-                            <View style={style.modifierLabelIconContainer}>
-                                <CompassIcon
-                                    style={style.modifierLabelIcon}
-                                    name='plus-box'
-                                />
+                            <View style={style.modifierLabelValueContainer}>
+                                <Text
+                                    style={style.modifierLabelValue}
+                                >
+                                    {item.value.toUpperCase()}
+                                </Text>
                             </View>
                             <Text
                                 style={style.modifierItemLabel}
@@ -81,13 +81,17 @@ const getStyleFromTheme = makeStyleSheetFromTheme((theme) => {
             alignItems: 'center',
             flexDirection: 'row',
         },
-        modifierLabelIconContainer: {
+        modifierLabelValueContainer: {
             alignItems: 'center',
             marginRight: 5,
+            backgroundColor: 'rgba(61, 60, 64, 0.08)',
+            borderRadius: 4,
+            padding: 4,
         },
-        modifierLabelIcon: {
-            fontSize: 16,
-            color: changeOpacity(theme.centerChannelColor, 0.5),
+        modifierLabelValue: {
+            fontSize: 10,
+
+            // color: changeOpacity(theme.centerChannelColor, 0.5),
         },
         modifierItemLabel: {
             fontSize: 14,

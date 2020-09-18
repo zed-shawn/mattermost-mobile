@@ -45,7 +45,7 @@ export default makeStyleSheetFromTheme((theme) => {
             paddingRight: 15,
         },
         arrow: {
-            color: changeOpacity(theme.centerChannelColor, 0.25),
+            color: changeOpacity(theme.centerChannelColor, 0.32),
             fontSize: 24,
         },
         dividerContainer: {

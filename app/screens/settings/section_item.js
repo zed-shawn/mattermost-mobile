@@ -11,7 +11,6 @@ import {
 
 import CompassIcon from '@components/compass_icon';
 import {paddingHorizontal as padding} from '@components/safe_area_view/iphone_x_spacing';
-import CheckMark from '@components/checkmark';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 const ActionTypes = {
@@ -37,11 +36,11 @@ function sectionItem(props) {
 
     let actionComponent;
     if (actionType === ActionTypes.SELECT && selected) {
+        const selectStyle = [style.arrow, {color: theme.linkColor}];
         actionComponent = (
-            <CheckMark
-                width={12}
-                height={12}
-                color={theme.linkColor}
+            <CompassIcon
+                name='check'
+                style={selectStyle}
             />
         );
     } else if (actionType === ActionTypes.TOGGLE) {

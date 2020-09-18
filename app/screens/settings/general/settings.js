@@ -199,8 +199,7 @@ class Settings extends PureComponent {
                         <SettingsItem
                             defaultMessage='Open teams you can join'
                             i18nId={t('mobile.select_team.join_open')}
-                            iconName='list'
-                            iconType='foundation'
+                            iconName='menu'
                             onPress={this.goToSelectTeam}
                             showArrow={showArrow}
                             theme={theme}
