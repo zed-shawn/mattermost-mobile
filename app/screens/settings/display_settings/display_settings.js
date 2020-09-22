@@ -76,6 +76,7 @@ export default class DisplaySettings extends PureComponent {
         const {theme, enableTimezone, enableTheme, isLandscape} = this.props;
         const {showClockDisplaySettings} = this.state;
         const style = getStyleSheet(theme);
+        const showArrow = Platform.OS === 'ios';
 
         let clockDisplayModal;
         if (Platform.OS === 'android') {
@@ -98,7 +99,7 @@ export default class DisplaySettings extends PureComponent {
                     iconName='globe'
                     onPress={this.goToTimezoneSettings}
                     separator={false}
-                    showArrow={true}
+                    showArrow={showArrow}
                     theme={theme}
                     isLandscape={isLandscape}
                 />
@@ -114,7 +115,7 @@ export default class DisplaySettings extends PureComponent {
                     iconName='dock-left'
                     onPress={this.goToSidebarSettings}
                     separator={true}
-                    showArrow={true}
+                    showArrow={showArrow}
                     theme={theme}
                     isLandscape={isLandscape}
                 />
@@ -134,7 +135,7 @@ export default class DisplaySettings extends PureComponent {
                             iconName='palette-outline'
                             onPress={this.goToThemeSettings}
                             separator={true}
-                            showArrow={true}
+                            showArrow={showArrow}
                             theme={theme}
                             isLandscape={isLandscape}
                         />
@@ -145,7 +146,7 @@ export default class DisplaySettings extends PureComponent {
                         iconName='clock-outline'
                         onPress={this.goToClockDisplaySettings}
                         separator={disableClockDisplaySeparator}
-                        showArrow={true}
+                        showArrow={showArrow}
                         theme={theme}
                         isLandscape={isLandscape}
                     />
@@ -162,14 +163,16 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
     return {
         container: {
             flex: 1,
+            backgroundColor: theme.centerChannelBg,
         },
         wrapper: {
-            flex: 1,
             ...Platform.select({
                 ios: {
+                    flex: 1,
                     paddingTop: 35,
                 },
             }),
+            backgroundColor: changeOpacity(theme.centerChannelColor, 0.06),
         },
         divider: {
             backgroundColor: changeOpacity(theme.centerChannelColor, 0.1),

@@ -164,7 +164,13 @@ class Settings extends PureComponent {
         const style = getStyleSheet(theme);
         const showTeams = joinableTeams.length > 0;
         const showHelp = isValidUrl(config.HelpLink);
-        const showArrow = Platform.OS === 'ios';
+
+        let showArrow = false;
+        let middleDividerStyle = style.divider;
+        if (Platform.OS === 'ios') {
+            showArrow = true;
+            middleDividerStyle = style.middleDivider;
+        }
 
         return (
             <View style={style.container}>
@@ -244,13 +250,7 @@ class Settings extends PureComponent {
                         theme={theme}
                         isLandscape={isLandscape}
                     />
-                    <View style={style.divider}/>
-                </ScrollView>
-                <ScrollView
-                    alwaysBounceVertical={false}
-                    contentContainerStyle={style.wrapper}
-                >
-                    <View style={style.divider}/>
+                    <View style={middleDividerStyle}/>
                     {showHelp &&
                     <React.Fragment>
                         <SettingsItem
@@ -285,12 +285,14 @@ class Settings extends PureComponent {
 const getStyleSheet = makeStyleSheetFromTheme((theme) => {
     return {
         container: {
+            flex: 1,
             backgroundColor: theme.centerChannelBg,
         },
         wrapper: {
             backgroundColor: changeOpacity(theme.centerChannelColor, 0.06),
             ...Platform.select({
                 ios: {
+                    flex: 1,
                     paddingTop: 35,
                 },
             }),
@@ -298,6 +300,12 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
         divider: {
             backgroundColor: changeOpacity(theme.centerChannelColor, 0.1),
             height: 1,
+        },
+        middleDivider: {
+            borderTopWidth: 1,
+            borderBottomWidth: 1,
+            borderColor: changeOpacity(theme.centerChannelColor, 0.1),
+            height: 35,
         },
     };
 });

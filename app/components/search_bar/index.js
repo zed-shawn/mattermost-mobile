@@ -278,6 +278,7 @@ export default class Search extends PureComponent {
                     name='arrow-left'
                     size={25}
                     color={searchBarStyle.clearIconColorAndroid}
+                    onPress={this.onCancel}
                 />
             );
 

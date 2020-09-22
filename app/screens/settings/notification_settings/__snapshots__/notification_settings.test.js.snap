@@ -246,6 +246,7 @@ NotificationSettings {
           contentContainerStyle={
             Object {
               "backgroundColor": "rgba(61,60,64,0.06)",
+              "flex": 1,
               "paddingTop": 35,
             }
           }

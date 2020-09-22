@@ -4,6 +4,7 @@ exports[`DisplaySettings should match snapshot 1`] = `
 <View
   style={
     Object {
+      "backgroundColor": "#ffffff",
       "flex": 1,
     }
   }
@@ -12,6 +13,7 @@ exports[`DisplaySettings should match snapshot 1`] = `
   <View
     style={
       Object {
+        "backgroundColor": "rgba(61,60,64,0.06)",
         "flex": 1,
         "paddingTop": 35,
       }
@@ -81,6 +83,7 @@ exports[`DisplaySettings should match snapshot on Tablet devices 1`] = `
 <View
   style={
     Object {
+      "backgroundColor": "#ffffff",
       "flex": 1,
     }
   }
@@ -89,6 +92,7 @@ exports[`DisplaySettings should match snapshot on Tablet devices 1`] = `
   <View
     style={
       Object {
+        "backgroundColor": "rgba(61,60,64,0.06)",
         "flex": 1,
         "paddingTop": 35,
       }
