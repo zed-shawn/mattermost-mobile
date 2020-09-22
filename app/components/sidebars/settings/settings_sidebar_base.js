@@ -247,9 +247,9 @@ export default class SettingsSidebarBase extends PureComponent {
                     <View style={style.separator}/>
                     <View style={style.block}>
                         <DrawerItem
-                            centered={true}
                             defaultMessage='Logout'
                             i18nId='sidebar_right_menu.logout'
+                            iconName='exit-to-app'
                             isDestructor={true}
                             onPress={this.logout}
                             separator={false}

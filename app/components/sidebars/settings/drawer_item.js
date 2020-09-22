@@ -117,8 +117,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             marginLeft: 5,
         },
         icon: {
-            color: theme.linkColor,
-            fontSize: 22,
+            color: changeOpacity(theme.centerChannelColor, 0.64),
+            fontSize: 24,
         },
         wrapper: {
             flex: 1,
