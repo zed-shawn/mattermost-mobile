@@ -40,13 +40,12 @@ export default class RadioSetting extends PureComponent {
         this.setState({value: item});
     }
 
-    renderCheckMark = (value, {size, color}) => {
+    renderCheckMark = (value, style) => {
         if (value === this.state.value) {
             return (
                 <CompassIcon
                     name='check'
-                    size={size}
-                    color={color}
+                    style={style}
                 />
             );
         }
@@ -184,7 +183,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             marginLeft: 15,
         },
         checkMark: {
-            size: 12,
+            fontSize: 12,
             color: theme.linkColor,
         },
     };

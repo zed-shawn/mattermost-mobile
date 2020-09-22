@@ -13,6 +13,8 @@ import intitialState from '@store/initial_state';
 
 import PostDraft from './post_draft';
 
+jest.mock('app/components/compass_icon', () => 'Icon');
+
 const mockStore = configureMockStore([thunk]);
 const state = {
     ...intitialState,

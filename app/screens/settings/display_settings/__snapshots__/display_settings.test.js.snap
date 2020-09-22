@@ -28,13 +28,13 @@ exports[`DisplaySettings should match snapshot 1`] = `
     <SettingsItem
       defaultMessage="Clock Display"
       i18nId="mobile.advanced_settings.clockDisplay"
-      iconName="ios-time"
-      iconType="ion"
+      iconName="clock-outline"
       isDestructor={false}
       isLandscape={false}
+      isLink={false}
       onPress={[Function]}
       separator={false}
-      showArrow={false}
+      showArrow={true}
       theme={
         Object {
           "awayIndicator": "#ffbc42",
@@ -105,13 +105,13 @@ exports[`DisplaySettings should match snapshot on Tablet devices 1`] = `
     <SettingsItem
       defaultMessage="Sidebar"
       i18nId="mobile.display_settings.sidebar"
-      iconName="columns"
-      iconType="fontawesome"
+      iconName="dock-left"
       isDestructor={false}
       isLandscape={false}
+      isLink={false}
       onPress={[Function]}
       separator={true}
-      showArrow={false}
+      showArrow={true}
       theme={
         Object {
           "awayIndicator": "#ffbc42",
@@ -145,13 +145,13 @@ exports[`DisplaySettings should match snapshot on Tablet devices 1`] = `
     <SettingsItem
       defaultMessage="Clock Display"
       i18nId="mobile.advanced_settings.clockDisplay"
-      iconName="ios-time"
-      iconType="ion"
+      iconName="clock-outline"
       isDestructor={false}
       isLandscape={false}
+      isLink={false}
       onPress={[Function]}
       separator={false}
-      showArrow={false}
+      showArrow={true}
       theme={
         Object {
           "awayIndicator": "#ffbc42",
