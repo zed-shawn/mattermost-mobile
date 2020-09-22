@@ -476,7 +476,7 @@ export default class EmojiPicker extends PureComponent {
                     <View style={styles.notFoundIcon}>
                         <CompassIcon
                             name='magnify'
-                            size={60}
+                            size={72}
                             color={theme.buttonBg}
                         />
                     </View>

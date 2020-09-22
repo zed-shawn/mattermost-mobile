@@ -333,7 +333,7 @@ export default class UserProfile extends PureComponent {
                     <UserProfileRow
                         action={this.sendMessage}
                         defaultMessage='Send Message'
-                        icon='send-outline'
+                        icon='send'
                         iconSize={24}
                         textId={t('mobile.routes.user_profile.send_message')}
                         theme={theme}

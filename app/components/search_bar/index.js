@@ -268,7 +268,7 @@ export default class Search extends PureComponent {
                     <CompassIcon
                         name='magnify'
                         size={this.props.searchIconSize}
-                        styler={{color: searchBarStyle.searchIconColor}}
+                        color={searchBarStyle.searchIconColor}
                     />
                 );
 
@@ -277,10 +277,7 @@ export default class Search extends PureComponent {
                 <CompassIcon
                     name='arrow-left'
                     size={25}
-                    style={{
-                        color: searchBarStyle.clearIconColorAndroid,
-                        underlayColor: 'transparent',
-                    }}
+                    color={searchBarStyle.clearIconColorAndroid}
                 />
             );
 
@@ -288,7 +285,7 @@ export default class Search extends PureComponent {
                 <CompassIcon
                     name='close'
                     size={this.props.deleteIconSize}
-                    style={{color: searchBarStyle.clearIconColorAndroid}}
+                    color={searchBarStyle.clearIconColorAndroid}
                 />
             );
         }

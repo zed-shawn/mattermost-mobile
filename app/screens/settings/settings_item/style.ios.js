@@ -42,7 +42,7 @@ export default makeStyleSheetFromTheme((theme) => {
         },
         arrowContainer: {
             justifyContent: 'center',
-            paddingRight: 15,
+            paddingRight: 11,
         },
         arrow: {
             color: changeOpacity(theme.centerChannelColor, 0.32),
