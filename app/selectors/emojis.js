@@ -12,12 +12,12 @@ const categoryToI18n = {
     activity: {
         id: t('mobile.emoji_picker.activity'),
         defaultMessage: 'ACTIVITY',
-        icon: 'soccer',
+        icon: 'basketball',
     },
     custom: {
         id: t('mobile.emoji_picker.custom'),
         defaultMessage: 'CUSTOM',
-        icon: 'at',
+        icon: 'emoticon-plus-outline',
     },
     flags: {
         id: t('mobile.emoji_picker.flags'),
@@ -27,12 +27,12 @@ const categoryToI18n = {
     foods: {
         id: t('mobile.emoji_picker.foods'),
         defaultMessage: 'FOODS',
-        icon: 'food-fork-drink',
+        icon: 'food-apple',
     },
     nature: {
         id: t('mobile.emoji_picker.nature'),
         defaultMessage: 'NATURE',
-        icon: 'leaf',
+        icon: 'leaf-outline',
     },
     objects: {
         id: t('mobile.emoji_picker.objects'),
@@ -47,7 +47,7 @@ const categoryToI18n = {
     places: {
         id: t('mobile.emoji_picker.places'),
         defaultMessage: 'PLACES',
-        icon: 'airplane',
+        icon: 'airplan-variant',
     },
     recent: {
         id: t('mobile.emoji_picker.recent'),

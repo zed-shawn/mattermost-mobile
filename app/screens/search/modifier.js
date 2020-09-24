@@ -8,7 +8,7 @@ import {Text, TouchableHighlight, View} from 'react-native';
 import {paddingHorizontal as padding} from 'app/components/safe_area_view/iphone_x_spacing';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
-export const MODIFIER_LABEL_HEIGHT = 58;
+export const MODIFIER_LABEL_HEIGHT = 68;
 
 export default class Modifier extends PureComponent {
     static propTypes = {
@@ -86,14 +86,14 @@ const getStyleFromTheme = makeStyleSheetFromTheme((theme) => {
             marginRight: 5,
             backgroundColor: changeOpacity(theme.centerChannelColor, 0.08),
             borderRadius: 4,
-            padding: 4,
+            paddingHorizontal: 4,
         },
         modifierLabelValue: {
             fontSize: 10,
-            color: changeOpacity(theme.centerChannelColor, 0.5),
+            color: theme.centerChannelColor,
         },
         modifierItemLabel: {
-            fontSize: 14,
+            fontSize: 15,
             color: theme.centerChannelColor,
         },
         modifierItemDescription: {

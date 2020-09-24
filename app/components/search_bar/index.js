@@ -287,6 +287,7 @@ export default class Search extends PureComponent {
                     name='close'
                     size={this.props.deleteIconSize}
                     color={searchBarStyle.clearIconColorAndroid}
+                    onPress={this.onClear}
                 />
             );
         }

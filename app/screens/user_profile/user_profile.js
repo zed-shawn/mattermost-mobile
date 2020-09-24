@@ -315,6 +315,7 @@ export default class UserProfile extends PureComponent {
                 <StatusBar/>
                 <ScrollView
                     style={style.scrollView}
+                    contentContainerStyle={style.contentContainer}
                 >
                     <View style={style.top}>
                         <ProfilePicture
@@ -371,6 +372,9 @@ const createStyleSheet = makeStyleSheetFromTheme((theme) => {
         scrollView: {
             flex: 1,
             backgroundColor: theme.centerChannelBg,
+        },
+        contentContainer: {
+            paddingBottom: 48,
         },
         text: {
             fontSize: 15,
