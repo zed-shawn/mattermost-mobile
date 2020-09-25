@@ -39,6 +39,7 @@ exports[`FileAttachment should match snapshot 1`] = `
         }
         iconSize={48}
         onCaptureRef={[Function]}
+        smallImage={false}
         theme={
           Object {
             "awayIndicator": "#ffbc42",

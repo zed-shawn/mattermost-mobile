@@ -17,7 +17,7 @@ const categoryToI18n = {
     custom: {
         id: t('mobile.emoji_picker.custom'),
         defaultMessage: 'CUSTOM',
-        icon: 'emoticon-plus-outline',
+        icon: 'emoticon-custom-outline',
     },
     flags: {
         id: t('mobile.emoji_picker.flags'),
@@ -47,7 +47,7 @@ const categoryToI18n = {
     places: {
         id: t('mobile.emoji_picker.places'),
         defaultMessage: 'PLACES',
-        icon: 'airplan-variant',
+        icon: 'airplane-variant',
     },
     recent: {
         id: t('mobile.emoji_picker.recent'),

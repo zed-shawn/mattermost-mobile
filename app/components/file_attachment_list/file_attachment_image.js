@@ -101,7 +101,10 @@ export default class FileAttachmentImage extends PureComponent {
                 style={[
                     wrapperStyle,
                     style.smallImageBorder,
-                    {borderColor: changeOpacity(theme.centerChannelColor, 0.4)},
+                    {
+                        borderColor: changeOpacity(theme.centerChannelColor, 0.4),
+                        backgroundColor: changeOpacity(theme.centerChannelColor, 0.08),
+                    },
                 ]}
             >
                 {this.boxPlaceholder()}
@@ -113,6 +116,7 @@ export default class FileAttachmentImage extends PureComponent {
                         onError={this.handleError}
                         resizeMode={'contain'}
                         resizeMethod={resizeMethod}
+                        isSmallImage={true}
                         {...this.imageProps(file)}
                     />
                 </View>
@@ -180,7 +184,6 @@ const style = StyleSheet.create({
         paddingBottom: '100%',
     },
     smallImageBorder: {
-        borderWidth: 1,
         borderRadius: 5,
     },
     smallImageOverlay: {

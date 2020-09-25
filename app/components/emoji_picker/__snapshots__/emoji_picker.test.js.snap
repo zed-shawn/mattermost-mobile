@@ -3182,7 +3182,7 @@ exports[`components/emoji_picker/emoji_picker.ios should match snapshot 1`] = `
                 },
               ],
               "defaultMessage": "NATURE",
-              "icon": "leaf",
+              "icon": "leaf-outline",
               "id": "mobile.emoji_picker.nature",
               "key": "nature",
             },
@@ -3778,7 +3778,7 @@ exports[`components/emoji_picker/emoji_picker.ios should match snapshot 1`] = `
                 },
               ],
               "defaultMessage": "FOODS",
-              "icon": "food-fork-drink",
+              "icon": "food-apple",
               "id": "mobile.emoji_picker.foods",
               "key": "foods",
             },
@@ -4335,7 +4335,7 @@ exports[`components/emoji_picker/emoji_picker.ios should match snapshot 1`] = `
                 },
               ],
               "defaultMessage": "ACTIVITY",
-              "icon": "soccer",
+              "icon": "basketball",
               "id": "mobile.emoji_picker.activity",
               "key": "activity",
             },
@@ -5144,7 +5144,7 @@ exports[`components/emoji_picker/emoji_picker.ios should match snapshot 1`] = `
                 },
               ],
               "defaultMessage": "PLACES",
-              "icon": "airplane",
+              "icon": "airplane-variant",
               "id": "mobile.emoji_picker.places",
               "key": "places",
             },
@@ -9952,7 +9952,7 @@ exports[`components/emoji_picker/emoji_picker.ios should match snapshot 1`] = `
                 },
               ],
               "defaultMessage": "CUSTOM",
-              "icon": "at",
+              "icon": "emoticon-custom-outline",
               "id": "mobile.emoji_picker.custom",
               "key": "custom",
             },
@@ -10037,7 +10037,7 @@ exports[`components/emoji_picker/emoji_picker.ios should match snapshot 1`] = `
             >
               <Icon
                 allowFontScaling={false}
-                name="leaf"
+                name="leaf-outline"
                 size={17}
                 style={
                   Array [
@@ -10062,7 +10062,7 @@ exports[`components/emoji_picker/emoji_picker.ios should match snapshot 1`] = `
             >
               <Icon
                 allowFontScaling={false}
-                name="food-fork-drink"
+                name="food-apple"
                 size={17}
                 style={
                   Array [
@@ -10087,7 +10087,7 @@ exports[`components/emoji_picker/emoji_picker.ios should match snapshot 1`] = `
             >
               <Icon
                 allowFontScaling={false}
-                name="soccer"
+                name="basketball"
                 size={17}
                 style={
                   Array [
@@ -10112,7 +10112,7 @@ exports[`components/emoji_picker/emoji_picker.ios should match snapshot 1`] = `
             >
               <Icon
                 allowFontScaling={false}
-                name="airplane"
+                name="airplane-variant"
                 size={17}
                 style={
                   Array [
@@ -10212,7 +10212,7 @@ exports[`components/emoji_picker/emoji_picker.ios should match snapshot 1`] = `
             >
               <Icon
                 allowFontScaling={false}
-                name="at"
+                name="emoticon-custom-outline"
                 size={17}
                 style={
                   Array [

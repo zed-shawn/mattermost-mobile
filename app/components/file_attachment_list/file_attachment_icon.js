@@ -21,6 +21,7 @@ const ICON_NAME_AND_COLOR_FROM_FILE_TYPE = {
     audio: ['jumbo-attachment-audio', BLUE_ICON],
     code: ['jumbo-attachment-code', BLUE_ICON],
     image: ['jumbo-attachment-image', BLUE_ICON],
+    smallImage: ['image-outline', BLUE_ICON],
     other: ['jumbo-attachment-generic', BLUE_ICON],
     patch: ['jumbo-attachment-patch', BLUE_ICON],
     pdf: ['jumbo-attachment-pdf', RED_ICON],
@@ -37,8 +38,10 @@ export default class FileAttachmentIcon extends PureComponent {
         backgroundColor: PropTypes.string,
         failed: PropTypes.bool,
         defaultImage: PropTypes.bool,
+        smallImage: PropTypes.bool,
         file: PropTypes.object,
         onCaptureRef: PropTypes.func,
+        iconColor: PropTypes.string,
         iconSize: PropTypes.number,
         theme: PropTypes.object,
     };
@@ -46,6 +49,7 @@ export default class FileAttachmentIcon extends PureComponent {
     static defaultProps = {
         failed: false,
         defaultImage: false,
+        smallImage: false,
         iconSize: 48,
     };
 
@@ -55,6 +59,10 @@ export default class FileAttachmentIcon extends PureComponent {
         }
 
         if (this.props.defaultImage) {
+            if (this.props.smallImage) {
+                return ICON_NAME_AND_COLOR_FROM_FILE_TYPE.smallImage;
+            }
+
             return ICON_NAME_AND_COLOR_FROM_FILE_TYPE.image;
         }
 
@@ -71,8 +79,9 @@ export default class FileAttachmentIcon extends PureComponent {
     };
 
     render() {
-        const {backgroundColor, file, iconSize, theme} = this.props;
-        const [iconName, iconColor] = this.getFileIconNameAndColor(file);
+        const {backgroundColor, file, iconSize, theme, iconColor} = this.props;
+        const [iconName, defaultIconColor] = this.getFileIconNameAndColor(file);
+        const color = iconColor || defaultIconColor;
         const bgColor = backgroundColor || theme.centerChannelBg || 'transparent';
 
         return (
@@ -83,7 +92,7 @@ export default class FileAttachmentIcon extends PureComponent {
                 <CompassIcon
                     name={iconName}
                     size={iconSize}
-                    style={{color: iconColor}}
+                    color={color}
                 />
             </View>
         );

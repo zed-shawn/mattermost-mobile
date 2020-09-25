@@ -79,15 +79,18 @@ exports[`ProgressiveImage should match snapshot for Image 1`] = `
       },
       Object {},
       Object {
-        "backgroundColor": "rgba(61,60,64,NaN)",
+        "backgroundColor": "rgba(61,60,64,0.08)",
       },
     ]
   }
 >
   <FileAttachmentIcon
+    backgroundColor="transparent"
     defaultImage={true}
     failed={false}
+    iconColor="rgba(61,60,64,0.32)"
     iconSize={48}
+    smallImage={false}
     theme={
       Object {
         "awayIndicator": "#ffbc42",
