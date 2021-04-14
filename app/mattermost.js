@@ -6,6 +6,7 @@ import {Navigation} from 'react-native-navigation';
 import {Provider} from 'react-redux';
 
 import EventEmitter from '@mm-redux/utils/event_emitter';
+import {getCurrentUserId} from '@mm-redux/selectors/entities/users';
 
 import {resetToChannel, resetToSelectServer} from '@actions/navigation';
 import {setDeepLinkURL} from '@actions/views/root';
@@ -70,7 +71,7 @@ const launchApp = (credentials) => {
                 await globalEventHandler.configureAnalytics();
                 // eslint-disable-next-line no-console
                 console.log('Launch app in Channel screen');
-                resetToChannel({skipMetrics: true});
+                resetToChannel({skipMetrics: true, userId: getCurrentUserId(store.getState())});
             } else {
                 const error = new Error(`Previous app version "${previousVersion}" is invalid.`);
                 captureJSException(error, false, store);

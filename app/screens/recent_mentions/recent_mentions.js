@@ -10,6 +10,7 @@ import {
     FlatList,
     StyleSheet,
     View,
+    Text,
 } from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -226,10 +227,32 @@ export default class RecentMentions extends PureComponent {
         return (
             <SafeAreaView
                 testID='recent_mentions.screen'
-                style={style.container}
+                style={[style.container, {backgroundColor: theme.sidebarHeaderBg}]}
             >
+                <Text style={{
+                    fontSize: 24,
+                    fontWeight: "bold",
+                    color: theme.sidebarHeaderTextColor,
+                    paddingLeft: 14,
+                }}>
+                    Recent Mentions
+                </Text>
+                <Text style={{
+                    fontSize: 14,
+                    color: theme.sidebarHeaderTextColor,
+                    paddingLeft: 14,
+                    paddingBottom: 20,
+                }}>
+                    Messages you've been mentioned in
+                </Text>
                 <StatusBar/>
+                <View style={{
+                    backgroundColor: theme.centerChannelBg,
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                }}>
                 {component}
+                </View>
             </SafeAreaView>
         );
     }

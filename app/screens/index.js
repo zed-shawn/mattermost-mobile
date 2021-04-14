@@ -100,6 +100,9 @@ Navigation.setLazyComponentRegistrator((screenName) => {
     case 'Gallery':
         screen = require('@screens/gallery').default;
         break;
+    case 'Home':
+        screen = require('@screens/tabs/home').default;
+        break;
     case 'InteractiveDialog':
         screen = require('@screens/interactive_dialog').default;
         break;
@@ -175,6 +178,9 @@ Navigation.setLazyComponentRegistrator((screenName) => {
         break;
     case 'SelectTimezone':
         screen = require('@screens/settings/timezone/select_timezone').default;
+        break;
+    case 'Servers':
+        screen = require('@screens/tabs/home/screens/servers').default;
         break;
     case 'Settings':
         screen = require('@screens/settings/general').default;

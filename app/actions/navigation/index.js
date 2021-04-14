@@ -30,6 +30,168 @@ export function resetToChannel(passProps = {}) {
 
     EphemeralStore.clearNavigationComponents();
 
+    const bottomTabs = {
+        id: 'BOTTOM_TABS_LAYOUT',
+        children: [{
+            stack: {
+                id: 'HOME_TAB',
+                children: [{
+                    component: {
+                        id: 'Home',
+                        name: 'Home',
+                        passProps,
+                        options: {
+                            layout: {
+                                componentBackgroundColor: theme.centerChannelBg,
+                            },
+                            statusBar: {
+                                visible: true,
+                            },
+                            topBar: {
+                                visible: false,
+                                height: 0,
+                                background: {
+                                    color: theme.sidebarHeaderBg,
+                                },
+                                backButton: {
+                                    visible: false,
+                                    color: theme.sidebarHeaderTextColor,
+                                    enableMenu: false,
+                                },
+                            },
+                        },
+                    },
+                }],
+                options: {
+                    bottomTab: {
+                        icon: require('@assets/images/icons/home.png'),
+                    },
+                },
+            },
+        }, {
+            stack: {
+                id: 'SEARCH_TAB',
+                children: [{
+                    component: {
+                        id: 'Search',
+                        name: 'Search',
+                        passProps,
+                        options: {
+                            layout: {
+                                componentBackgroundColor: theme.centerChannelBg,
+                            },
+                            statusBar: {
+                                visible: true,
+                            },
+                            topBar: {
+                                visible: false,
+                                height: 0,
+                                background: {
+                                    color: theme.sidebarHeaderBg,
+                                },
+                                backButton: {
+                                    visible: false,
+                                    color: theme.sidebarHeaderTextColor,
+                                    enableMenu: false,
+                                },
+                            },
+                        },
+                    },
+                }],
+                options: {
+                    bottomTab: {
+                        icon: require('@assets/images/icons/search.png'),
+                    },
+                },
+            },
+        }, {
+            stack: {
+                id: 'MENTIONS_TAB',
+                children: [{
+                    component: {
+                        id: 'RecentMentions',
+                        name: 'RecentMentions',
+                        passProps,
+                        options: {
+                            layout: {
+                                componentBackgroundColor: theme.centerChannelBg,
+                            },
+                            statusBar: {
+                                visible: true,
+                            },
+                            topBar: {
+                                visible: false,
+                                height: 0,
+                                background: {
+                                    color: theme.sidebarHeaderBg,
+                                },
+                                backButton: {
+                                    visible: false,
+                                    color: theme.sidebarHeaderTextColor,
+                                    enableMenu: false,
+                                },
+                            },
+                        },
+                    },
+                }],
+                options: {
+                    bottomTab: {
+                        icon: require('@assets/images/icons/mention.png'),
+                    },
+                },
+            },
+        }, {
+            stack: {
+                id: 'SETTINGS_TAB',
+                children: [{
+                    component: {
+                        id: 'UserProfile',
+                        name: 'UserProfile',
+                        passProps,
+                        options: {
+                            layout: {
+                                componentBackgroundColor: theme.centerChannelBg,
+                            },
+                            statusBar: {
+                                visible: true,
+                            },
+                            topBar: {
+                                visible: false,
+                                height: 0,
+                                background: {
+                                    color: theme.sidebarHeaderBg,
+                                },
+                                backButton: {
+                                    visible: false,
+                                    color: theme.sidebarHeaderTextColor,
+                                    enableMenu: false,
+                                },
+                            },
+                        },
+                    },
+                }],
+                options: {
+                    bottomTab: {
+                        icon: require('@assets/images/icons/user.png'),
+                        size: 14,
+                    },
+                },
+            },
+        }],
+    };
+
+    Navigation.setRoot({
+        root: {
+            bottomTabs,
+        },
+    });
+}
+
+export function resetToChannel2(passProps = {}) {
+    const theme = getThemeFromState();
+
+    EphemeralStore.clearNavigationComponents();
+
     const stack = {
         children: [{
             component: {
@@ -223,7 +385,19 @@ export function popTopScreen(screenId) {
         Navigation.pop(screenId);
     } else {
         const componentId = EphemeralStore.getNavigationTopComponentId();
-        Navigation.pop(componentId);
+        Navigation.pop(componentId, {component: {options: {
+            animations: {
+                pop: {
+                    content: {
+                        translationX: {
+                            from: 0,
+                            to: -require('react-native').Dimensions.get('window').width,
+                            duration: 30000,
+                        },
+                    },
+                },
+            },
+        }}});
     }
 }
 

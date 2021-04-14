@@ -708,38 +708,46 @@ export default class Search extends PureComponent {
         return (
             <KeyboardLayout>
                 <StatusBar/>
+                <SafeAreaView style={{backgroundColor: theme.sidebarHeaderBg}}>
+                <Text style={{
+                    fontSize: 24,
+                    fontWeight: "bold",
+                    color: theme.sidebarHeaderTextColor,
+                    paddingLeft: 14,
+                }}>
+                        Search
+                </Text>
                 <View
                     testID='search.screen'
                     style={style.header}
                 >
-                    <SafeAreaView edges={['left', 'right']}>
-                        <SearchBar
-                            testID='search.search_bar'
-                            ref={this.setSearchBarRef}
-                            placeholder={intl.formatMessage({id: 'search_bar.search', defaultMessage: 'Search'})}
-                            cancelTitle={intl.formatMessage({id: 'mobile.post.cancel', defaultMessage: 'Cancel'})}
-                            backgroundColor='transparent'
-                            inputHeight={Platform.OS === 'ios' ? 33 : 46}
-                            inputStyle={searchBarInput}
-                            placeholderTextColor={changeOpacity(theme.sidebarHeaderTextColor, 0.5)}
-                            selectionColor={changeOpacity(theme.sidebarHeaderTextColor, 0.5)}
-                            tintColorSearch={changeOpacity(theme.sidebarHeaderTextColor, 0.5)}
-                            tintColorDelete={changeOpacity(theme.sidebarHeaderTextColor, 0.5)}
-                            titleCancelColor={theme.sidebarHeaderTextColor}
-                            onChangeText={this.handleTextChanged}
-                            onSearchButtonPress={this.handleSearchButtonPress}
-                            onCancelButtonPress={this.cancelSearch}
-                            onSelectionChange={this.handleSelectionChange}
-                            autoCapitalize='none'
-                            showArrow={true}
-                            value={value}
-                            containerStyle={style.searchBarContainer}
-                            backArrowSize={28}
-                            keyboardAppearance={getKeyboardAppearanceFromTheme(theme)}
-                            containerHeight={33}
-                        />
-                    </SafeAreaView>
+                    <SearchBar
+                        testID='search.search_bar'
+                        ref={this.setSearchBarRef}
+                        placeholder={intl.formatMessage({id: 'search_bar.search', defaultMessage: 'Search'})}
+                        cancelTitle={intl.formatMessage({id: 'mobile.post.cancel', defaultMessage: 'Cancel'})}
+                        backgroundColor='transparent'
+                        inputHeight={Platform.OS === 'ios' ? 33 : 46}
+                        inputStyle={searchBarInput}
+                        placeholderTextColor={changeOpacity(theme.sidebarHeaderTextColor, 0.5)}
+                        selectionColor={changeOpacity(theme.sidebarHeaderTextColor, 0.5)}
+                        tintColorSearch={changeOpacity(theme.sidebarHeaderTextColor, 0.5)}
+                        tintColorDelete={changeOpacity(theme.sidebarHeaderTextColor, 0.5)}
+                        titleCancelColor={theme.sidebarHeaderTextColor}
+                        onChangeText={this.handleTextChanged}
+                        onSearchButtonPress={this.handleSearchButtonPress}
+                        onCancelButtonPress={this.cancelSearch}
+                        onSelectionChange={this.handleSelectionChange}
+                        autoCapitalize='none'
+                        showArrow={true}
+                        value={value}
+                        containerStyle={style.searchBarContainer}
+                        backArrowSize={28}
+                        keyboardAppearance={getKeyboardAppearanceFromTheme(theme)}
+                        containerHeight={33}
+                    />
                 </View>
+                </SafeAreaView>
                 <SafeAreaView
                     style={style.flex}
                     edges={['bottom', 'left', 'right']}
