@@ -2,13 +2,10 @@
 // See LICENSE.txt for license information.
 import {AppBindingLocations, AppCallResponseTypes} from '@mm-redux/constants/apps';
 import {AppBinding, AppCall, AppCallRequest, AppCallValues, AppContext, AppExpand} from '@mm-redux/types/apps';
-import {getConfig} from '@mm-redux/selectors/entities/general';
-import {Config} from '@mm-redux/types/config';
 import {GlobalState} from '@mm-redux/types/store';
 
 export function appsEnabled(state: GlobalState) { // eslint-disable-line @typescript-eslint/no-unused-vars
-    const enabled = getConfig(state)?.['FeatureFlagAppsEnabled' as keyof Partial<Config>];
-    return enabled === 'true';
+    return true;
 }
 
 export function copyAndFillBindings(binding?: AppBinding): AppBinding | undefined {
