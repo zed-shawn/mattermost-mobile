@@ -262,7 +262,7 @@ class SSO extends PureComponent {
                     onLoadEnd={this.onLoadEnd}
                     onMessage={messagingEnabled ? this.onMessage : null}
                     useSharedProcessPool={false}
-                    cacheEnabled={false}
+                    cacheEnabled={true}
                 />
             );
         } else {
