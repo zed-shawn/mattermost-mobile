@@ -39,7 +39,7 @@
     "react-native-button": "3.0.1",
     "react-native-calendars": "1.333.0",
     "react-native-circular-progress": "1.3.6",
-    "react-native-cookies": "github:mattermost/react-native-cookies#b35bafc388ae09c83bd875e887daf6a0755e0b40",
+    "react-native-cookies": "github:sadohert/react-native-cookies#9f43291c2f943ae6ed47f5a64d760b5f9dedb17f",
     "react-native-device-info": "5.6.5",
     "react-native-document-picker": "3.5.4",
     "react-native-elements": "2.3.2",
