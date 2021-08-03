@@ -9,6 +9,8 @@
 #import "Mattermost-Swift.h"
 #import <os/log.h>
 #import <RNHWKeyboardEvent.h>
+#import <react-native-notifications/RNEventEmitter.h>
+#import <react-native-notifications/RNNotificationParser.h>
 
 @implementation AppDelegate
 
@@ -62,8 +64,15 @@ NSString* const NOTIFICATION_UPDATE_BADGE_ACTION = @"update_badge";
 
   os_log(OS_LOG_DEFAULT, "Mattermost started!!");
 
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPushNotificationProcessed:) name:NSUserDefaultsDidChangeNotification object:nil];
 
   return YES;
+}
+
+-(void) onPushNotificationProcessed:(NSNotification *)notification
+{
+  NSLog(@"======================= %@", notification);
+//  [RNEventEmitter sendEvent:RNNotificationReceived body:nil];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -78,6 +87,7 @@ NSString* const NOTIFICATION_UPDATE_BADGE_ACTION = @"update_badge";
 // Required for the notification event.
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler {
+  NSLog(@"MIGUEL AppDelegate didReceiveRemoteNotification");
   UIApplicationState state = [UIApplication sharedApplication].applicationState;
   NSString* action = [userInfo objectForKey:@"type"];
   NSString* channelId = [userInfo objectForKey:@"channel_id"];

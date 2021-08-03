@@ -200,11 +200,13 @@ class PushNotifications {
     }
 
     onNotificationReceivedBackground = (notification: NotificationWithData, completion: (response: NotificationBackgroundFetchResult) => void) => {
+        console.log("MIGUEL", "background notification received");
         this.handleNotification(notification);
         completion(NotificationBackgroundFetchResult.NO_DATA);
     };
 
     onNotificationReceivedForeground = (notification: NotificationWithData, completion: (response: NotificationCompletion) => void) => {
+        console.log("MIGUEL", "foreground notification received");
         notification.foreground = AppState.currentState === 'active';
         completion({alert: false, sound: true, badge: true});
         this.handleNotification(notification);

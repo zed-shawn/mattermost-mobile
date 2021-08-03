@@ -9,6 +9,13 @@ class NotificationService: UNNotificationServiceExtension {
   var retryIndex = 0
   
   override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+    let appGroupId = Bundle.main.object(forInfoDictionaryKey: "AppGroupIdentifier") as! String
+    let sharedUserDefaults = UserDefaults.standard
+    sharedUserDefaults.addSuite(named: appGroupId)
+    sharedUserDefaults.set("someValue", forKey: "someKey")
+    sharedUserDefaults.synchronize()
+    print("didReceive changed user defaults")
+    
     self.contentHandler = contentHandler
 
     let fibonacciBackoffsInSeconds = [1.0, 2.0, 3.0, 5.0, 8.0]

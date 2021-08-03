@@ -154,7 +154,9 @@ public class CustomPushNotification extends PushNotification {
                 break;
         }
 
+        Log.d("MIGUEL", "received notification");
         if (mAppLifecycleFacade.isReactInitialized()) {
+            Log.d("MIGUEL", "notifyReceivedToJS");
             notifyReceivedToJS();
         }
     }
