@@ -58,8 +58,6 @@ const ChannelList = ({iconPad}: ChannelListProps) => {
         <View style={[styles.container, isTablet && styles.maxW]}>
             <TouchableOpacity onPress={() => setShowCats(!showCats)}>
                 <ChannelListHeader
-                    heading='Contributors'
-                    subheading='Community TEST'
                     iconPad={iconPad}
                 />
             </TouchableOpacity>
